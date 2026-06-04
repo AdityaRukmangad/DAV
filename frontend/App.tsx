@@ -4,9 +4,10 @@ import GenerationModule from './components/GenerationModule';
 import PaperGeneratorModule from './components/PaperGeneratorModule';
 import KnowledgeHubModule from './components/KnowledgeHubModule';
 import QuestionBankModule from './components/QuestionBankModule';
+import DAVModule from './components/DAVModule';
 import { GenerationResponse } from './types';
 
-type Tab = 'generate' | 'papers' | 'ingest' | 'knowledge' | 'question-bank';
+type Tab = 'generate' | 'papers' | 'ingest' | 'knowledge' | 'question-bank' | 'dav';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('generate');
@@ -58,6 +59,11 @@ const App: React.FC = () => {
               label="Knowledge Hub"
             />
             <TabButton
+              active={activeTab === 'dav'}
+              onClick={() => setActiveTab('dav')}
+              label="Analytics"
+            />
+            <TabButton
               active={activeTab === 'ingest'}
               onClick={() => setActiveTab('ingest')}
               label="Upload"
@@ -88,6 +94,9 @@ const App: React.FC = () => {
         )}
         {activeTab === 'question-bank' && (
           <QuestionBankModule />
+        )}
+        {activeTab === 'dav' && (
+          <DAVModule />
         )}
       </main>
 

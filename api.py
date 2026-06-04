@@ -1549,3 +1549,81 @@ async def explain_question(question_id: int):
     except Exception as e:
         logger.error(f"Failed to explain question {question_id}: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# =============================================================================
+# DAV — DATA ANALYTICS & VISUALIZATION ENDPOINTS
+# =============================================================================
+
+from app.services.dav_service import (
+    get_overview,
+    get_bloom_distribution,
+    get_topic_coverage,
+    get_difficulty_trends,
+    get_copo_matrix,
+    get_eda_report,
+    clean_data,
+)
+
+
+@app.get("/api/v1/dav/overview")
+async def dav_overview():
+    """Summary stats: totals, difficulty distribution, variance, bloom balance."""
+    try:
+        return get_overview()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/v1/dav/bloom-distribution")
+async def dav_bloom_distribution():
+    """Bloom level distribution overall, per-topic, and as difficulty×bloom heatmap."""
+    try:
+        return get_bloom_distribution()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/v1/dav/topic-coverage")
+async def dav_topic_coverage():
+    """Syllabus topic coverage — which topics are covered vs gap topics per unit."""
+    try:
+        return get_topic_coverage()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/v1/dav/difficulty-trends")
+async def dav_difficulty_trends():
+    """Daily and weekly question generation trends with difficulty breakdown."""
+    try:
+        return get_difficulty_trends()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/v1/dav/copo-matrix")
+async def dav_copo_matrix():
+    """CO×PO attainment matrix for NBA/NAAC compliance with attainment levels."""
+    try:
+        return get_copo_matrix()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/v1/dav/eda-report")
+async def dav_eda_report():
+    """Full EDA report: distributions, data quality, accuracy proxies."""
+    try:
+        return get_eda_report()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/v1/dav/clean")
+async def dav_clean():
+    """Trigger a data cleaning pass — dedup, standardize, fill missing values."""
+    try:
+        return clean_data()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
