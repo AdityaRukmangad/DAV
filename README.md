@@ -1,6 +1,6 @@
 # Tribunal: AI Questionnaire Generator
 
-An intelligent, multi-agent system for generating high-quality evaluation questions with verification code, provenance tracking, and syllabus validation.
+An intelligent, multi-agent system for generating high-quality evaluation questions with verification code, provenance tracking, syllabus validation, and a full-featured Data Analytics & Visualization (DAV) dashboard.
 
 ## Features
 
@@ -37,6 +37,41 @@ An intelligent, multi-agent system for generating high-quality evaluation questi
 - Enable with `ENABLE_GUARDIAN=true`
 - Configure syllabus in `config/syllabus.yaml`
 
+### Step 6: Data Analytics & Visualization (DAV)
+
+A full analytics dashboard powered by a dedicated backend service and React frontend with interactive charts.
+
+**Backend service** (`app/services/dav_service.py`):
+- **Data Cleaning** — removes duplicate rows, standardizes difficulty casing, fills missing Bloom/CO/PO values
+- **Overview Stats** — total questions, unique topics, difficulty variance & std dev, Bloom balance score
+- **Bloom Distribution** — per-level counts, per-topic breakdown, and a Difficulty × Bloom heatmap matrix
+- **Syllabus Coverage** — compares question topics against `config/syllabus.yaml` to identify gap topics per unit
+- **Difficulty Trends** — daily/weekly stacked question counts, cumulative growth curve, avg difficulty score over time
+- **CO-PO Attainment Matrix** — NBA/NAAC-style CO × PO matrix with 4-level attainment scoring
+- **EDA Report** — mean difficulty, variance, top-10 topics, data quality %, accuracy proxies
+
+**Frontend dashboard** (`frontend/components/DAVModule.tsx`) — 6-tab interface:
+
+| Tab | Visualizations |
+|---|---|
+| Overview | Difficulty pie chart, source pie chart, stat chips (variance, std dev, Bloom balance), data cleaning trigger |
+| Bloom's | Bar chart by cognitive level, Difficulty × Bloom intensity heatmap |
+| Coverage | Unit coverage radar chart, per-unit bar chart, expandable topic accordion (✓/✗), gap topics panel |
+| Trends | Stacked bar (Easy/Medium/Hard), cumulative growth line chart, avg difficulty line chart |
+| CO-PO | NBA attainment matrix (4-level color coded), CO distribution bar, PO distribution bar |
+| EDA | Stats row, Bloom bar, Top-10 topics, content quality bars, data completeness gap bars, CO pie |
+
+**API endpoints** (`/api/v1/dav/*`):
+- `GET /api/v1/dav/overview`
+- `GET /api/v1/dav/bloom-distribution`
+- `GET /api/v1/dav/topic-coverage`
+- `GET /api/v1/dav/difficulty-trends`
+- `GET /api/v1/dav/copo-matrix`
+- `GET /api/v1/dav/eda-report`
+- `POST /api/v1/dav/clean`
+
+---
+
 ## Installation
 
 ### Prerequisites
@@ -48,8 +83,8 @@ An intelligent, multi-agent system for generating high-quality evaluation questi
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/AI-Questionnaire-Generator.git
-cd AI-Questionnaire-Generator
+git clone https://github.com/yourusername/tribunal.git
+cd tribunal
 
 # Create virtual environment
 python -m venv venv
@@ -59,7 +94,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # Set up environment variables
-export GROQ_API_KEY="your-groq-api-key"
+export OPENAI_API_KEY="your-openai-api-key"
 export ENABLE_PEDAGOGY_TAGGER="false"  # Optional
 export ENABLE_GUARDIAN="false"         # Optional
 
@@ -75,7 +110,7 @@ uvicorn api:app --reload --port 8000
 ```bash
 cd frontend
 
-# Install dependencies
+# Install dependencies (includes Recharts for DAV charts)
 npm install
 
 # Start development server
@@ -83,6 +118,8 @@ npm run dev
 ```
 
 Access the UI at `http://localhost:5173`
+
+---
 
 ## Quick Start
 
@@ -112,19 +149,41 @@ curl -X POST http://localhost:8000/api/v1/generate \
 ### 3. View Provenance (Step 4)
 
 ```bash
-# Get provenance data for question ID 1
 curl http://localhost:8000/api/v1/question/1/explain
 ```
 
-### 4. Generate a Paper
+### 4. Analytics Dashboard (Step 6)
+
+Open the **Analytics** tab in the UI, or query directly:
+
+```bash
+# Overview stats
+curl http://localhost:8000/api/v1/dav/overview
+
+# Syllabus coverage gap report
+curl http://localhost:8000/api/v1/dav/topic-coverage
+
+# CO-PO attainment matrix
+curl http://localhost:8000/api/v1/dav/copo-matrix
+
+# Trigger data cleaning
+curl -X POST http://localhost:8000/api/v1/dav/clean
+
+# Full EDA report
+curl http://localhost:8000/api/v1/dav/eda-report
+```
+
+### 5. Generate a Paper
 
 ```bash
 python main.py --paper templates/midterm_template.json
 ```
 
+---
+
 ## Configuration
 
-### Syllabus Configuration (Guardian)
+### Syllabus Configuration (Guardian + DAV Coverage)
 
 Edit `config/syllabus.yaml`:
 
@@ -148,46 +207,67 @@ validation:
   max_regenerations: 1       # Allow one retry
 ```
 
+> The same syllabus.yaml drives both the Guardian validator and the DAV coverage gap analysis.
+
 ### Environment Variables
 
 ```bash
 # Required
-GROQ_API_KEY=your-api-key
+OPENAI_API_KEY=your-api-key
 
 # Optional Features (default: false)
-ENABLE_PEDAGOGY_TAGGER=true   # Enable CO/PO tagging
-ENABLE_GUARDIAN=true          # Enable syllabus validation
+ENABLE_PEDAGOGY_TAGGER=true   # Enable CO/PO tagging (Step 3)
+ENABLE_GUARDIAN=true          # Enable syllabus validation (Step 5)
+
+# Bloom-Adaptive RAG tuning (Step 2)
+BLOOM_RAG_ENABLED=true
+BLOOM_K_LOW=4
+BLOOM_K_MED=8
+BLOOM_K_HIGH=13
 
 # Model Configuration
-DEFAULT_LLM_MODEL=llama-3.3-70b-versatile
-FAST_LLM_MODEL=llama-3.1-8b-instant
+DEFAULT_LLM_MODEL=gpt-4o
+FAST_LLM_MODEL=gpt-4o-mini
 ```
+
+---
 
 ## API Endpoints
 
 ### Question Generation
-- `POST /api/v1/generate` - Generate single question
-- `GET /api/v1/generate/stream` - Stream generation progress (SSE)
-- `POST /api/v1/context` - Get PDF context for topic
+- `POST /api/v1/generate` — Generate single question
+- `GET /api/v1/generate/stream` — Stream generation progress (SSE)
+- `POST /api/v1/context` — Get PDF context for topic
 
 ### Provenance (Step 4)
-- `GET /api/v1/question/{id}/explain` - Get question provenance
+- `GET /api/v1/question/{id}/explain` — Get question provenance
 
 ### Document Management
-- `POST /api/v1/upload` - Upload PDF
-- `GET /api/v1/documents` - List uploaded documents
-- `GET /api/v1/suggestions` - Get topic suggestions
+- `POST /api/v1/upload` — Upload PDF
+- `GET /api/v1/documents` — List uploaded documents
+- `GET /api/v1/suggestions` — Get topic suggestions
 
 ### Paper Generation
-- `POST /api/v1/paper/template` - Create paper template
-- `POST /api/v1/paper/generate/{paper_id}` - Generate paper
-- `GET /api/v1/paper/generate/{paper_id}/stream` - Stream paper generation
-- `GET /api/v1/paper/{paper_id}` - Retrieve generated paper
-- `GET /api/v1/paper/{paper_id}/export` - Export as PDF/Markdown
+- `POST /api/v1/paper/template` — Create paper template
+- `POST /api/v1/paper/generate/{paper_id}` — Generate paper
+- `GET /api/v1/paper/generate/{paper_id}/stream` — Stream paper generation
+- `GET /api/v1/paper/{paper_id}` — Retrieve generated paper
+- `GET /api/v1/paper/{paper_id}/export` — Export as PDF/Markdown
 
 ### Metrics & Analytics
-- `GET /api/v1/metrics` - Generation metrics
-- `GET /api/v1/analytics` - Question bank analytics
+- `GET /api/v1/metrics` — Generation pipeline metrics
+- `GET /api/v1/analytics` — Question bank analytics
+
+### DAV — Data Analytics & Visualization (Step 6)
+- `GET /api/v1/dav/overview` — Summary stats and difficulty distribution
+- `GET /api/v1/dav/bloom-distribution` — Bloom level breakdown + heatmap
+- `GET /api/v1/dav/topic-coverage` — Syllabus coverage vs gap topics
+- `GET /api/v1/dav/difficulty-trends` — Daily/weekly generation trends
+- `GET /api/v1/dav/copo-matrix` — NBA CO×PO attainment matrix
+- `GET /api/v1/dav/eda-report` — Full exploratory data analysis report
+- `POST /api/v1/dav/clean` — Data cleaning pass (dedup, standardize, fill)
+
+---
 
 ## Architecture
 
@@ -220,6 +300,26 @@ Bloom Analyzer → Scout → [Cache Check]
 - **Guardian**: Validates against syllabus (Step 5)
 - **Archivist**: Saves to question bank
 
+### DAV Data Flow
+
+```
+SQLite question_bank.db
+         ↓
+app/services/dav_service.py
+  ├── clean_data()           → dedup, standardize, fill nulls
+  ├── get_overview()         → summary stats, variance, Bloom balance
+  ├── get_bloom_distribution() → bar data + heatmap matrix
+  ├── get_topic_coverage()   → coverage % vs config/syllabus.yaml
+  ├── get_difficulty_trends() → daily/weekly time series
+  ├── get_copo_matrix()      → NBA attainment levels
+  └── get_eda_report()       → full statistical EDA
+         ↓
+/api/v1/dav/* endpoints
+         ↓
+frontend/components/DAVModule.tsx
+  (Recharts: Bar, Pie, Line, Radar, Heatmap)
+```
+
 ### Technology Stack
 
 **Backend:**
@@ -228,13 +328,16 @@ Bloom Analyzer → Scout → [Cache Check]
 - LangChain (LLM integration)
 - ChromaDB (vector store)
 - SQLite (question bank)
-- Groq (LLM provider)
+- OpenAI (GPT-4o / GPT-4o-mini)
 
 **Frontend:**
-- React + TypeScript
+- React 18 + TypeScript
 - Vite (build tool)
 - TailwindCSS (styling)
-- React Markdown (rendering)
+- Recharts (DAV charts — Bar, Pie, Line, Radar)
+- React Markdown (question rendering)
+
+---
 
 ## Database Schema
 
@@ -261,56 +364,54 @@ CREATE TABLE templates (
 );
 ```
 
-## Development
+> The schema auto-migrates on startup — existing databases are updated without data loss.
 
-### Running Tests
+---
 
-```bash
-# Backend tests
-pytest
-
-# Quality verification
-python verify_quality.py
-```
-
-### Code Structure
+## Code Structure
 
 ```
 .
-├── api.py                      # FastAPI application
-├── main.py                     # CLI interface
+├── api.py                          # FastAPI application + DAV endpoints
+├── main.py                         # CLI interface
+├── requirements.txt
+├── config/
+│   ├── syllabus.yaml               # Guardian + DAV coverage config
+│   └── ...
 ├── app/
 │   ├── core/
-│   │   └── question_bank.py    # Database operations
-│   ├── services/
-│   │   ├── graph_agent.py      # LangGraph pipeline
-│   │   ├── guardian.py         # Step 5: Syllabus validator
-│   │   └── paper_generator.py  # Paper generation
-│   ├── rag.py                  # RAG engine
-│   └── tools/
-│       └── utils.py            # Utilities
-├── config/
-│   ├── prompts.yaml            # LLM prompts
-│   ├── syllabus.yaml           # Guardian config
-│   └── tags.yaml               # CO/PO mappings
+│   │   └── question_bank.py        # Database operations + auto-migration
+│   └── services/
+│       ├── graph_agent.py          # LangGraph multi-agent pipeline
+│       ├── dav_service.py          # DAV analytics & EDA engine (Step 6)
+│       ├── guardian.py             # Syllabus validator (Step 5)
+│       ├── metrics.py              # Generation pipeline metrics
+│       ├── paper_generator.py      # Exam paper generation
+│       └── rag_service.py          # Bloom-adaptive RAG engine (Step 2)
 ├── frontend/
+│   ├── App.tsx                     # Nav + tab routing (includes Analytics tab)
 │   ├── components/
-│   │   ├── GenerationModule.tsx
-│   │   └── ProvenanceModal.tsx  # Step 4: Provenance UI
+│   │   ├── DAVModule.tsx           # DAV dashboard — 6-tab chart UI (Step 6)
+│   │   ├── GenerationModule.tsx    # Question generation UI
+│   │   ├── PaperGeneratorModule.tsx
+│   │   ├── KnowledgeHubModule.tsx
+│   │   ├── QuestionBankModule.tsx
+│   │   ├── ProvenanceModal.tsx     # Provenance viewer (Step 4)
+│   │   └── IngestModule.tsx
 │   ├── services/
-│   │   └── api.ts              # API client
-│   └── types.ts                # TypeScript types
-└── docs/
-    └── REPORT_*.md             # Project documentation
+│   │   └── api.ts
+│   └── types.ts
+└── Documentation/
+    └── REPORT_*.md
 ```
+
+---
 
 ## Troubleshooting
 
-### Common Issues
-
-**1. GROQ_API_KEY not set**
+**1. OPENAI_API_KEY not set**
 ```bash
-export GROQ_API_KEY="your-key-here"
+export OPENAI_API_KEY="your-key-here"
 ```
 
 **2. ChromaDB not initialized**
@@ -324,9 +425,16 @@ python main.py --upload path/to/pdf
 - Check CORS settings in `api.py`
 
 **4. Guardian rejects all questions**
-- Check `config/syllabus.yaml` enabled: true
-- Verify topic is in syllabus units
-- Lower similarity_threshold for looser matching
+- Set `enabled: true` in `config/syllabus.yaml`
+- Verify topic is listed under a unit's topics
+- Lower `similarity_threshold` for looser matching
+
+**5. DAV charts show no data**
+- Generate at least a few questions first
+- Confirm backend is running: `curl http://localhost:8000/api/v1/dav/overview`
+- Run data cleaning: `curl -X POST http://localhost:8000/api/v1/dav/clean`
+
+---
 
 ## Contributing
 
@@ -343,25 +451,13 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - Built with LangGraph, LangChain, and FastAPI
-- LLMs powered by Groq (Llama 3.3 70B)
+- LLMs powered by OpenAI (GPT-4o)
 - Vector embeddings by Sentence Transformers
-- Inspired by code-first generation paradigm
-
-## Citation
-
-If you use this project in your research, please cite:
-
-```bibtex
-@software{tribunal_questionnaire_generator,
-  title={Tribunal: AI Questionnaire Generator},
-  author={Your Name},
-  year={2024},
-  url={https://github.com/yourusername/AI-Questionnaire-Generator}
-}
-```
+- Charts rendered with Recharts
+- Inspired by the code-first generation paradigm
 
 ---
 
-**Version**: 2.0.0 (with Provenance & Guardian)
+**Version**: 3.0.0 (with DAV Analytics Dashboard)
 **Status**: Production Ready
-**Last Updated**: January 2025
+**Last Updated**: June 2025
