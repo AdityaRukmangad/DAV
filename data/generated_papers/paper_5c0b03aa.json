@@ -1,0 +1,198 @@
+{
+  "id": "5c0b03aa",
+  "template_id": "5c0b03aa",
+  "template_name": "Untitled Paper",
+  "subject": "Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 60,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Answer Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "hunts algo",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "What is the primary goal of Hunt's algorithm in the context of decision tree construction?",
+          "answer": "The primary goal of Hunt's algorithm in decision tree construction is to recursively divide the dataset into subsets based on attribute values until each subset is either homogeneous or meets a predefined stopping criterion. This results in the formation of a decision tree used for classification, where each node represents a decision rule based on an attribute, and the leaves represent the final class predictions.",
+          "explanation": "Hunt's algorithm is one of the earliest and most fundamental algorithms for constructing decision trees. It operates by splitting data into subsets that become progressively purer in terms of class distribution. This recursive partitioning continues until a subset becomes homogeneous (all instances belong to the same class) or a stopping criterion (like a minimum number of instances in a node) is reached. This process constructs a tree that classifies new instances by following the decisions from root to leaf nodes.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 2,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "a search algo",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "What is the primary difference between uninformed and informed search strategies with respect to domain knowledge?",
+          "answer": "The primary difference between uninformed and informed search strategies is their reliance on domain knowledge. Uninformed search strategies do not use any specific domain information and explore the search space blindly, often employing methods like breadth-first or depth-first search. In contrast, informed search strategies use domain-specific knowledge, such as heuristics, to guide the search process more efficiently and reduce the number of nodes explored before reaching the goal.",
+          "explanation": "Uninformed search strategies are also known as blind search strategies because they do not have additional information about the state space to guide the search process. They explore the search space systematically without any guidance, which can be inefficient. On the other hand, informed search strategies, such as A* or greedy search, use heuristic functions to estimate the cost or distance to the goal, allowing them to prioritize nodes that are more promising, thus typically making the search process more efficient.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 3,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "informed search",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "Explain the difference between informed and uninformed search in the context of algorithmic search methods.",
+          "answer": "Informed search, also known as heuristic search, uses additional information about the problem domain, such as estimated costs or distances, to efficiently navigate towards the goal. Uninformed search, on the other hand, lacks this domain-specific knowledge and relies on general exploration techniques, often examining nodes in a more exhaustive and less directed manner until the goal is reached.",
+          "explanation": "Informed search techniques utilize heuristics to make decisions about which paths to explore, potentially reducing the time and resources required to find a solution by prioritizing more promising paths. Uninformed search methods, such as Breadth-First Search (BFS) or Depth-First Search (DFS), do not use such heuristics and may explore many unnecessary nodes, making them less efficient in many cases.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 4,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "spervised learning",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "In supervised learning, what is bagging and how does it benefit model performance?",
+          "answer": "Bagging, or Bootstrap Aggregating, is an ensemble method where multiple models are trained on different subsets of the dataset, created by sampling with replacement. The predictions of these models are then aggregated (for example, by majority voting) to produce a final result. This technique helps to reduce variance, improve accuracy, and make models more robust to overfitting by averaging out the errors from individual models.",
+          "explanation": "Bagging works by training multiple instances of a model on slightly different datasets, which are created through bootstrapping. This diversity among models helps in capturing various aspects of the data, thereby reducing overfitting. The aggregation step ensures that the final prediction is less sensitive to the noise or peculiarities of individual training datasets, leading to a more stable and reliable model.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 5,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "ensemble methods",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "What is the primary reason for employing ensemble methods with unstable base classifiers?",
+          "answer": "The primary reason for using ensemble methods with unstable base classifiers is that these classifiers tend to overfit the training data due to their high variance. By aggregating predictions from multiple classifiers, ensemble methods can reduce this variance, leading to more stable and accurate predictions.",
+          "explanation": "Unstable base classifiers, like decision trees, are known for their sensitivity to small changes in the training data. This can lead to high variance and overfitting. Ensemble methods, such as bagging and boosting, combine the predictions of several such classifiers to average out the errors, thus improving the model's generalization ability.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 6,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "hunts algo",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "What is the primary goal of Hunt's algorithm in the context of decision tree construction?",
+          "answer": "The primary goal of Hunt's algorithm in decision tree construction is to recursively divide the dataset into subsets based on attribute values until each subset is either homogeneous or meets a predefined stopping criterion. This results in the formation of a decision tree used for classification, where each node represents a decision rule based on an attribute, and the leaves represent the final class predictions.",
+          "explanation": "Hunt's algorithm is one of the earliest and most fundamental algorithms for constructing decision trees. It operates by splitting data into subsets that become progressively purer in terms of class distribution. This recursive partitioning continues until a subset becomes homogeneous (all instances belong to the same class) or a stopping criterion (like a minimum number of instances in a node) is reached. This process constructs a tree that classifies new instances by following the decisions from root to leaf nodes.",
+          "verification_code": "",
+          "from_cache": true
+        }
+      ]
+    },
+    {
+      "name": "Section B - Descriptive / Analytical Questions",
+      "title": "Questions",
+      "instructions": "Answer in detail. Internal choice may be provided",
+      "questions": [
+        {
+          "question_number": 7,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "a search algo",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "What is the primary difference between uninformed and informed search strategies with respect to domain knowledge?",
+          "answer": "The primary difference between uninformed and informed search strategies is their reliance on domain knowledge. Uninformed search strategies do not use any specific domain information and explore the search space blindly, often employing methods like breadth-first or depth-first search. In contrast, informed search strategies use domain-specific knowledge, such as heuristics, to guide the search process more efficiently and reduce the number of nodes explored before reaching the goal.",
+          "explanation": "Uninformed search strategies are also known as blind search strategies because they do not have additional information about the state space to guide the search process. They explore the search space systematically without any guidance, which can be inefficient. On the other hand, informed search strategies, such as A* or greedy search, use heuristic functions to estimate the cost or distance to the goal, allowing them to prioritize nodes that are more promising, thus typically making the search process more efficient.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 8,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "informed search",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "Explain the difference between informed and uninformed search in the context of algorithmic search methods.",
+          "answer": "Informed search, also known as heuristic search, uses additional information about the problem domain, such as estimated costs or distances, to efficiently navigate towards the goal. Uninformed search, on the other hand, lacks this domain-specific knowledge and relies on general exploration techniques, often examining nodes in a more exhaustive and less directed manner until the goal is reached.",
+          "explanation": "Informed search techniques utilize heuristics to make decisions about which paths to explore, potentially reducing the time and resources required to find a solution by prioritizing more promising paths. Uninformed search methods, such as Breadth-First Search (BFS) or Depth-First Search (DFS), do not use such heuristics and may explore many unnecessary nodes, making them less efficient in many cases.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 9,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "spervised learning",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "In supervised learning, what is bagging and how does it benefit model performance?",
+          "answer": "Bagging, or Bootstrap Aggregating, is an ensemble method where multiple models are trained on different subsets of the dataset, created by sampling with replacement. The predictions of these models are then aggregated (for example, by majority voting) to produce a final result. This technique helps to reduce variance, improve accuracy, and make models more robust to overfitting by averaging out the errors from individual models.",
+          "explanation": "Bagging works by training multiple instances of a model on slightly different datasets, which are created through bootstrapping. This diversity among models helps in capturing various aspects of the data, thereby reducing overfitting. The aggregation step ensures that the final prediction is less sensitive to the noise or peculiarities of individual training datasets, leading to a more stable and reliable model.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 10,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "ensemble methods",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "What is the primary reason for employing ensemble methods with unstable base classifiers?",
+          "answer": "The primary reason for using ensemble methods with unstable base classifiers is that these classifiers tend to overfit the training data due to their high variance. By aggregating predictions from multiple classifiers, ensemble methods can reduce this variance, leading to more stable and accurate predictions.",
+          "explanation": "Unstable base classifiers, like decision trees, are known for their sensitivity to small changes in the training data. This can lead to high variance and overfitting. Ensemble methods, such as bagging and boosting, combine the predictions of several such classifiers to average out the errors, thus improving the model's generalization ability.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 11,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "hunts algo",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "What is the primary goal of Hunt's algorithm in the context of decision tree construction?",
+          "answer": "The primary goal of Hunt's algorithm in decision tree construction is to recursively divide the dataset into subsets based on attribute values until each subset is either homogeneous or meets a predefined stopping criterion. This results in the formation of a decision tree used for classification, where each node represents a decision rule based on an attribute, and the leaves represent the final class predictions.",
+          "explanation": "Hunt's algorithm is one of the earliest and most fundamental algorithms for constructing decision trees. It operates by splitting data into subsets that become progressively purer in terms of class distribution. This recursive partitioning continues until a subset becomes homogeneous (all instances belong to the same class) or a stopping criterion (like a minimum number of instances in a node) is reached. This process constructs a tree that classifies new instances by following the decisions from root to leaf nodes.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 12,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "a search algo",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "What is the primary difference between uninformed and informed search strategies with respect to domain knowledge?",
+          "answer": "The primary difference between uninformed and informed search strategies is their reliance on domain knowledge. Uninformed search strategies do not use any specific domain information and explore the search space blindly, often employing methods like breadth-first or depth-first search. In contrast, informed search strategies use domain-specific knowledge, such as heuristics, to guide the search process more efficiently and reduce the number of nodes explored before reaching the goal.",
+          "explanation": "Uninformed search strategies are also known as blind search strategies because they do not have additional information about the state space to guide the search process. They explore the search space systematically without any guidance, which can be inefficient. On the other hand, informed search strategies, such as A* or greedy search, use heuristic functions to estimate the cost or distance to the goal, allowing them to prioritize nodes that are more promising, thus typically making the search process more efficient.",
+          "verification_code": "",
+          "from_cache": true
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-20T02:54:20.845059",
+  "generation_stats": {}
+}

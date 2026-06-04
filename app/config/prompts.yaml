@@ -1,0 +1,307 @@
+# =============================================================================
+# PROMPT CONFIGURATION
+# All LLM prompts for the question generation engine
+# Edit these to tune question quality without changing code
+# =============================================================================
+
+# Format instructions by question type
+format_instructions:
+  mcq: |
+    FORMAT: Multiple Choice Question (MCQ)
+    - Present a clear question stem
+    - Provide exactly 4 options labeled A), B), C), D)
+    - Put each option on a NEW LINE
+    - Only ONE option should be correct
+    - The answer field should be just the letter (e.g., "A")
+    - Include plausible distractors based on common errors
+
+  long: |
+    FORMAT: Long Answer / Essay Question
+    - Create a multi-part question with (a), (b), (c) parts
+    - Each part should require a detailed explanation (2-4 sentences minimum)
+    - DO NOT use MCQ format - this is an essay/written response question
+    - The answer should be a comprehensive written response for each part
+    - Separate parts clearly with blank lines
+
+  short: |
+    FORMAT: Short Answer Question
+    - Create a focused question answerable in 2-5 sentences
+    - DO NOT use MCQ format - this requires a written response
+    - The answer should be a concise but complete explanation
+
+  trace: |
+    FORMAT: Algorithm Trace Question
+    - Ask students to trace through the algorithm step-by-step
+    - Show initial state and ask for intermediate/final states
+    - The answer should show the trace at each step
+
+  calculation: |
+    FORMAT: Calculation Question
+    - Create a question requiring numerical computation
+    - Include all necessary data in a clear format (tables if appropriate)
+    - The answer should match the computed result
+    - For Medium/Hard, include multiple parts (a), (b), etc.
+
+  default: |
+    FORMAT: Open-ended Question
+    - Create a question appropriate for the topic
+    - The answer should be clear and comprehensive
+
+# General formatting requirements (appended to all prompts)
+formatting_requirements: |
+  GENERAL FORMATTING REQUIREMENTS:
+  - Use SHORT paragraphs (2-3 sentences max)
+  - Add BLANK LINES between different sections of the question
+  - Present data as a clean markdown table with blank lines before and after
+  - For multi-part questions, clearly separate parts with blank lines
+  - Use markdown formatting (bold, lists, tables) where appropriate
+
+# Theory question generation prompt
+theory_question:
+  system: |
+    You are an expert professor creating an exam question about a CONCEPTUAL topic.
+
+    Topic: {topic}
+    Difficulty: {difficulty}
+
+    Reference material from PDF:
+    {context}
+
+    IMPORTANT: This is a CONCEPTUAL/THEORETICAL topic. Create a question that tests:
+    - Understanding of definitions and concepts
+    - Ability to explain, compare, or analyze ideas
+    - Application of theoretical knowledge
+
+    {format_instruction}
+
+    {formatting_requirements}
+
+    The answer should be based DIRECTLY on the PDF content provided.
+
+  human: "Create a {difficulty} conceptual question about {topic}{type_instruction}."
+
+# Code generation prompt (first pass)
+code_generation:
+  system: |
+    You are an Expert Professor creating exam problems.
+    Topic: {topic} | Difficulty: {difficulty}
+
+    TASK: {task}
+
+    **INSTRUCTIONS:**
+    1. Use the PDF context below as reference for formulas/methods
+    2. Write Python code that creates a dataset and computes the answer
+    3. Code must print() the final answer with key steps shown
+    4. Use raw input data - don't hardcode intermediate values
+
+    **DIFFICULTY GUIDELINES:**
+    - Easy: ~15-20 data points, single question
+    - Medium: ~20-30 data points, may have 2 parts
+    - Hard: ~30-50 data points, 2-3 parts required
+
+    **CODE REQUIREMENTS:**
+    - Define dataset as Python data structure
+    - Compute everything dynamically (no hardcoded counts)
+    - Print answer showing key steps/sequence
+    - End with print(answer)
+
+    Context:
+    {context}
+    {keyword_instructions}
+    {critique_prompt}
+
+  human: "Generate code."
+
+# Question from result prompt (second pass)
+question_from_result:
+  system: |
+    You are an expert professor creating an exam question.
+
+    Topic: {topic}
+    Difficulty: {difficulty}
+
+    Reference material from PDF:
+    {context}
+
+    Verification code that computes the answer:
+    ```python
+    {verification_code}
+    ```
+
+    Computed answer from code:
+    {computed_result}
+
+    Create a well-structured exam question based on this information.
+
+    {format_instruction}
+
+    {formatting_requirements}
+    - The answer MUST match the computed result above
+
+  human: "Create a {difficulty} difficulty question about {topic}{type_instruction}."
+
+# Critique/review prompt
+critique:
+  system: |
+    Review this exam question. Target Difficulty: {difficulty}
+
+    Question: {question}
+    Answer: {answer}
+
+    **EVALUATION CRITERIA:**
+
+    1. **Validity** (Required):
+       - Is the question solvable with the given information?
+       - Is the answer correct and reasonable?
+
+    2. **Difficulty Match** (Required):
+       Target: {difficulty}
+       - Easy: 15-20 data points, single focused question
+       - Medium: 20-30 data points, may have 2 parts
+       - Hard: 30-50 data points, MUST have 2-3 parts
+
+    3. **Quality** (Required):
+       - Is the data realistic?
+       - Does it follow the PDF formulas?
+
+    **GRADING:**
+    - Score 8-10: Valid, matches difficulty -> PASS
+    - Score 7: Acceptable -> PASS
+    - Score 0-6: Issues -> REJECT
+
+    Verification Code:
+    ```python
+    {verification_code}
+    ```
+
+  human: "Evaluate this question."
+
+# Validation prompt (answer matching)
+validation:
+  system: |
+    You are validating that a question's answer matches its verification code output.
+
+    Question: {question}
+    Stated Answer: {answer}
+    Code Output: {computed_answer}
+
+    Check if the stated answer correctly represents the code output.
+    Consider:
+    - Numerical equivalence (0.5 == 50% == 1/2)
+    - Formatting differences are OK
+    - The core answer value must match
+
+  human: "Do the answers match?"
+
+# Fallback generation prompt
+fallback:
+  system: |
+    You are an expert professor creating an exam question.
+
+    Topic: {topic}
+    Difficulty: {difficulty}
+
+    Using the following reference material, create a clear, well-structured exam question:
+
+    {context}
+
+    {format_instruction}
+
+    {formatting_requirements}
+
+    The question should be appropriate for the difficulty level specified.
+
+  human: "Create a {difficulty} {topic} question{type_instruction}."
+
+# Refinement prompt
+refinement:
+  system: |
+    Review and improve this exam question. Fix any issues with clarity, formatting, or accuracy.
+
+    ORIGINAL QUESTION:
+    {question}
+
+    ORIGINAL ANSWER:
+    {answer}
+    {mcq_fix_instructions}
+    TARGET TEMPLATE FORMAT:
+    {template}
+
+    REFINEMENT CHECKLIST:
+    1. Is the question clear and unambiguous?
+    2. Does it match the {difficulty} difficulty level?
+    3. Is the formatting clean with proper spacing?
+    4. For MCQs: Are all 4 options (A, B, C, D) ON SEPARATE LINES in the question text?
+    5. For numerical: Is there a clear data table?
+    6. Is the answer complete and accurate?
+
+    Return the IMPROVED version following the template format exactly.
+    Keep the same core question but improve clarity and formatting.
+
+  human: "Improve this question."
+
+# Question templates for each type
+question_templates:
+  mcq: |
+    **Multiple Choice Question Template:**
+
+    [Context/Scenario if needed - 1-2 sentences]
+
+    [Clear question statement ending with ?]
+
+    A) [First option - complete sentence/answer]
+    B) [Second option - complete sentence/answer]
+    C) [Third option - complete sentence/answer]
+    D) [Fourth option - complete sentence/answer]
+
+    CRITICAL: The options A), B), C), D) MUST be included in the question text itself!
+
+    **Answer:** [Correct letter only, e.g., "A"]
+    **Explanation:** [Why correct answer is right and others are wrong]
+
+  short: |
+    **Short Answer Question Template:**
+
+    [Context/Background - 1-2 sentences if needed]
+
+    [Clear, focused question - should be answerable in 2-5 sentences]
+
+    **Answer:** [Concise answer - 2-5 sentences]
+    **Key Points:** [Bullet points of essential concepts]
+
+  numerical: |
+    **Numerical Question Template:**
+
+    [Problem setup with clear data]
+
+    Given the following data:
+    | Column1 | Column2 | ... |
+    |---------|---------|-----|
+    | value1  | value2  | ... |
+
+    [Clear question asking for specific calculation]
+
+    **Answer:** [Numerical result with units if applicable]
+    **Solution Steps:**
+    1. [Step 1 calculation]
+    2. [Step 2 calculation]
+
+  long: |
+    **Long Answer Question Template:**
+
+    [Context/Scenario - 2-3 sentences]
+
+    Answer the following:
+
+    (a) [First part - 2-3 marks worth]
+
+    (b) [Second part - 2-3 marks worth]
+
+    (c) [Third part if applicable]
+
+    **Model Answer:**
+    (a) [Detailed answer for part a]
+
+    (b) [Detailed answer for part b]
+
+    (c) [Answer for part c if applicable]

@@ -1,0 +1,2786 @@
+[
+  {
+    "id": "4d23cb2e",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 80,
+    "total_marks": 14,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Easy",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "depth first search",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "gain ratio in decision tree ",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-29T20:21:13.179771"
+  },
+  {
+    "id": "2fb751ad",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 80,
+    "total_marks": 14,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Easy",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "depth first search",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "gain ratio in decision tree ",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-29T20:21:13.960718"
+  },
+  {
+    "id": "3ed93bf9",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 80,
+    "total_marks": 14,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Easy",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "depth first search",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "gain ratio in decision tree ",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-29T20:21:14.465800"
+  },
+  {
+    "id": "87f8ef63",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 80,
+    "total_marks": 14,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Easy",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "depth first search",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "gain ratio in decision tree ",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-29T20:21:14.865691"
+  },
+  {
+    "id": "382e0846",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 80,
+    "total_marks": 14,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Easy",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "depth first search",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "gain ratio in decision tree ",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-29T20:21:36.082491"
+  },
+  {
+    "id": "79bb184d",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 8,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree",
+            "question_type": "mcq",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "pruning for decision trees",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "depth first search",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-29T20:23:39.373074"
+  },
+  {
+    "id": "25898395",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 8,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A",
+        "title": "Questions",
+        "instructions": "Answer precisely",
+        "questions": [
+          {
+            "topic": "decision tree",
+            "question_type": "mcq",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "pruning in decision tree",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "iterative depth first search",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-29T20:32:37.927405"
+  },
+  {
+    "id": "7c65ece5",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 8,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "rationality of an agent",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "decision tree pruning",
+            "question_type": "mcq",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "iterative depth first search",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-29T23:41:37.751106"
+  },
+  {
+    "id": "4664cc2a",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 8,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "rationality in agents",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "decision tree overfitting",
+            "question_type": "mcq",
+            "total_marks": 5,
+            "difficulty": "Easy",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "depth first search",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-29T23:57:47.067001"
+  },
+  {
+    "id": "b437eba2",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 10,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "make a question about the rationality of agent, specifically the dependencies",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "make a question about decision tree overfitting (conceptual)",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Easy",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "depth first search",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T00:25:44.864849"
+  },
+  {
+    "id": "b21dcb9a",
+    "name": "AI/ML Mock Test",
+    "subject": "Artificial Intelligence & Machine Learning",
+    "duration_minutes": 90,
+    "total_marks": 100,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit",
+      "Each question carries equal marks"
+    ],
+    "sections": [
+      {
+        "name": "Section A",
+        "title": "Conceptual Questions",
+        "instructions": "Answer briefly and clearly",
+        "questions": [
+          {
+            "topic": "rational agent conceptual",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "decision tree entropy calculation",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      },
+      {
+        "name": "Section B",
+        "title": "Problem Solving",
+        "instructions": "Show all steps",
+        "questions": [
+          {
+            "topic": "gini index",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "informed search A* algorithm",
+            "question_type": "mcq",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "constraint satisfaction problem",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T01:05:44.624948"
+  },
+  {
+    "id": "496087eb",
+    "name": "Varied Marks Test",
+    "subject": "AI/ML Test",
+    "duration_minutes": 60,
+    "total_marks": 100,
+    "instructions": [
+      "Answer all questions"
+    ],
+    "sections": [
+      {
+        "name": "Section A",
+        "title": "Mixed Questions",
+        "instructions": "Answer all",
+        "questions": [
+          {
+            "topic": "decision tree",
+            "question_type": "mcq",
+            "total_marks": 2,
+            "difficulty": "Easy",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "entropy",
+            "question_type": "short",
+            "total_marks": 4,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "gini index calculation",
+            "question_type": "numerical",
+            "total_marks": 8,
+            "difficulty": "Hard",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T11:36:57.651567"
+  },
+  {
+    "id": "52057d77",
+    "name": "Varied Marks Test",
+    "subject": "AI/ML Test",
+    "duration_minutes": 60,
+    "total_marks": 100,
+    "instructions": [
+      "Answer all questions"
+    ],
+    "sections": [
+      {
+        "name": "Section A",
+        "title": "Mixed Questions",
+        "instructions": "Answer all",
+        "questions": [
+          {
+            "topic": "decision tree",
+            "question_type": "mcq",
+            "total_marks": 2,
+            "difficulty": "Easy",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "entropy",
+            "question_type": "short",
+            "total_marks": 4,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          },
+          {
+            "topic": "gini index calculation",
+            "question_type": "numerical",
+            "total_marks": 8,
+            "difficulty": "Hard",
+            "parts": [],
+            "count": 1,
+            "keywords": []
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T11:37:28.337363"
+  },
+  {
+    "id": "51d25aa3",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 3,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Easy",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "gini index",
+            "question_type": "mcq",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:05:33.610732"
+  },
+  {
+    "id": "f1ddde35",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "model based reflex agents",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:15:21.931280"
+  },
+  {
+    "id": "df8ee13f",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "model based reflex agents",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:15:23.818740"
+  },
+  {
+    "id": "552d9b02",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "model based reflex agents",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:15:24.605319"
+  },
+  {
+    "id": "aaefaa22",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "model based reflex agents",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:15:25.297286"
+  },
+  {
+    "id": "e6f5743c",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "model based reflex agents",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:15:25.962641"
+  },
+  {
+    "id": "6c5b16b1",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "model based reflex agents",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:15:26.605859"
+  },
+  {
+    "id": "92f3e2f0",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "model based reflex agents",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:15:27.348986"
+  },
+  {
+    "id": "1d048479",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "model based reflex agents",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:17:03.173413"
+  },
+  {
+    "id": "9388581c",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "model based reflex agents",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:21:26.316187"
+  },
+  {
+    "id": "d4a0cf74",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "C4.5",
+            "question_type": "short",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:31:37.271694"
+  },
+  {
+    "id": "5103c9c2",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 3,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "C4.5 conceptual",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2025-12-30T12:39:06.535890"
+  },
+  {
+    "id": "5b0b06b7",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 8,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Long questions, answer all ",
+        "questions": [
+          {
+            "topic": "C4.5 - conceptual",
+            "question_type": "short",
+            "total_marks": 3,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Hunt algorithm",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Easy",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-01T10:51:14.374827"
+  },
+  {
+    "id": "f354eada",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree ",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-18T02:46:00.784717"
+  },
+  {
+    "id": "e1753550",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree ",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-18T02:47:31.922028"
+  },
+  {
+    "id": "11fd4b23",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "pruning ",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-18T02:48:38.917795"
+  },
+  {
+    "id": "33009e62",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree pruning ",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-18T02:51:37.049631"
+  },
+  {
+    "id": "819a0d54",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree ",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-18T02:54:26.366608"
+  },
+  {
+    "id": "f35fa2cd",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree ",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-18T02:58:32.961137"
+  },
+  {
+    "id": "aaaa125f",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "hunts algorithm ",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-18T03:13:47.993041"
+  },
+  {
+    "id": "c9eac67a",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 2,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "decision tree pruning ",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-19T02:38:55.208025"
+  },
+  {
+    "id": "f79ac558",
+    "name": "Untitled Paper",
+    "subject": "Artificial Intelligence & Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 14,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "hunts algorithm ",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "decision tree building",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      },
+      {
+        "name": "Section B",
+        "title": "Questions",
+        "instructions": "Answer properly in 8-10 sentences",
+        "questions": [
+          {
+            "topic": "design issues for decision tree induction",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Methods for Expressing Attribute Test Conditions",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-19T16:12:27.783624"
+  },
+  {
+    "id": "c1204b4e",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 10,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "Boosting",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Classification",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Informed Search",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Search Algorithm",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Underfitting",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-19T18:14:39.355673"
+  },
+  {
+    "id": "fa7eb390",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 8,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly in 2-3 sentences",
+        "questions": [
+          {
+            "topic": "Overfitting",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Gain Ratio",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Gini Index",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Search Algorithm",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-19T18:17:21.064749"
+  },
+  {
+    "id": "8a749882",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 36,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Answer Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly",
+        "questions": [
+          {
+            "topic": "Naive Bayes",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Logistic Regression",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Ensemble Methods",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Supervised Learning",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Model Overfitting",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Decision tree classification",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      },
+      {
+        "name": "Section B - Descriptive / Analytical Questions",
+        "title": "Questions",
+        "instructions": "Answer in detail. Internal choice may be provided",
+        "questions": [
+          {
+            "topic": "Logistic Regression",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Ensemble Methods",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Supervised Learning",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Model Overfitting",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Decision tree classification",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Naive Bayes",
+            "question_type": "numerical",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-20T01:02:04.602800"
+  },
+  {
+    "id": "dd20d0e3",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 60,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Answer Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly",
+        "questions": [
+          {
+            "topic": "Search strategies",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Supervised learning",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Model overfitting",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Naive Bayes classifier",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Logistic regression",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Search strategies",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      },
+      {
+        "name": "Section B - Descriptive / Analytical Questions",
+        "title": "Questions",
+        "instructions": "Answer in detail. Internal choice may be provided",
+        "questions": [
+          {
+            "topic": "Supervised learning",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Model overfitting",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Naive Bayes classifier",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Logistic regression",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Search strategies",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Supervised learning",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-20T01:30:17.109025"
+  },
+  {
+    "id": "dfb5ca5d",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 60,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Answer Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly",
+        "questions": [
+          {
+            "topic": "Decision tree classification",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "model overfitting",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "naive bayes classifier",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "logistic regression",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "ensemble methods",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Decision tree classification",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      },
+      {
+        "name": "Section B - Descriptive / Analytical Questions",
+        "title": "Questions",
+        "instructions": "Answer in detail. Internal choice may be provided",
+        "questions": [
+          {
+            "topic": "model overfitting",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "naive bayes classifier",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "logistic regression",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "ensemble methods",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Decision tree classification",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "model overfitting",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-20T01:38:35.937169"
+  },
+  {
+    "id": "57461dde",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 60,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Answer Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly",
+        "questions": [
+          {
+            "topic": "Hunts algorithm",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "A* search",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Informed searches",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "uninformed searches",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "ensemble methods",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "supervised learning",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      },
+      {
+        "name": "Section B - Descriptive / Analytical Questions",
+        "title": "Questions",
+        "instructions": "Answer in detail. Internal choice may be provided",
+        "questions": [
+          {
+            "topic": "A* search",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Informed searches",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "uninformed searches",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "ensemble methods",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "supervised learning",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "Hunts algorithm",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-20T02:42:12.575524"
+  },
+  {
+    "id": "5c0b03aa",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 60,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Answer Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly",
+        "questions": [
+          {
+            "topic": "hunts algo",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "a search algo",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "informed search",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "spervised learning",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "ensemble methods",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "hunts algo",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      },
+      {
+        "name": "Section B - Descriptive / Analytical Questions",
+        "title": "Questions",
+        "instructions": "Answer in detail. Internal choice may be provided",
+        "questions": [
+          {
+            "topic": "a search algo",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "informed search",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "spervised learning",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "ensemble methods",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "hunts algo",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "a search algo",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-20T02:53:16.335203"
+  },
+  {
+    "id": "b87405b1",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 60,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Answer Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly",
+        "questions": [
+          {
+            "topic": "informed search",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "a* algorithm",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "supervised learning",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "decision trees",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "hunts algorithm",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "informed search",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      },
+      {
+        "name": "Section B - Descriptive / Analytical Questions",
+        "title": "Questions",
+        "instructions": "Answer in detail. Internal choice may be provided",
+        "questions": [
+          {
+            "topic": "a* algorithm",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "supervised learning",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "decision trees",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "hunts algorithm",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "informed search",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "a* algorithm",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-20T03:34:29.142831"
+  },
+  {
+    "id": "c7377337",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 60,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Answer Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly",
+        "questions": [
+          {
+            "topic": "hunts algo",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "informed search",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "decision tree",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "a* search",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "supervised learning",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "hunts algo",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      },
+      {
+        "name": "Section B - Descriptive / Analytical Questions",
+        "title": "Questions",
+        "instructions": "Answer in detail. Internal choice may be provided",
+        "questions": [
+          {
+            "topic": "informed search",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "decision tree",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "a* search",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "supervised learning",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "hunts algo",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "informed search",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-20T04:28:09.710075"
+  },
+  {
+    "id": "b583deab",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 60,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Answer Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly",
+        "questions": [
+          {
+            "topic": "naive bayes classifier",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "ensemble methods",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "logistic regression",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "informed heuristic search",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "hunts algorithm",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "naive bayes classifier",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      },
+      {
+        "name": "Section B - Descriptive / Analytical Questions",
+        "title": "Questions",
+        "instructions": "Answer in detail. Internal choice may be provided",
+        "questions": [
+          {
+            "topic": "ensemble methods",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "logistic regression",
+            "question_type": "long",
+            "total_marks": 5,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "informed heuristic search",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "hunts algorithm",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "naive bayes classifier",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "ensemble methods",
+            "question_type": "long",
+            "total_marks": 10,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-20T05:08:41.138364"
+  },
+  {
+    "id": "ee6895db",
+    "name": "Untitled Paper",
+    "subject": "Machine Learning",
+    "duration_minutes": 120,
+    "total_marks": 10,
+    "instructions": [
+      "Answer all questions",
+      "Show your working for partial credit"
+    ],
+    "sections": [
+      {
+        "name": "Section A - Short Answer Questions",
+        "title": "Questions",
+        "instructions": "Answer briefly",
+        "questions": [
+          {
+            "topic": "naive bayes classifier",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "ensemble methods",
+            "question_type": "short",
+            "total_marks": 1,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "logistic regression",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "informed heuristic search",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "hunts algorithm",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          },
+          {
+            "topic": "naive bayes classifier",
+            "question_type": "short",
+            "total_marks": 2,
+            "difficulty": "Medium",
+            "parts": [],
+            "count": 1,
+            "keywords": [],
+            "bloom_level": ""
+          }
+        ]
+      }
+    ],
+    "created_at": "2026-01-20T05:18:21.029328"
+  }
+]

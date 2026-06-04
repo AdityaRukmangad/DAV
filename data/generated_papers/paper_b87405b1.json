@@ -1,0 +1,198 @@
+{
+  "id": "b87405b1",
+  "template_id": "b87405b1",
+  "template_name": "Untitled Paper",
+  "subject": "Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 60,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Answer Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "informed search",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 2,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "a* algorithm",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "In the A* search algorithm, what is the primary function of the heuristic?",
+          "answer": "The primary function of the heuristic in the A* search algorithm is to estimate the cost from a current node to the goal node. This estimation is used to prioritize nodes during the search, as it is combined with the actual cost from the start node to the current node (denoted as g(x)) to form the evaluation function f(x) = g(x) + h(x). The heuristic helps guide the search towards the goal more efficiently by estimating which nodes are closer to the goal.",
+          "explanation": "A* is a popular pathfinding and graph traversal algorithm that is often used in many fields of computer science due to its performance and accuracy. The heuristic function in A* is crucial because it estimates the cost from any given node to the goal, guiding the algorithm in choosing which path to explore next. This estimation helps in optimizing the search process by reducing the number of nodes that need to be explored. The function f(x) = g(x) + h(x) where g(x) is the cost from the start node to the current node and h(x) is the heuristic estimate to the goal, represents the total estimated cost of the cheapest solution through the current node.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 3,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "supervised learning",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 4,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "decision trees",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "In decision tree induction, what is the role of an attribute test condition?",
+          "answer": "The role of an attribute test condition in decision tree induction is to decide how the data is divided at each node. It helps to split the dataset into subsets that are more uniform concerning the target variable, enhancing the decision tree's accuracy and efficiency by using the most relevant attributes for separation.",
+          "explanation": "An attribute test condition determines how the data is partitioned at each node of a decision tree. This process is crucial as it affects the tree's predictive performance by ensuring the data is divided based on attributes that provide the most information gain or reduction in impurity.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 5,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "hunts algorithm",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 6,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "informed search",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    },
+    {
+      "name": "Section B - Descriptive / Analytical Questions",
+      "title": "Questions",
+      "instructions": "Answer in detail. Internal choice may be provided",
+      "questions": [
+        {
+          "question_number": 7,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "a* algorithm",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 8,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "supervised learning",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 9,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "decision trees",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 10,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "hunts algorithm",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 11,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "informed search",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 12,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "a* algorithm",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-20T03:35:11.459352",
+  "generation_stats": {}
+}

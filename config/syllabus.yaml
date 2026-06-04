@@ -1,0 +1,114 @@
+# ============================================================================
+# SYLLABUS CONFIGURATION - Guardian Validator (Step 5)
+# ============================================================================
+# This file defines the syllabus structure for the Guardian validator.
+# The Guardian checks if generated questions align with the syllabus.
+#
+# Format:
+# - course: Course name/code
+# - units: List of units with topics
+# ============================================================================
+
+# Enable/Disable Guardian Validation
+# Set to false to skip validation (backward compatible)
+enabled: false
+
+# Course Information
+course:
+  code: "CS501"
+  name: "Machine Learning"
+  semester: "Fall 2024"
+
+# Syllabus Units
+units:
+  - unit: 1
+    name: "Introduction to Machine Learning"
+    topics:
+      - "supervised learning"
+      - "unsupervised learning"
+      - "reinforcement learning"
+      - "types of machine learning"
+      - "machine learning workflow"
+      - "training and testing"
+      - "overfitting and underfitting"
+
+  - unit: 2
+    name: "Decision Trees and Ensemble Methods"
+    topics:
+      - "decision trees"
+      - "ID3 algorithm"
+      - "C4.5 algorithm"
+      - "CART algorithm"
+      - "entropy"
+      - "information gain"
+      - "gini index"
+      - "gini impurity"
+      - "decision tree splitting"
+      - "decision tree pruning"
+      - "random forest"
+      - "bagging"
+      - "boosting"
+      - "adaboost"
+      - "gradient boosting"
+      - "ensemble methods"
+
+  - unit: 3
+    name: "Neural Networks and Deep Learning"
+    topics:
+      - "perceptron"
+      - "multilayer perceptron"
+      - "backpropagation"
+      - "activation functions"
+      - "gradient descent"
+      - "neural networks"
+      - "deep learning"
+      - "convolutional neural networks"
+      - "recurrent neural networks"
+      - "LSTM"
+      - "GRU"
+      - "transformers"
+      - "attention mechanism"
+
+  - unit: 4
+    name: "Support Vector Machines"
+    topics:
+      - "support vector machines"
+      - "SVM"
+      - "kernel methods"
+      - "kernel trick"
+      - "linear SVM"
+      - "non-linear SVM"
+      - "soft margin"
+      - "hard margin"
+      - "hyperplane"
+      - "support vectors"
+
+  - unit: 5
+    name: "Clustering and Dimensionality Reduction"
+    topics:
+      - "clustering"
+      - "k-means"
+      - "k-means clustering"
+      - "hierarchical clustering"
+      - "DBSCAN"
+      - "dimensionality reduction"
+      - "PCA"
+      - "principal component analysis"
+      - "t-SNE"
+      - "feature extraction"
+      - "feature selection"
+
+# Validation Settings
+validation:
+  # Similarity threshold for fuzzy matching (0.0 to 1.0)
+  # Higher = stricter matching
+  similarity_threshold: 0.6
+
+  # Stricter threshold for high-Bloom questions (level 5-6)
+  strict_threshold: 0.8
+
+  # Allow partial word matches
+  allow_partial_matches: true
+
+  # Maximum regeneration attempts (Guardian allows ONE retry)
+  max_regenerations: 1

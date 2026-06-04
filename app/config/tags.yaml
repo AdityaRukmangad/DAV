@@ -1,0 +1,124 @@
+# =============================================================================
+# TOPIC TAGS CONFIGURATION
+# Add your domain-specific tags here
+# Format: "keyword": ["tag1", "tag2", ...]
+# =============================================================================
+
+# Machine Learning
+machine_learning:
+  "decision tree": ["machine-learning", "classification", "supervised"]
+  "random forest": ["machine-learning", "ensemble", "classification"]
+  "neural network": ["machine-learning", "deep-learning", "supervised"]
+  "perceptron": ["machine-learning", "deep-learning", "classification"]
+  "backpropagation": ["machine-learning", "deep-learning", "optimization"]
+  "gradient descent": ["machine-learning", "optimization", "calculus"]
+  "naive bayes": ["machine-learning", "classification", "probability"]
+  "svm": ["machine-learning", "classification", "supervised"]
+  "knn": ["machine-learning", "classification", "instance-based"]
+  "k-means": ["machine-learning", "clustering", "unsupervised"]
+  "clustering": ["machine-learning", "unsupervised"]
+  "regression": ["machine-learning", "supervised", "prediction"]
+  "gini": ["decision-tree", "metrics", "classification"]
+  "entropy": ["decision-tree", "information-theory", "metrics"]
+  "information gain": ["decision-tree", "information-theory", "metrics"]
+  "id3": ["decision-tree", "algorithm", "classification"]
+  "cart": ["decision-tree", "algorithm"]
+  "c4.5": ["decision-tree", "algorithm", "classification"]
+  "c5.0": ["decision-tree", "algorithm", "classification"]
+
+# Graph Algorithms
+algorithms:
+  "dfs": ["graph", "algorithm", "traversal"]
+  "bfs": ["graph", "algorithm", "traversal"]
+  "dijkstra": ["graph", "algorithm", "shortest-path"]
+  "spanning tree": ["graph", "algorithm", "optimization"]
+  "dynamic programming": ["algorithm", "optimization"]
+  "greedy": ["algorithm", "optimization"]
+  "sorting": ["algorithm", "comparison"]
+  "searching": ["algorithm", "lookup"]
+
+# Data Structures
+data_structures:
+  "tree": ["data-structure", "hierarchical"]
+  "graph": ["data-structure", "non-linear"]
+  "array": ["data-structure", "linear"]
+  "linked list": ["data-structure", "linear"]
+  "stack": ["data-structure", "linear", "lifo"]
+  "queue": ["data-structure", "linear", "fifo"]
+  "hash": ["data-structure", "lookup"]
+  "heap": ["data-structure", "priority"]
+
+# Physics (example - extend as needed)
+physics:
+  "newton": ["physics", "mechanics", "classical"]
+  "force": ["physics", "mechanics", "dynamics"]
+  "momentum": ["physics", "mechanics", "conservation"]
+  "energy": ["physics", "mechanics", "conservation"]
+  "kinetic": ["physics", "mechanics", "energy"]
+  "potential": ["physics", "mechanics", "energy"]
+  "velocity": ["physics", "kinematics", "motion"]
+  "acceleration": ["physics", "kinematics", "motion"]
+  "projectile": ["physics", "kinematics", "2d-motion"]
+  "gravity": ["physics", "mechanics", "forces"]
+  "friction": ["physics", "mechanics", "forces"]
+  "wave": ["physics", "waves", "oscillation"]
+  "frequency": ["physics", "waves", "periodic"]
+  "wavelength": ["physics", "waves", "properties"]
+  "electric": ["physics", "electromagnetism", "charge"]
+  "magnetic": ["physics", "electromagnetism", "field"]
+  "circuit": ["physics", "electronics", "current"]
+  "resistance": ["physics", "electronics", "ohm"]
+  "capacitor": ["physics", "electronics", "charge"]
+  "inductor": ["physics", "electronics", "magnetic"]
+  "thermodynamics": ["physics", "thermal", "energy"]
+  "entropy": ["physics", "thermal", "thermodynamics"]
+  "heat": ["physics", "thermal", "energy"]
+  "optics": ["physics", "light", "waves"]
+  "lens": ["physics", "optics", "refraction"]
+  "mirror": ["physics", "optics", "reflection"]
+  "quantum": ["physics", "modern", "quantum-mechanics"]
+  "relativity": ["physics", "modern", "einstein"]
+
+# Mathematics
+mathematics:
+  "derivative": ["math", "calculus", "differential"]
+  "integral": ["math", "calculus", "integration"]
+  "limit": ["math", "calculus", "analysis"]
+  "matrix": ["math", "linear-algebra", "matrices"]
+  "vector": ["math", "linear-algebra", "geometry"]
+  "eigenvalue": ["math", "linear-algebra", "spectral"]
+  "probability": ["math", "statistics", "chance"]
+  "distribution": ["math", "statistics", "probability"]
+  "hypothesis": ["math", "statistics", "inference"]
+  "regression": ["math", "statistics", "modeling"]
+  "differential equation": ["math", "calculus", "ode"]
+  "fourier": ["math", "analysis", "transforms"]
+  "laplace": ["math", "analysis", "transforms"]
+
+# Chemistry
+chemistry:
+  "atom": ["chemistry", "structure", "fundamental"]
+  "molecule": ["chemistry", "structure", "bonding"]
+  "reaction": ["chemistry", "reactions", "kinetics"]
+  "oxidation": ["chemistry", "reactions", "redox"]
+  "acid": ["chemistry", "reactions", "ph"]
+  "base": ["chemistry", "reactions", "ph"]
+  "organic": ["chemistry", "organic", "carbon"]
+  "inorganic": ["chemistry", "inorganic", "metals"]
+  "equilibrium": ["chemistry", "thermodynamics", "balance"]
+  "catalyst": ["chemistry", "kinetics", "reactions"]
+
+# Generic patterns (applied to all topics)
+generic_patterns:
+  trace: ["trace", "step-by-step"]
+  step: ["trace", "step-by-step"]
+  pseudo: ["algorithm", "pseudo-code"]
+  algorithm: ["algorithm", "pseudo-code"]
+  calculate: ["calculation", "numerical"]
+  compute: ["calculation", "numerical"]
+  compare: ["comparison", "theory"]
+  difference: ["comparison", "theory"]
+  explain: ["theory", "conceptual"]
+  define: ["theory", "definition"]
+  derive: ["proof", "derivation"]
+  prove: ["proof", "mathematical"]

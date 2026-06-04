@@ -1,0 +1,125 @@
+{
+  "difficulty_guidelines": {
+    "Easy": {
+      "description": "Basic recall and simple understanding",
+      "bloom_levels": ["Remember", "Understand"],
+      "short_answer": {
+        "max_lines": 3,
+        "complexity": "Simple definitions, direct recall, basic concepts",
+        "example": "Define Artificial Intelligence.",
+        "answer_length": "2-3 sentences maximum"
+      },
+      "long_answer": {
+        "max_lines": 8,
+        "complexity": "Explain with one simple example",
+        "answer_length": "5-8 sentences with basic example"
+      },
+      "mcq": {
+        "complexity": "Direct factual questions, clear correct answer",
+        "distractors": "Obviously incorrect options"
+      },
+      "numerical": {
+        "complexity": "Single-step calculation, given formula",
+        "steps": "1-2 calculation steps maximum"
+      }
+    },
+    "Medium": {
+      "description": "Application and basic analysis",
+      "bloom_levels": ["Apply", "Analyze"],
+      "short_answer": {
+        "max_lines": 4,
+        "complexity": "Explain process or compare concepts",
+        "example": "Differentiate between BFS and DFS.",
+        "answer_length": "3-4 sentences with brief comparison"
+      },
+      "long_answer": {
+        "max_lines": 12,
+        "complexity": "Multi-part explanation with examples",
+        "answer_length": "8-12 sentences with detailed example"
+      },
+      "mcq": {
+        "complexity": "Application-based, scenario questions",
+        "distractors": "Plausible but incorrect options"
+      },
+      "numerical": {
+        "complexity": "Multi-step calculation with reasoning",
+        "steps": "3-4 calculation steps"
+      }
+    },
+    "Hard": {
+      "description": "Synthesis, evaluation, and complex problem-solving",
+      "bloom_levels": ["Evaluate", "Create"],
+      "short_answer": {
+        "max_lines": 5,
+        "complexity": "Analyze trade-offs or justify choices",
+        "example": "Why is A* search considered optimal? Justify.",
+        "answer_length": "4-5 sentences with reasoning"
+      },
+      "long_answer": {
+        "max_lines": 15,
+        "complexity": "Comprehensive analysis with multiple examples",
+        "answer_length": "12-15 sentences with detailed analysis"
+      },
+      "mcq": {
+        "complexity": "Complex scenarios requiring deep understanding",
+        "distractors": "Highly plausible alternatives requiring careful analysis"
+      },
+      "numerical": {
+        "complexity": "Complex multi-step problems requiring algorithm understanding",
+        "steps": "5+ calculation steps with optimization"
+      }
+    }
+  },
+  "question_type_constraints": {
+    "short": {
+      "max_answer_sentences": 5,
+      "max_answer_words": 100,
+      "focus": "Concise, focused response",
+      "avoid": ["Multi-part questions", "Lengthy explanations", "Multiple examples"]
+    },
+    "long": {
+      "min_answer_sentences": 8,
+      "parts": ["Should have (a), (b), (c) parts", "Each part worth 1-2 marks"],
+      "focus": "Comprehensive detailed explanation",
+      "include": ["Examples", "Comparisons", "Step-by-step explanation"]
+    },
+    "mcq": {
+      "options_count": 4,
+      "correct_answers": 1,
+      "distractor_quality": "Plausible but clearly distinguishable for target difficulty",
+      "avoid": ["Ambiguous options", "All of the above", "None of the above"]
+    },
+    "numerical": {
+      "must_include": ["Given data", "Clear calculation steps", "Units if applicable"],
+      "format": "Structured problem with data table",
+      "answer_format": "Numerical value with working"
+    }
+  },
+  "co_bloom_mapping": {
+    "CO1": {
+      "primary_bloom": ["Remember", "Understand", "Apply"],
+      "question_types": ["short", "mcq"],
+      "difficulty_distribution": {"Easy": 40, "Medium": 40, "Hard": 20}
+    },
+    "CO2": {
+      "primary_bloom": ["Apply", "Analyze"],
+      "question_types": ["short", "long", "numerical"],
+      "difficulty_distribution": {"Easy": 20, "Medium": 50, "Hard": 30}
+    },
+    "CO3": {
+      "primary_bloom": ["Apply", "Analyze"],
+      "question_types": ["numerical", "long"],
+      "difficulty_distribution": {"Easy": 20, "Medium": 40, "Hard": 40}
+    },
+    "CO4": {
+      "primary_bloom": ["Analyze", "Evaluate"],
+      "question_types": ["long"],
+      "difficulty_distribution": {"Easy": 10, "Medium": 40, "Hard": 50}
+    },
+    "CO5": {
+      "primary_bloom": ["Analyze", "Evaluate", "Create"],
+      "question_types": ["long", "numerical"],
+      "difficulty_distribution": {"Easy": 10, "Medium": 30, "Hard": 60}
+    }
+  }
+}

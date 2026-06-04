@@ -1,0 +1,79 @@
+{
+  "id": "fa7eb390",
+  "template_id": "fa7eb390",
+  "template_name": "Untitled Paper",
+  "subject": "Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 8,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly in 2-3 sentences",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "Overfitting",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "What is overfitting in machine learning models, how is it different from underfitting, and what are the potential causes of overfitting?",
+          "answer": "Overfitting happens when a machine learning model is overly complex, fitting the training data too closely, leading to low training error but high test error on new data. Underfitting, on the other hand, occurs when the model is too simple, resulting in high errors on both training and test data. Potential causes of overfitting include using a model with too many parameters, insufficient training data, and excessive training iterations.",
+          "explanation": "Overfitting is a common issue in machine learning where the model captures noise in the training data as if it were a true pattern. This usually occurs when the model is excessively complex for the data it learns from. Underfitting is different; it means the model is unable to capture the underlying trend of the data, often due to being too simplistic. Overfitting can be caused by having more parameters than necessary, a lack of diverse training data, or prolonged training that makes the model memorize the training data too closely.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 2,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "Gain Ratio",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "What is the concept of Gain Ratio, and how does it address the limitations of Information Gain in decision tree algorithms like C4.5? Use specific details from the formula to support your explanation.",
+          "answer": "Gain Ratio is a measurement used in decision tree algorithms, such as C4.5, to mitigate the bias of Information Gain towards attributes with many distinct values. It achieves this by normalizing Information Gain with Split Information, the entropy of the data partitioning, which penalizes overly complex splits.",
+          "explanation": "Gain Ratio is calculated by dividing the Information Gain of an attribute by its Split Information. While Information Gain measures the reduction in uncertainty after a split, it tends to favor attributes that produce many partitions, potentially leading to overfitting. The Gain Ratio counteracts this by considering the number and size of those partitions, promoting splits that lead to a more balanced tree. This ensures that attributes are chosen not only for their informational value but also for their ability to produce meaningful and generalizable results.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 3,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "Gini Index",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "Consider the training set with a single numeric attribute \"Income\" and a binary class label shown below. You are to evaluate three candidate binary splits at v = 50, v = 70 and v = 90 (split rule: Income \u2264 v vs Income > v) using the Gini index as the split evaluation measure.\n\n| Income | Class |\n|--------|-------|\n| 30     | Y     |\n| 45     | N     |\n| 55     | Y     |\n| 60     | N     |\n| 65     | N     |\n| 75     | Y     |\n| 80     | N     |\n| 85     | N     |\n| 95     | Y     |\n| 100    | N     |\n\nWhich candidate split produces the smallest weighted Gini index (if there is a tie, state the tied split)?\n\nA) The split v = 50 has the smallest weighted Gini index.\nB) The split v = 70 has the smallest weighted Gini index.\nC) The split v = 90 has the smallest weighted Gini index.\nD) There is a tie for the smallest weighted Gini index between v = 50 and v = 90.",
+          "answer": "D",
+          "explanation": "Compute Gini for each child node: Gini(t) = 1 - sum p_i^2, where p_i are class proportions.\n\nv = 50:\n- Left (\u226450): {30:Y, 45:N} \u2192 Y=1, N=1 \u2192 pY=0.5, pN=0.5 \u2192 G_left = 1 - (0.5^2+0.5^2) = 0.5\n- Right (>50): remaining 8 examples \u2192 Y=3, N=5 \u2192 pY=3/8, pN=5/8 \u2192 G_right = 1 - ((3/8)^2+(5/8)^2) = 0.46875\n- Weighted Gini = (2/10)*0.5 + (8/10)*0.46875 = 0.475\n\nv = 70:\n- Left (\u226470): {30:Y,45:N,55:Y,60:N,65:N} \u2192 Y=2, N=3 \u2192 G_left = 1 - ((2/5)^2+(3/5)^2) = 0.48\n- Right (>70): {75:Y,80:N,85:N,95:Y,100:N} \u2192 Y=2, N=3 \u2192 G_right = 0.48\n- Weighted Gini = 0.48\n\nv = 90:\n- Left (\u226490): 8 examples \u2192 Y=3, N=5 \u2192 G_left = 0.46875\n- Right (>90): {95:Y,100:N} \u2192 Y=1, N=1 \u2192 G_right = 0.5\n- Weighted Gini = (8/10)*0.46875 + (2/10)*0.5 = 0.475\n\nComparison: v=50 \u2192 0.475, v=70 \u2192 0.48, v=90 \u2192 0.475. The smallest weighted Gini is 0.475, tied between v = 50 and v = 90.\n\nTherefore the correct option is D. (Calculations rounded where appropriate.)",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 4,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "Search Algorithm",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "What is the difference between complete and optimal search algorithms? Can you provide an example of an algorithm that is complete but not optimal, and explain why it is considered so?",
+          "answer": "A complete search algorithm is one that guarantees finding a solution if one exists. An optimal search algorithm ensures that the solution found is the best possible one, with the lowest path cost. Breadth-First Search (BFS) is an example of a complete but not necessarily optimal algorithm, as it will find a solution if it exists but may not find the lowest-cost path when dealing with weighted graphs.",
+          "explanation": "The key distinction between completeness and optimality lies in the guarantee of finding a solution versus finding the best solution. BFS explores nodes level by level, ensuring it finds a solution if there is one (completeness). However, BFS does not account for edge weights and thus cannot guarantee the lowest path cost in weighted graphs, failing the optimality criterion.",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-19T18:18:09.498200",
+  "generation_stats": {}
+}

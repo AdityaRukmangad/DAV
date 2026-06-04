@@ -1,0 +1,132 @@
+{
+  "exam_name": "Mid-Term Examination",
+  "academic_year": "2024-2025",
+  "semester": "V",
+  "course_code": "IS353IA",
+  "course_name": "Artificial Intelligence and Machine Learning",
+  "total_marks": 50,
+  "duration_minutes": 90,
+  "questions": [
+    {
+      "question_number": 1,
+      "section": "Section A",
+      "question_type": "short",
+      "marks": 2,
+      "difficulty": "Easy",
+      "topic": "Introduction to Artificial Intelligence",
+      "co_mapping": ["CO1"],
+      "bloom_level": "Remember",
+      "question_text": "Define Artificial Intelligence.",
+      "expected_answer_length": "2-3 sentences"
+    },
+    {
+      "question_number": 2,
+      "section": "Section A",
+      "question_type": "short",
+      "marks": 2,
+      "difficulty": "Easy",
+      "topic": "Intelligent Agents",
+      "co_mapping": ["CO1"],
+      "bloom_level": "Understand",
+      "question_text": "What is a rational agent?",
+      "expected_answer_length": "2-3 sentences"
+    },
+    {
+      "question_number": 3,
+      "section": "Section A",
+      "question_type": "short",
+      "marks": 2,
+      "difficulty": "Medium",
+      "topic": "Problem Solving and Uninformed Search",
+      "co_mapping": ["CO1", "CO3"],
+      "bloom_level": "Apply",
+      "question_text": "Differentiate between Breadth First Search and Depth First Search.",
+      "expected_answer_length": "3-4 sentences"
+    },
+    {
+      "question_number": 4,
+      "section": "Section A",
+      "question_type": "short",
+      "marks": 2,
+      "difficulty": "Easy",
+      "topic": "Intelligent Agents",
+      "co_mapping": ["CO1"],
+      "bloom_level": "Understand",
+      "question_text": "List four types of agents.",
+      "expected_answer_length": "2-3 sentences"
+    },
+    {
+      "question_number": 5,
+      "section": "Section B",
+      "question_type": "long",
+      "marks": 5,
+      "difficulty": "Medium",
+      "topic": "Informed (Heuristic) Search",
+      "co_mapping": ["CO1", "CO2"],
+      "bloom_level": "Analyze",
+      "question_text": "Explain A* search algorithm with a suitable example.",
+      "expected_answer_length": "8-10 sentences"
+    },
+    {
+      "question_number": 6,
+      "section": "Section B",
+      "question_type": "long",
+      "marks": 5,
+      "difficulty": "Medium",
+      "topic": "Decision Tree Classifier",
+      "co_mapping": ["CO1", "CO5"],
+      "bloom_level": "Apply",
+      "question_text": "Describe the decision tree induction algorithm with an example.",
+      "expected_answer_length": "8-10 sentences"
+    },
+    {
+      "question_number": 7,
+      "section": "Section C",
+      "question_type": "mcq",
+      "marks": 1,
+      "difficulty": "Easy",
+      "topic": "Naive Bayes Classifier",
+      "co_mapping": ["CO1"],
+      "bloom_level": "Remember",
+      "question_text": "Which assumption does Naive Bayes classifier make?",
+      "expected_answer_length": "Single letter"
+    },
+    {
+      "question_number": 8,
+      "section": "Section C",
+      "question_type": "mcq",
+      "marks": 1,
+      "difficulty": "Easy",
+      "topic": "K-Means Clustering",
+      "co_mapping": ["CO1"],
+      "bloom_level": "Remember",
+      "question_text": "What is the objective of K-Means clustering algorithm?",
+      "expected_answer_length": "Single letter"
+    },
+    {
+      "question_number": 9,
+      "section": "Section D",
+      "question_type": "numerical",
+      "marks": 3,
+      "difficulty": "Medium",
+      "topic": "Decision Tree Classifier",
+      "co_mapping": ["CO2", "CO5"],
+      "bloom_level": "Apply",
+      "question_text": "Calculate the information gain for a given dataset split.",
+      "expected_answer_length": "3-4 calculation steps"
+    },
+    {
+      "question_number": 10,
+      "section": "Section D",
+      "question_type": "numerical",
+      "marks": 3,
+      "difficulty": "Medium",
+      "topic": "Naive Bayes Classifier",
+      "co_mapping": ["CO2", "CO5"],
+      "bloom_level": "Apply",
+      "question_text": "Apply Naive Bayes to classify a new instance given prior probabilities.",
+      "expected_answer_length": "3-4 calculation steps"
+    }
+  ],
+  "notes": "This is a sample previous year paper for pattern learning. Questions demonstrate typical structure, length, and complexity for each marks value and difficulty level."
+}

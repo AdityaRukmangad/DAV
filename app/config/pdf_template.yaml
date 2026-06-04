@@ -1,0 +1,52 @@
+# PDF Export Template Configuration
+# Customize the academic paper format
+
+institution:
+  name: "Your University Name"
+  department: "DEPARTMENT OF INFORMATION SCIENCE AND ENGINEERING"
+  logo_placeholder: "[Institution Logo]"  # Text shown if no logo
+  # logo_path: "assets/logo.png"  # Uncomment and set path to use actual logo
+
+defaults:
+  academic_year: "2024-2025"
+  semester: "V"
+  ug_pg: "UG"
+  faculty: "Course Faculty"
+  course_code_prefix: ""  # Auto-generated from subject if empty
+
+# Paper type labels
+labels:
+  question_paper: "QUESTION PAPER"
+  scheme_solution: "SCHEME AND SOLUTION"
+  answer_key: "ANSWER KEY"
+
+# Table column headers
+table_headers:
+  q_no: "Q. No."
+  question: "QUESTION"
+  question_answer: "QUESTION & ANSWER"
+  marks: "M"
+
+# Course info table labels
+course_info:
+  course_code: "Course Code"
+  semester: "Sem"
+  ug_pg: "UG/PG"
+  max_marks: "Maximum Marks"
+  duration: "Duration"
+  faculty: "Faculty"
+
+# Colors (RGB values 0-255)
+colors:
+  subject_title: [180, 0, 0]      # Red
+  department: [0, 0, 139]         # Dark blue
+  default_text: [0, 0, 0]         # Black
+  placeholder: [150, 150, 150]    # Gray
+
+# Font sizes
+fonts:
+  title: 14
+  department: 12
+  section: 11
+  question: 9
+  table_header: 10

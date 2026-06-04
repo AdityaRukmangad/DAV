@@ -1,0 +1,86 @@
+{
+  "id": "f79ac558",
+  "template_id": "f79ac558",
+  "template_name": "Untitled Paper",
+  "subject": "Artificial Intelligence & Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 14,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly in 2-3 sentences",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "hunts algorithm ",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "What are the main steps in Hunt's algorithm for decision tree induction, and how does the algorithm determine when to stop splitting a node during decision tree construction?",
+          "answer": "Hunt's algorithm involves recursively dividing the dataset into subgroups based on attribute values to construct a decision tree. The steps include selecting the best attribute to split the data, forming nodes for the resulting subgroups, and repeating the process for each subgroup until a termination criterion is reached. The algorithm stops splitting when all samples in a node belong to one class or when further splitting does not provide a significant information gain. Additional stopping criteria may involve a minimum node size or a maximum tree depth.",
+          "explanation": "Hunt's algorithm is a classic method for building decision trees by partitioning the dataset recursively. The algorithm aims to select attributes that optimize the classification or prediction task by increasing information gain. Stopping conditions are critical to prevent overfitting and ensure the decision tree's generalizability. Thus, when a node is homogeneous (all samples belong to one class) or when further splits do not enhance the decision tree's information gain, the algorithm halts.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 2,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "decision tree building",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "Given the dataset below, construct a simple decision tree to predict if a passenger will survive based on their class and gender.\n\n| Passenger | Class | Gender | Survived |\n|-----------|-------|--------|----------|\n| 1         | 1st   | Male   | No       |\n| 2         | 2nd   | Female | Yes      |\n| 3         | 1st   | Female | Yes      |\n| 4         | 3rd   | Male   | No       |\n| 5         | 2nd   | Male   | No       |\n| 6         | 3rd   | Female | No       |\n\n**Part A:** What is the first attribute you would use to split the dataset, and why?\n\n**Part B:** Explain the branches created after making the first split.",
+          "answer": "**Part A:** The first attribute to split on should be 'Gender' because it provides a clear division in survival outcomes, with females having a higher chance of survival.\n\n**Part B:**\n- 'Gender = Female' branch: Includes passengers with 2nd (Yes), 1st (Yes), and 3rd (No) class.\n- 'Gender = Male' branch: Includes passengers with 1st (No), 2nd (No), and 3rd (No) class.",
+          "explanation": "The dataset indicates that gender is a significant factor in survival, as seen from the given data where females have a higher survival rate than males. By splitting first on 'Gender', we can effectively separate the majority of 'Yes' and 'No' outcomes, making the decision tree simpler and more accurate for this dataset.",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    },
+    {
+      "name": "Section B",
+      "title": "Questions",
+      "instructions": "Answer properly in 8-10 sentences",
+      "questions": [
+        {
+          "question_number": 3,
+          "part_of_section": "Section B",
+          "topic": "design issues for decision tree induction",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "### Decision Tree Induction: Design Considerations\n\nConsider the process of building a decision tree for a classification task, which involves several critical design considerations that can significantly influence the model's performance and accuracy.\n\n**(a)** Explain the importance of attribute selection measures in decision tree induction. Why is it crucial to select an appropriate measure? Provide examples of commonly used selection measures and describe how they affect the decision tree's structure.\n\n**(b)** Discuss the challenges and methods of handling continuous attributes in decision tree induction. How can decision trees manage continuous attributes effectively, and what issues may arise if they are not properly addressed?\n\n**(c)** Analyze the risk of overfitting in decision trees. What strategies can be employed during the induction process to prevent overfitting? Provide examples of pruning techniques that are used to address this issue.\n\n---\n\n**Answer each part thoroughly, offering examples and reasoning for your explanations. Highlight the complexities and subtle differences in these design considerations.**",
+          "answer": "### Model Answer\n\n**(a)** Attribute selection measures are crucial in decision tree induction because they determine which attributes are most effective at splitting the data into classes at each node. Selecting an appropriate measure influences the model\u2019s ability to generalize to unseen data. Common attribute selection measures include Information Gain, Gain Ratio, and Gini Index. Information Gain helps select attributes that provide the highest reduction in entropy, resulting in clearer class distinctions. Gain Ratio addresses Information Gain's bias towards attributes with many outcomes by normalizing it. The Gini Index, on the other hand, measures impurity and chooses attributes that best segregate the data. These measures affect the tree's depth and structure, influencing overall interpretability and complexity.\n\n**(b)** Handling continuous attributes in decision tree induction is significant due to their prevalence in real-world datasets. Decision trees manage continuous attributes by finding optimal split points, which convert continuous data into discrete intervals. This involves sorting the values and assessing potential thresholds using attribute selection measures like Information Gain. Challenges include increased computational load and potential overfitting if numerous splits create overly complex trees. Effective discretization or binning is vital to balance model accuracy and computational efficiency.\n\n**(c)** Overfitting in decision trees occurs when the model becomes overly complex, capturing noise in the training data rather than general patterns. This results in poor generalization to new data. To prevent overfitting, strategies such as pruning can be implemented. Pruning simplifies the tree by removing branches that have little statistical significance. Pre-pruning stops the tree growth early based on set criteria, while post-pruning trims the tree after it is fully grown, often using a validation set to ensure branches don't contribute to model performance. These techniques help the decision tree focus on capturing the most relevant data patterns, thereby enhancing generalizability.",
+          "explanation": "The revised question and answer structure follows a clear format that encourages detailed, structured responses, aligning with academic expectations for medium difficulty level questions. The questions are clear and specify the areas to be covered, while the answers provide comprehensive explanations with examples and justifications, enhancing understanding of complex design considerations in decision tree induction.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 4,
+          "part_of_section": "Section B",
+          "topic": "Methods for Expressing Attribute Test Conditions",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "In data mining and machine learning, attribute test conditions are fundamental in classification and decision tree models. These conditions can be expressed through equality tests, range tests, and set membership tests. \n\nConsider the following situations:\n\n(a) **Equality Tests:** How are equality tests utilized to express attribute test conditions in decision tree models? Provide a detailed example using a categorical attribute and explain the resulting data split.\n\n(b) **Range Tests:** How are range tests applied to numerical attributes in decision tree models? Describe with an example using a numerical attribute, and analyze how different range conditions might influence the tree's structure and depth.\n\n(c) **Set Membership Tests:** What role do set membership tests play in handling attributes with multiple values? Provide an example where this method is more beneficial than the other two methods. Compare this method with equality and range tests in terms of computational complexity and interpretability.\n\n| Method              | Description                                                                  |\n|---------------------|------------------------------------------------------------------------------|\n| Equality Test       | Checks if an attribute's value is strictly equal to a specified value.       |\n| Range Test          | Determines if an attribute's value falls within a specified numerical range. |\n| Set Membership Test | Evaluates if an attribute's value belongs to a predefined set of values.     |\n\nAnswer the following:\n\n(a) Explain equality tests with an example. (2-3 marks)\n\n(b) Describe range tests using a numerical attribute. (2-3 marks)\n\n(c) Discuss set membership tests and provide a comparative analysis. (2-3 marks)",
+          "answer": "(a) **Equality Tests:**\nEquality tests are used to determine if an attribute value matches a specific categorical value. For instance, for a categorical attribute 'Color' with potential values {Red, Blue, Green}, an equality test could check if 'Color' equals 'Red'. This condition splits the dataset into two: one where 'Color' is 'Red' and another where 'Color' is not 'Red'. This helps create distinct and interpretable splits in decision trees.\n\n(b) **Range Tests:**\nRange tests apply to numerical attributes by checking if the attribute's value falls within a certain range. For example, with an attribute 'Age', a range test might ascertain if 20 <= Age < 30. Such a condition can segment data into groups based on defined intervals, affecting tree depth and structure by possibly reducing branches if ranges are broadly defined.\n\n(c) **Set Membership Tests:**\nSet membership tests check if an attribute's value is part of a specified set of values. For example, if an attribute 'Fruit' has values {Apple, Banana, Cherry}, a test might determine if 'Fruit' is in {Apple, Banana}. This method is particularly useful for attributes with many possible values where grouping is meaningful. Compared to equality and range tests, set membership tests can be more computationally intensive due to evaluating multiple values but offer improved interpretability for multi-valued attributes.",
+          "explanation": "This question examines the student's understanding of the methods used in decision tree models for handling various types of data through different types of tests. It assesses comprehension of the implementation and implications of equality, range, and set membership tests in real-world data classification scenarios.",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-19T16:14:14.864654",
+  "generation_stats": {}
+}

@@ -1,0 +1,88 @@
+{
+  "id": "c1204b4e",
+  "template_id": "c1204b4e",
+  "template_name": "Untitled Paper",
+  "subject": "Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 10,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly in 2-3 sentences",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "Boosting",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "[Error generating question on Boosting]",
+          "answer": "",
+          "explanation": "",
+          "verification_code": ""
+        },
+        {
+          "question_number": 2,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "Classification",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "[Error generating question on Classification]",
+          "answer": "",
+          "explanation": "",
+          "verification_code": ""
+        },
+        {
+          "question_number": 3,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "Informed Search",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "[Error generating question on Informed Search]",
+          "answer": "",
+          "explanation": "",
+          "verification_code": ""
+        },
+        {
+          "question_number": 4,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "Search Algorithm",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "[Error generating question on Search Algorithm]",
+          "answer": "",
+          "explanation": "",
+          "verification_code": ""
+        },
+        {
+          "question_number": 5,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "Underfitting",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "[Error generating question on Underfitting]",
+          "answer": "",
+          "explanation": "",
+          "verification_code": ""
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-19T18:14:57.182358",
+  "generation_stats": {}
+}

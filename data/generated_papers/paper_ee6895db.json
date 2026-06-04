@@ -1,0 +1,107 @@
+{
+  "id": "ee6895db",
+  "template_id": "ee6895db",
+  "template_name": "Untitled Paper",
+  "subject": "Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 10,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Answer Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "naive bayes classifier",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "Given the following dataset, apply the Na\u00efve Bayes classifier to determine the class for the instance \\( X = (\\text{Refund} = \\text{Yes}, \\text{Single}, 120K) \\). Use the data to calculate \\( P(X | \\text{Yes}) \\) and \\( P(X | \\text{No}) \\). Assume class conditional independence for the attributes.\n\n| Refund | Marital Status | Income | Class |\n|--------|----------------|--------|-------|\n| No     | Single         | 80K    | No    |\n| Yes    | Married        | 50K    | No    |\n| No     | Divorced       | 90K    | Yes   |\n| Yes    | Single         | 120K   | Yes   |\n| No     | Married        | 100K   | No    |\n\n**Question:** \nCalculate and state the class prediction for \\( X \\) considering the prior probabilities \\( P(\\text{Yes}) \\) and \\( P(\\text{No}) \\).",
+          "answer": "The predicted class for the instance \\( X = (\\text{Refund} = \\text{Yes}, \\text{Single}, 120K) \\) is 'Yes'.",
+          "explanation": "To determine the class for the instance, calculate \\( P(X | \\text{Yes}) \\) and \\( P(X | \\text{No}) \\):\n\n1. **P(X | Yes):**\n   - \\( P(\\text{Refund} = \\text{Yes} | \\text{Yes}) = \\frac{1}{2} \\) (1 out of 2 'Yes' instances)\n   - \\( P(\\text{Single} | \\text{Yes}) = \\frac{1}{2} \\) (1 out of 2 'Yes' instances)\n   - Assume income is normally distributed. Calculate likelihood for 120K.\n\n2. **P(X | No):**\n   - \\( P(\\text{Refund} = \\text{Yes} | \\text{No}) = \\frac{1}{3} \\) (1 out of 3 'No' instances)\n   - \\( P(\\text{Single} | \\text{No}) = \\frac{1}{3} \\) (1 out of 3 'No' instances)\n   - Assume income is normally distributed. Calculate likelihood for 120K.\n\nUsing prior probabilities \\( P(\\text{Yes}) = \\frac{2}{5} \\) and \\( P(\\text{No}) = \\frac{3}{5} \\), calculate and compare posterior probabilities to make the prediction. Given these calculations, the class 'Yes' has the highest probability.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 2,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "ensemble methods",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "**Question:**\n\nWhat is the general approach used in ensemble learning methods to enhance classification accuracy? Discuss how predictions are combined and identify which types of base classifiers benefit most from ensemble methods.",
+          "answer": "Ensemble learning methods enhance classification accuracy by combining the predictions of multiple classifiers, typically through a majority vote or weighted majority vote. Weights may be assigned based on each classifier's performance. These methods are particularly effective with unstable base classifiers that are sensitive to changes in the training data, such as decision trees and neural networks.",
+          "explanation": "Ensemble learning leverages the strengths of multiple classifiers to improve overall model performance. By aggregating predictions, either equally or with weights, the ensemble model can mitigate individual classifier weaknesses, leading to better accuracy. Unstable classifiers, which vary significantly with small changes in the data, are ideal candidates because ensemble methods can help stabilize their predictions.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 3,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "logistic regression",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "In logistic regression, the log-odds of a binary outcome is modeled as a linear combination of the input features. Consider a logistic regression model with two features, \\(x_1\\) and \\(x_2\\). The model formula is given by: \\( z = w_1 x_1 + w_2 x_2 + b \\). Given the model parameters \\(w_1 = 0.8\\), \\(w_2 = -0.6\\), and \\(b = 0.4\\), compute the log-odds for a point \\((x_1, x_2) = (3, 2)\\). Based on the log-odds, determine if this point is classified as class 0 or class 1.",
+          "answer": "The log-odds for the point \\((x_1, x_2) = (3, 2)\\) is calculated as:\n\n\\[ z = w_1 x_1 + w_2 x_2 + b = 0.8 \\times 3 + (-0.6) \\times 2 + 0.4 = 2.4 - 1.2 + 0.4 = 1.6 \\]\n\nSince the log-odds \\(z = 1.6 > 0\\), the odds are greater than 1, indicating that the point is classified as class 1.",
+          "explanation": "Logistic regression uses the model \\( z = w_1 x_1 + w_2 x_2 + b \\) to compute the log-odds of the binary outcome. In this question, we substitute the given values into the equation to calculate \\(z\\). The log-odds value (\\(z=1.6\\)) being positive indicates the probability of the point being in class 1 is greater than 0.5, hence it's classified as class 1.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 4,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "informed heuristic search",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "How do informed search strategies, such as the A* Search algorithm, utilize heuristics to improve efficiency over uninformed search strategies?",
+          "answer": "Informed search strategies use heuristics to guide the search process by incorporating problem-specific knowledge, such as estimating the shortest path to the goal. This allows the search to focus on paths that are more likely to lead to the optimal solution, reducing unnecessary exploration. The A* Search algorithm combines a heuristic estimate with the path cost from the start node, effectively prioritizing paths that minimize total cost, thereby improving efficiency over uninformed strategies that lack such guidance.",
+          "explanation": "Informed search strategies, such as A*, leverage heuristic functions to estimate the cost to reach the goal from any given node. This estimation helps prioritize nodes that appear more promising, reducing the number of nodes needed to explore. The A* algorithm uses a cost function, f(n) = g(n) + h(n), where g(n) is the path cost from the start node to node n, and h(n) is the estimated cost from n to the goal. This combination ensures that the search is both complete and optimal under certain conditions, such as when the heuristic is admissible and consistent.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 5,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "hunts algorithm",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "**Question:**\n\nWhat is Hunt's Algorithm in the context of decision tree induction? How does it decide on data splitting and the formation of decision nodes? Additionally, explain the roles of leaf nodes and decision nodes in this algorithm.",
+          "answer": "Hunt's Algorithm is a foundational approach to constructing decision trees by recursively partitioning a dataset into subsets. At each node, it selects an attribute to split the data, aiming to maximize the homogeneity of resulting subsets. Decision nodes represent splits based on these attribute tests, directing the flow through the tree. Leaf nodes, on the other hand, signify the end of a branch and correspond to a class label or outcome, achieved when a node's data becomes pure or nearly pure.",
+          "explanation": "Hunt's Algorithm systematically builds a decision tree by recursively splitting the dataset into smaller subsets. At each step, it chooses an attribute that best separates the data, forming decision nodes which dictate the flow based on different attribute conditions. The ultimate goal is to reach leaf nodes, which represent class labels, indicating the classification outcome for a path through the tree. This process continues until the data at each node is sufficiently homogenous.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 6,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "naive bayes classifier",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "You are given a dataset with the following attributes and class labels. Use the Naive Bayes Classifier to find the likelihood of the instance X = (Refund = Yes, Divorced, Income = 120K) being classified as 'Yes' or 'No'. Assume conditional independence between attributes:\n\n| Attribute     | Class = Yes | Class = No |\n|---------------|-------------|------------|\n| Refund = Yes  | 3/9         | 2/6        |\n| Divorced      | 3/9         | 0/6        |\n| Income        | Mean = 100K, Variance = 25 | Mean = 90K, Variance = 25 |\n\n**Tasks:**\n\n1. Calculate $P(X|\\text{Yes})$.\n2. Calculate $P(X|\\text{No})$.\n3. Determine if the Naive Bayes classifier can decide whether X is 'Yes' or 'No'.",
+          "answer": "1. $P(X|\\text{Yes}) = (3/9) \\times (3/9) \\times \\frac{1}{\\sqrt{2\\pi \\times 25}} \\times e^{-\\frac{(120-100)^2}{2 \\times 25}} = 0.037$ approximately.\n\n2. $P(X|\\text{No}) = (2/6) \\times (0) \\times \\frac{1}{\\sqrt{2\\pi \\times 25}} \\times e^{-\\frac{(120-90)^2}{2 \\times 25}} = 0$.\n\n3. Naive Bayes will classify X as 'Yes' since $P(X|\\text{No})$ is zero and $P(X|\\text{Yes})$ is not zero.",
+          "explanation": "- $P(X|\\text{Yes})$ involves calculating the product of probabilities of each feature given the class 'Yes'. The income probability is derived from the Gaussian distribution.\n- $P(X|\\text{No})$ shows a zero probability due to the 'Divorced' attribute having zero likelihood under 'No'.\n- Naive Bayes chooses 'Yes' because it has a non-zero probability compared to 'No'.",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-20T05:20:40.317585",
+  "generation_stats": {}
+}

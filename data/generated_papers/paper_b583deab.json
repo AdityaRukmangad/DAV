@@ -1,0 +1,198 @@
+{
+  "id": "b583deab",
+  "template_id": "b583deab",
+  "template_name": "Untitled Paper",
+  "subject": "Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 60,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Answer Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "naive bayes classifier",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "Consider a dataset with two classes 'Yes' and 'No', and the following statistics for the 'No' class:\n\n- Sample Mean: 90\n- Sample Variance: 25\n\nYou are given an instance X with the following features:\n\n- Refund: Yes\n- Marital Status: Divorced\n- Income: 120K\n\nUsing the Na\u00efve Bayes Classifier, calculate the probabilities for P(X | No) and P(X | Yes) based on the given data:\n\n- **P(X | No):** \\( \\frac{2}{6} \\times 0 \\times 0.0083 = 0 \\)\n- **P(X | Yes):** \\( 0 \\times \\frac{1}{3} \\times 1.2 \\times 10^{-9} = 0 \\)\n\nCan the Na\u00efve Bayes Classifier assign a class label to this instance? Justify your answer.",
+          "answer": "The Na\u00efve Bayes Classifier cannot assign a class label to the instance X because both P(X | No) and P(X | Yes) are zero. This results in a situation where the classifier cannot differentiate between the two classes based on the available data.",
+          "explanation": "In Na\u00efve Bayes, the classification is based on comparing the posterior probabilities of the classes given the instance. If both P(X | No) and P(X | Yes) are zero, it indicates that the instance has zero probability under both class assumptions, leading to an inability to assign a distinct class label.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 2,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "ensemble methods",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "**Question:**\n\nWhy are ensemble methods particularly effective when using unstable base classifiers? Provide an example of an unstable classifier and explain how ensemble methods can enhance its performance.",
+          "answer": "Ensemble methods are effective with unstable base classifiers because they can mitigate the high variability in predictions caused by sensitivity to small changes in training data. A common example of an unstable classifier is an unpruned decision tree. Ensemble methods, such as bagging and boosting, work by aggregating predictions from multiple base classifiers, thereby reducing variance and improving overall accuracy.",
+          "explanation": "Unstable classifiers, like unpruned decision trees, are highly sensitive to variations in the training dataset. This means that small changes in the data can lead to significantly different models. Ensemble methods improve performance by combining multiple such models, thus averaging out their prediction errors and reducing overall variability. This is particularly effective with techniques like bagging, which uses bootstrap sampling, and boosting, which focuses on learning from mistakes of previous models.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 3,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "logistic regression",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "**Logistic Regression Problem**\n\nIn a logistic regression model, the linear predictor is expressed as \\( z = w^T x + b \\). Assume the weights \\( w = [0.5, -1.2] \\) and the bias \\( b = 0.8 \\).\n\n**Task:**\n\nFor a given data point \\( x = [2, 3] \\), compute the value of \\( z \\). Then, determine if the data point is classified as class 0 or class 1, based on the sign of the computed \\( z \\) value.",
+          "answer": "The computed value of \\( z \\) is \\( -1.8 \\). Since \\( z = -1.8 < 0 \\), the data point is classified as class 0.",
+          "explanation": "To calculate \\( z \\), use the formula \\( z = w^T x + b \\). Substitute the values to get \\( z = 0.5 \\times 2 + (-1.2) \\times 3 + 0.8 = 1 - 3.6 + 0.8 = -1.8 \\). As \\( z \\) is negative, the data point belongs to class 0.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 4,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "informed heuristic search",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "What is the primary advantage of using informed heuristic search strategies compared to uninformed search strategies in problem-solving?",
+          "answer": "The primary advantage is that informed heuristic search strategies incorporate problem-specific knowledge to guide the search process more efficiently than uninformed strategies. By estimating the distance to the goal, they can significantly reduce the search space and quickly find a solution, unlike uninformed strategies that explore blindly.",
+          "explanation": "Informed heuristic search strategies, such as A* or Greedy Best-First Search, use domain-specific information to make educated guesses about which paths are likely to lead to goal states. This can drastically reduce the number of nodes that need to be explored, speeding up the search process compared to uninformed search strategies like Breadth-First Search or Depth-First Search, which lack this guiding information and must explore all possibilities indiscriminately.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 5,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "hunts algorithm",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "**What is Hunt\u2019s Algorithm in decision tree induction, and how does it differ from other decision tree algorithms like CART or ID3?**",
+          "answer": "Hunt\u2019s Algorithm is an early decision tree induction algorithm that recursively partitions a dataset based on attribute values in a top-down manner until a stopping criterion is met, such as data homogeneity or a minimum number of instances. Unlike CART or ID3, Hunt's Algorithm lacks mechanisms for pruning or handling continuous attributes, which can make it less effective for complex datasets.",
+          "explanation": "Hunt\u2019s Algorithm is foundational in decision tree creation, focusing on recursive partitioning without many modern enhancements like pruning or continuous attribute handling, which are present in algorithms like CART and ID3. This makes it suitable for simpler datasets but less effective for complex scenarios where such features are necessary.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 6,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "naive bayes classifier",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "Given the following data about two classes 'Yes' and 'No', and a new instance X = (Refund = Yes, Marital Status = Divorced, Income = 120K), determine if the Na\u00efve Bayes Classifier can classify X as 'Yes' or 'No'. Assume missing probabilities are zero.\n\n**Class Statistics:**\n\n| Class | Sample Mean | Sample Variance |\n|-------|-------------|-----------------|\n| No    | 90          | 25              |\n\n**Class Probabilities:**\n- P(X | No) = 2/6 * 0 * 0.0083 = 0\n- P(X | Yes) = 0 * 1/3 * 1.2 * 10^-9 = 0\n\n**Question:** Can the Na\u00efve Bayes Classifier classify X as 'Yes' or 'No'? Explain your reasoning based on the probability calculations.",
+          "answer": "The Na\u00efve Bayes Classifier cannot classify X as 'Yes' or 'No'.",
+          "explanation": "The calculated probabilities for both the 'Yes' and 'No' classes are zero. This means that the Na\u00efve Bayes Classifier does not have enough information to prefer one class over the other, as the likelihood of X belonging to either class is zero due to missing probabilities.",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    },
+    {
+      "name": "Section B - Descriptive / Analytical Questions",
+      "title": "Questions",
+      "instructions": "Answer in detail. Internal choice may be provided",
+      "questions": [
+        {
+          "question_number": 7,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "ensemble methods",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "### Exam Question: Ensemble Methods\n\nIn the field of machine learning, ensemble methods are commonly employed to enhance the performance of predictive models.\n\n(a) Define ensemble learning and explain why it is often preferred over using a single model for classification tasks. Consider factors such as accuracy, overfitting, and robustness in your response. \n\n(b) Describe the necessary conditions for ensemble methods to be effective. Include an explanation of the role of base classifiers and provide examples of techniques used to ensure these conditions are met.\n\n(c) Outline the process of constructing ensemble classifiers by manipulating training sets, input features, and learning algorithms. Provide examples of specific methods for each approach and discuss how they contribute to the diversity and effectiveness of ensemble models.",
+          "answer": "**Model Answer:**\n\n(a) Ensemble learning is a machine learning technique that involves combining multiple models, known as base models or classifiers, to solve a problem and improve overall performance. This approach is preferred over single models because it generally offers higher accuracy by leveraging the diverse strengths of different models. It reduces overfitting by averaging or combining predictions, thus making the model more generalizable. Additionally, ensemble methods increase robustness, as they are less sensitive to noise and errors in the data.\n\n(b) For ensemble methods to be effective, the base classifiers must be diverse and each should perform better than random guessing. In binary classification tasks, this implies that the error rate should be less than 0.5. Diversity among classifiers ensures that errors are not correlated, allowing the ensemble to reduce variance and improve prediction accuracy. Techniques such as bagging, boosting, and random forests help achieve these conditions by either resampling the data or manipulating feature sets to introduce variety.\n\n(c) Constructing ensemble classifiers can be achieved through various methods:\n\n- **Manipulating training sets:** Techniques like bagging (Bootstrap Aggregating) and boosting create multiple training sets by resampling the original data, which helps create diverse models by training on different subsets of data.\n\n- **Manipulating input features:** Methods such as random forests select a random subset of features for each model. This approach is particularly effective in datasets with a large number of features, some of which may be redundant.\n\n- **Manipulating learning algorithms:** Injecting randomness into the learning process, such as varying initial weights in neural networks or choosing random attributes for decision tree splits, ensures that different models are developed from the same data, contributing to the diversity and effectiveness of the ensemble.",
+          "explanation": "The question is now formatted more clearly, with an introductory scenario to provide context. Each sub-question is directly related to a key aspect of understanding ensemble learning methods in machine learning. The answer includes detailed explanations for each point, ensuring that students can understand the rationale behind ensemble methods and how they are constructed.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 8,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "logistic regression",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "### Logistic Regression Analysis\n\nLogistic Regression is a fundamental technique used in data mining and statistics for classification tasks. You are tasked with applying logistic regression to a dataset that predicts whether students pass or fail based on various features, including the number of hours they study.\n\n**Scenario:** You have been given a dataset to analyze using logistic regression. The dataset records whether students pass or fail based on the number of hours they study. You need to evaluate the logistic regression model's effectiveness and interpret its results.\n\nAnswer the following:\n\n(a) **Understanding the Logistic Model**: In your own words, explain the logistic regression model. What is the primary function of the logistic model, and how are the odds of an event estimated using the logistic regression function? Describe the role of the sigmoid function in this context. (3 marks)\n\n(b) **Estimation of Model Parameters**: Discuss how the parameters \\(w\\) and \\(b\\) of the logistic regression model are estimated. What method is used for this estimation? Provide a brief explanation of why this method is suitable for logistic regression. (3 marks)\n\n(c) **Model Characteristics and Practical Considerations**: Identify and elaborate on at least two strengths and two limitations of using logistic regression for classification tasks. In your answer, consider how logistic regression handles high-dimensional data and missing values. (3 marks)\n\n**Example Dataset**\nConsider the following example dataset:\n\n| Hours Studied | Pass (1) or Fail (0) |\n|:-------------:|:---------------------:|\n|      2        |          0            |\n|      4        |          1            |\n|      5        |          1            |\n|      1        |          0            |\n\nCalculate the odds ratio for a student studying 4 hours compared to a student studying 2 hours using the logistic model. (2 marks)\n\n---",
+          "answer": "**(a) Understanding the Logistic Model**\nThe logistic regression model is a statistical approach used mainly for binary classification tasks. Its primary function is to estimate the probability that a given instance belongs to a particular class, typically coded as 1. This is achieved by modeling the log-odds of the probabilities as a linear combination of the input features, expressed mathematically as \\( z = w^T x + b \\). The sigmoid function, \\( \\sigma(z) = \\frac{1}{1 + e^{-z}} \\), is then applied to map the log-odds to a probability between 0 and 1, reflecting the likelihood of the instance being in the positive class.\n\n**(b) Estimation of Model Parameters**\nThe parameters \\( w \\) and \\( b \\) in logistic regression are typically estimated using the maximum likelihood estimation (MLE) method. This method is suitable because it maximizes the likelihood function, which ensures that the predicted probabilities align as closely as possible with the observed data. MLE is particularly effective for logistic regression as it deals well with the probabilistic predictions inherent in classification problems.\n\n**(c) Model Characteristics and Practical Considerations**\n**Strengths:**\n1. **Handling High-Dimensional Data:** Logistic regression performs well with high-dimensional datasets, as it can manage large attribute spaces without overfitting easily, especially when regularization techniques like L1 (Lasso) or L2 (Ridge) are applied.\n2. **Interpretability:** The coefficients of the logistic regression model provide clear insights into the relationships between each feature and the target outcome, making it easier to understand the influence of individual variables.\n\n**Limitations:**\n1. **Assumption of Linearity:** Logistic regression assumes a linear relationship between the log-odds of the outcome and the features, which may not capture non-linear patterns unless feature transformations or interactions are included.\n2. **Handling of Missing Values:** Logistic regression does not inherently manage missing data, necessitating preprocessing steps to handle or impute missing values before model training.\n\n**Example Dataset Analysis**\nUsing the logistic regression model, we calculate the odds for a student studying 4 hours and compare them to a student studying 2 hours. Assuming a simple model with \\( w = 1 \\) and \\( b = 0 \\) for illustration:\n- For 4 hours: \\( e^{4w + b} = e^{4} \\)\n- For 2 hours: \\( e^{2w + b} = e^{2} \\)\n\nThe odds ratio is calculated as:\n\\( \\frac{e^{4}}{e^{2}} = e^{2} \\approx 7.39 \\).\n\nThis indicates that, under the assumed model, the odds of passing are approximately 7.39 times higher for a student studying 4 hours compared to one studying 2 hours.",
+          "explanation": "The improvements made enhance clarity by structuring the question into clearly defined sections, which guide the candidate through the different components of logistic regression analysis. Each part is assigned specific marks, indicating its importance and expected depth of the answer. Additionally, the description of logistic regression integrates essential statistical concepts such as the log-odds and the sigmoid function, vital for a comprehensive understanding. The explanation of parameter estimation through MLE is succinct, catering to the medium difficulty level requirement. The strengths and limitations are directly related to logistic regression's practical applications, reinforcing the model's applicability and challenges. Overall, the structured format and specific prompts help students target their responses effectively, providing a holistic view of logistic regression in practice.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 9,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "informed heuristic search",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "### Exam Question: Informed Heuristic Search\n\nImagine a scenario where an agent is tasked with navigating a maze from a starting point to a goal. The agent uses informed search strategies and heuristic functions to find an optimal path efficiently. The maze consists of multiple paths with varying costs.\n\nAnswer the following:\n\n(a) Define what an informed search strategy is and explain how it differs from an uninformed search strategy. Provide examples to support your answer. \n\n(b) Describe the role of a heuristic function in informed search. What properties should a good heuristic function possess? Illustrate your explanation with an example of a simple heuristic function used in pathfinding problems.\n\n(c) Discuss the Pure Heuristic Search algorithm. Explain how it utilizes the heuristic function to determine the path, including the use of OPEN and CLOSED lists. Describe the conditions under which the search terminates.",
+          "answer": "**(a)** An informed search strategy utilizes domain-specific knowledge, typically in the form of heuristics, to guide the search process more efficiently than uninformed search strategies. Informed searches estimate the cost from the current node to the goal, thereby reducing the search space and time. For example, the A* search algorithm is an informed search that uses both actual path cost and heuristic information, whereas Breadth-First Search (BFS) is an uninformed search that explores nodes level by level without using domain knowledge.\n\n**(b)** A heuristic function provides an estimate of the cost from the current node to the goal node. A good heuristic should be admissible, meaning it never overestimates the cost to reach the goal, and should also be consistent (monotonic), ensuring that its estimated cost is always less than or equal to the estimated cost from any neighboring node plus the cost to reach that neighbor. An example is the Manhattan distance heuristic used in grid-based pathfinding problems, which calculates the sum of the horizontal and vertical distances from the current node to the goal.\n\n**(c)** Pure Heuristic Search expands nodes based solely on their heuristic values, utilizing two lists: OPEN and CLOSED. The OPEN list contains nodes to be expanded, sorted by their lowest heuristic value, while the CLOSED list holds nodes already expanded to prevent re-processing. The algorithm selects the node with the lowest heuristic value from the OPEN list, expands it, and moves it to the CLOSED list. This process is repeated until the goal node is expanded, or the OPEN list becomes empty, indicating no path exists to the goal.",
+          "explanation": "The improved question provides a clear scenario and specific prompts for each part, making it easy for students to understand what is being asked. The model answer gives detailed explanations and examples to clarify the concepts, ensuring accuracy and comprehensiveness.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 10,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "hunts algorithm",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "Hunt's Algorithm is one of the earliest decision tree induction algorithms and is crucial for understanding the foundational concepts of decision tree classification. Consider the following aspects of Hunt's Algorithm:\n\n(a) Explain the basic working principle of Hunt's Algorithm in decision tree induction. Describe how the algorithm selects splitting criteria and determines when to stop splitting.\n\n(b) Identify potential challenges when implementing Hunt's Algorithm on a real-world dataset, including issues related to data quality, computational efficiency, and result interpretability.\n\n(c) Compare Hunt's Algorithm with another decision tree algorithm such as CART or ID3, noting differences in their approach to tree construction and splitting criteria. Provide a comparison table encapsulating the key features of both algorithms.\n",
+          "answer": "(a) Hunt's Algorithm operates by recursively partitioning the dataset into subsets, using a splitting criterion that aims to increase homogeneity within each subset. Initially, the entire dataset is considered, and the algorithm evaluates multiple attributes to find the best split. The process stops under conditions such as reaching a predetermined node purity, minimum node size, or a maximum tree depth, helping to prevent overfitting.\n\n(b) Implementing Hunt's Algorithm presents several challenges. Data quality issues, like missing values and noise, can impair split accuracy. The computational cost can be high, especially for large datasets, because evaluating multiple potential splits is resource-intensive. Although decision trees are generally easy to interpret, overly complex trees may become difficult to understand, complicating stakeholder engagement and insight extraction.\n\n(c) Hunt\u2019s Algorithm differs from algorithms like CART and ID3 in several ways. Hunt\u2019s employs recursive partitioning, whereas CART uses binary splits with Gini impurity or variance reduction for regression. ID3 uses information gain specifically for categorical attributes. The following table contrasts these algorithms:\n\n| Feature                 | Hunt's Algorithm                            | CART                                       | ID3                                    |\n|-------------------------|---------------------------------------------|--------------------------------------------|----------------------------------------|\n| Splitting Criterion     | Information Gain / Impurity Reduction       | Gini Impurity / Variance Reduction         | Information Gain                        |\n| Tree Structure          | Multi-way splits                            | Binary splits                              | Multi-way splits based on categorical   |\n| Handling Numeric Data   | Less emphasis, focuses on categorical       | Capable of handling numerical data         | Primarily categorical                    |\n| Pruning Method          | Not inherently focused on pruning           | Post-pruning                               | No inherent pruning                      |\n\nThese distinctions showcase the different methodologies and considerations applied by each algorithm in constructing decision trees.",
+          "explanation": "The improved question now clearly outlines the expectations for each part of the question. The use of terms like 'partitioning', 'homogeneity', 'node purity', and 'tree depth' are consistent with decision tree terminology. The question is structured in a way that logically guides the respondent to address key aspects of Hunt's Algorithm and its practical implementation challenges, while also setting up a clear comparison with other algorithms. The answer provides a comprehensive and accurate response, including a side-by-side comparison in a table format for clarity.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 11,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "naive bayes classifier",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "### Scenario:\n\nConsider a scenario where a Na\u00efve Bayes Classifier is used to predict whether a person will evade taxes based on the following attributes: Refund status, Marital status, and Taxable Income. You are provided with the following training dataset:\n\n| Tid | Refund | Marital Status | Taxable Income | Evade  |\n|-----|--------|----------------|----------------|--------|\n| 1   | Yes    | Single         | 125K           | No     |\n| 2   | No     | Married        | 100K           | No     |\n| 3   | No     | Single         | 70K            | No     |\n| 4   | Yes    | Married        | 120K           | No     |\n| 5   | No     | Divorced       | 95K            | Yes    |\n| 6   | No     | Married        | 60K            | No     |\n| 7   | No     | Single         | 85K            | Yes    |\n| 8   | No     | Married        | 75K            | No     |\n| 9   | No     | Single         | 90K            | Yes    |\n\n\nAnswer the following:\n\n(a) **Calculate the probability of a person evading taxes given that they are divorced, have not received a refund, and have a taxable income of 120K.**\n\n- Use the Na\u00efve Bayes approach, providing detailed steps and calculations. Use the following class probability estimates: P(No) = 7/10, P(Yes) = 3/10. Assume that taxable income follows a normal distribution with these parameters:\n  - For class 'No': sample mean = 91, sample variance = 685 \n  - For class 'Yes': sample mean = 90, sample variance = 25\n\n(b) **Discuss potential issues that might arise with the Na\u00efve Bayes Classifier in this scenario.**\n\n- Address at least two specific issues related to assumptions made by Na\u00efve Bayes and how these could affect the classifier's performance. Provide examples from the dataset if applicable.\n\n(c) **Propose a solution or technique to address the issues identified in part (b).**\n\n- Suggest an alternative approach or modification to the Na\u00efve Bayes Classifier that could improve its accuracy or robustness in this context. Explain how your proposed solution overcomes the identified issues.",
+          "answer": "### Model Answer:\n\n(a) **Probability Calculation Using Na\u00efve Bayes**\n\nFirst, calculate the conditional probabilities for each attribute:\n\n- **P(Refund = No | Evade = No)** = 4/6  \n- **P(Refund = No | Evade = Yes)** = 1  \n- **P(Marital Status = Divorced | Evade = No)** = 0  \n- **P(Marital Status = Divorced | Evade = Yes)** = 1/3  \n\nFor taxable income, use the normal distribution:\n\n- **P(Income = 120K | Evade = No):**  \n  \\[ P(X) = \\frac{1}{\\sqrt{2\\pi \\times 685}} e^{-\\frac{(120-91)^2}{2 \\times 685}} \\approx 0.0072 \\]\n  \n- **P(Income = 120K | Evade = Yes):**  \n  \\[ P(X) = \\frac{1}{\\sqrt{2\\pi \\times 25}} e^{-\\frac{(120-90)^2}{2 \\times 25}} \\approx 1.2 \\times 10^{-9} \\]\n\nCalculate the posterior probabilities:\n\n- **P(No | X)** = P(No) * P(Refund = No | No) * P(Divorced | No) * P(Income = 120K | No)  \n\\[ \\approx \\frac{7}{10} \\times \\frac{4}{6} \\times 0 \\times 0.0072 = 0 \\]\n\n- **P(Yes | X)** = P(Yes) * P(Refund = No | Yes) * P(Divorced | Yes) * P(Income = 120K | Yes)  \n\\[ \\approx \\frac{3}{10} \\times 1 \\times \\frac{1}{3} \\times 1.2 \\times 10^{-9} \\approx 1.2 \\times 10^{-10} \\]\n\nIn conclusion, the Na\u00efve Bayes classifier cannot classify this instance as P(No | X) = 0.\n\n(b) **Potential Issues with Na\u00efve Bayes Classifier**\n\n1. **Independence Assumption**: Na\u00efve Bayes assumes that features are independent given the class label. However, attributes like marital status and taxable income might be correlated. This assumption can lead to inaccurate probability estimates.\n\n2. **Zero Probability Problem**: The probability of marital status being divorced given no evasion is zero, resulting in a zero probability for P(No | X), which makes classification impossible. This is a common issue with Na\u00efve Bayes when dealing with sparse data.\n\n(c) **Proposed Solutions**\n\n1. **Laplace Smoothing**: Apply Laplace smoothing to avoid zero probabilities by adding a small constant to all counts, ensuring no attribute has zero probability.\n\n2. **Use a Bayesian Network**: Employ a Bayesian Network to model the dependencies between variables, providing a more accurate representation of the dataset where the independence assumption does not hold.",
+          "explanation": "The question has been structured using the scenario-context-question-answer format to improve clarity and ensure it follows a logical order. The model answer provides a step-by-step explanation of how to calculate probabilities using the Na\u00efve Bayes approach, addressing each part of the question comprehensively. The explanation for part (b) identifies issues typical to Na\u00efve Bayes, such as the independence assumption and zero probability problem, which are directly applicable to the scenario given. Part (c) suggests solutions like Laplace smoothing and Bayesian Networks that are standard practices for addressing these issues in machine learning.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 12,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "ensemble methods",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "**Ensemble Methods in Machine Learning**\n\nYou are tasked with understanding the ensemble methods used in machine learning to improve classification accuracy. Answer the following questions:\n\n(a) What are ensemble methods, and what purpose do they serve in machine learning? Explain why combining multiple classifiers can be more beneficial than using a single model.\n\n(b) What are the necessary conditions for ensemble methods to be effective? Discuss the importance of independence among base classifiers and their performance relative to random guessing.\n\n(c) Why are unstable base classifiers often used in ensemble learning? Provide examples of such classifiers and explain why their instability might be advantageous in ensemble methods.",
+          "answer": "(a) Ensemble methods in machine learning involve the combination of multiple models, known as base classifiers, to address a problem with the aim of enhancing overall performance. The purpose of ensemble methods is to capitalize on the strengths of various models to achieve better predictions or classifications. Combining several models typically results in improved predictive accuracy because different models are likely to capture distinct patterns within the data, and their combination leads to more robust predictions.\n\n(b) For ensemble methods to be effective, certain conditions must be fulfilled. One key condition is that the base classifiers should be independent of each other, meaning their errors should not be correlated. This helps in increasing the diversity within the ensemble, thereby reducing the overall error rate. Additionally, each base classifier needs to perform better than random guessing, which implies having a classification accuracy greater than 50% for binary classification problems. If the classifiers do not outperform random guessing, the ensemble will not enhance predictive accuracy.\n\n(c) Unstable base classifiers are often used in ensemble learning due to their high sensitivity to small changes in the training dataset, which is a result of their complex structures. Examples of unstable classifiers include unpruned decision trees and artificial neural networks. These classifiers are suitable for ensemble methods because their high variance contributes to a diverse set of predictions. When such diverse predictions are aggregated, the ensemble can achieve higher accuracy and robustness than any individual unstable classifier.",
+          "explanation": "The question is designed to assess understanding of ensemble methods, a key concept in machine learning. Ensemble methods combine multiple models to improve classification accuracy, relying on the condition that base models should be independent and better than random guessing to be effective. Unstable classifiers, like decision trees and neural networks, are particularly useful in ensembles due to their high variance, contributing to prediction diversity and enhancing overall model performance.",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-20T05:15:24.499244",
+  "generation_stats": {}
+}

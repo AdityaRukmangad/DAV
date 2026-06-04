@@ -1,0 +1,37 @@
+{
+  "id": "aaaa125f",
+  "template_id": "aaaa125f",
+  "template_name": "Untitled Paper",
+  "subject": "Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 2,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly in 2-3 sentences",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "hunts algorithm ",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "**Short Answer Question Template:**\n\nContext: The Hunt\u2013Szymanski algorithm is an alternative to the classic dynamic programming method for computing the Longest Common Subsequence (LCS) of two sequences. Let A have length n, B have length m, and let r be the number of matching index pairs (i, j) with A[i] = B[j].\n\nQuestion: (a) Briefly describe the core idea behind the Hunt\u2013Szymanski algorithm for LCS. (b) State its time complexity in terms of n, m, and r, and contrast that with the standard dynamic programming approach.\n\n**Answer:** (a) Hunt\u2013Szymanski reduces LCS to a longest increasing subsequence (LIS) problem by, for each element of A, listing the positions in B where that element occurs and concatenating those positions into a sequence of indices (typically reversing each list so indices increase left-to-right). The LCS corresponds to an LIS in that sequence, which can be found with a patience-sorting (binary-search) method. (b) Building the lists takes O(n + r) time and finding the LIS takes O(r log m) time, so the overall running time is O((n + r) log m). This can be much faster than the standard dynamic programming O(n\u00b7m) when r is small compared with n\u00b7m.\n\n**Key Points:**\n- Map matches (i, j) to positions in B to obtain a sequence of length r.\n- Reduce LCS to LIS on that sequence; use patience-sorting / binary search to compute LIS in O(r log m).\n- Preprocessing (building occurrence lists) costs O(n + r), giving total O((n + r) log m).\n- Standard DP costs O(n\u00b7m) time and O(min(n,m)) to O(n\u00b7m) space, so Hunt\u2013Szymanski is advantageous when matches r are sparse.\n",
+          "answer": "(a) Hunt\u2013Szymanski transforms LCS into an LIS problem by listing, for each element of A, the positions in B where that element appears and concatenating those positions into one sequence; an LCS corresponds to a longest increasing subsequence of that sequence, which is found by a patience-sorting (binary-search) method. (b) Building the lists costs O(n + r) and computing the LIS costs O(r log m), for a total of O((n + r) log m), which can be substantially faster than the standard dynamic programming time O(n\u00b7m) when r is much smaller than n\u00b7m.",
+          "explanation": "Reasoning and complexity breakdown:\n- For each element of A, locate all matching positions in B. If there are r total matching pairs, producing the concatenated index sequence takes O(n + r) time (traversing A and appending matches).\n- The concatenated sequence has length r. Computing an LIS on values in the range 1..m using the patience-sorting technique (maintaining an array of pile-tops and binary-searching) takes O(r log L) where L \u2264 m (commonly stated as O(r log m)).\n- Summing gives O((n + r) + r log m) = O((n + r) log m) (the log factor dominates the r term in typical accounting). This is often written as O((r + n) log n) when m \u2248 n.\n- In contrast, the classic DP fills an n\u00d7m table in O(n\u00b7m) time and O(n\u00b7m) or O(min(n,m)) space; thus Hunt\u2013Szymanski is asymptotically better when matches are sparse (r \u226a n\u00b7m). \n\nReference: Hunt and Szymanski, 1977 (original algorithm reducing LCS to LIS).",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-18T03:14:49.724347",
+  "generation_stats": {}
+}

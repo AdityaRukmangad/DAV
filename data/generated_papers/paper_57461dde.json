@@ -1,0 +1,198 @@
+{
+  "id": "57461dde",
+  "template_id": "57461dde",
+  "template_name": "Untitled Paper",
+  "subject": "Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 60,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Answer Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "Hunts algorithm",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "**Short Answer Question Template:**\n\nContext: The Hunt\u2013Szymanski algorithm is an alternative to the classic dynamic programming method for computing the Longest Common Subsequence (LCS) of two sequences. Let A have length n, B have length m, and let r be the number of matching index pairs (i, j) with A[i] = B[j].\n\nQuestion: (a) Briefly describe the core idea behind the Hunt\u2013Szymanski algorithm for LCS. (b) State its time complexity in terms of n, m, and r, and contrast that with the standard dynamic programming approach.\n\n**Answer:** (a) Hunt\u2013Szymanski reduces LCS to a longest increasing subsequence (LIS) problem by, for each element of A, listing the positions in B where that element occurs and concatenating those positions into a sequence of indices (typically reversing each list so indices increase left-to-right). The LCS corresponds to an LIS in that sequence, which can be found with a patience-sorting (binary-search) method. (b) Building the lists takes O(n + r) time and finding the LIS takes O(r log m) time, so the overall running time is O((n + r) log m). This can be much faster than the standard dynamic programming O(n\u00b7m) when r is small compared with n\u00b7m.\n\n**Key Points:**\n- Map matches (i, j) to positions in B to obtain a sequence of length r.\n- Reduce LCS to LIS on that sequence; use patience-sorting / binary search to compute LIS in O(r log m).\n- Preprocessing (building occurrence lists) costs O(n + r), giving total O((n + r) log m).\n- Standard DP costs O(n\u00b7m) time and O(min(n,m)) to O(n\u00b7m) space, so Hunt\u2013Szymanski is advantageous when matches r are sparse.\n",
+          "answer": "(a) Hunt\u2013Szymanski transforms LCS into an LIS problem by listing, for each element of A, the positions in B where that element appears and concatenating those positions into one sequence; an LCS corresponds to a longest increasing subsequence of that sequence, which is found by a patience-sorting (binary-search) method. (b) Building the lists costs O(n + r) and computing the LIS costs O(r log m), for a total of O((n + r) log m), which can be substantially faster than the standard dynamic programming time O(n\u00b7m) when r is much smaller than n\u00b7m.",
+          "explanation": "Reasoning and complexity breakdown:\n- For each element of A, locate all matching positions in B. If there are r total matching pairs, producing the concatenated index sequence takes O(n + r) time (traversing A and appending matches).\n- The concatenated sequence has length r. Computing an LIS on values in the range 1..m using the patience-sorting technique (maintaining an array of pile-tops and binary-searching) takes O(r log L) where L \u2264 m (commonly stated as O(r log m)).\n- Summing gives O((n + r) + r log m) = O((n + r) log m) (the log factor dominates the r term in typical accounting). This is often written as O((r + n) log n) when m \u2248 n.\n- In contrast, the classic DP fills an n\u00d7m table in O(n\u00b7m) time and O(n\u00b7m) or O(min(n,m)) space; thus Hunt\u2013Szymanski is asymptotically better when matches are sparse (r \u226a n\u00b7m). \n\nReference: Hunt and Szymanski, 1977 (original algorithm reducing LCS to LIS).",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 2,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "A* search",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "What is A* search, and how does it differ from uninformed search strategies?",
+          "answer": "A* search is an informed search algorithm that uses both the actual cost to reach a node and a heuristic estimate of the cost to reach the goal from that node. This combination helps in efficiently finding the shortest path. In contrast, uninformed search strategies do not use such heuristic information and often explore paths without specific guidance towards the goal, potentially leading to less efficient searches.",
+          "explanation": "A* search is classified as an informed search because it uses heuristics to guide its search toward the goal, making it more efficient in finding the shortest path. The heuristic function estimates the minimum cost from the current node to the goal, which is not present in uninformed searches like Breadth-First Search or Depth-First Search. These uninformed strategies lack additional information about the goal's location or the cost to reach it, often resulting in exhaustive exploration of paths.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 3,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "Informed searches",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "What is an informed search strategy, and how does it improve search efficiency compared to uninformed search strategies?",
+          "answer": "An informed search strategy uses problem-specific knowledge to guide the search process more efficiently towards a solution. It employs heuristic information, such as an estimate of the cost to reach the goal from a given state, to reduce the search space and find the goal faster. In contrast, uninformed strategies lack this domain-specific guidance and are more reliant on brute-force exploration methods.",
+          "explanation": "Informed search strategies enhance efficiency by using heuristics to better estimate the most promising path to the goal, thus minimizing unnecessary exploration. This approach contrasts with uninformed strategies, which explore blindly without any additional information about the problem domain. Examples of informed strategies include A* and greedy best-first search, which utilize heuristics to prioritize paths that appear more promising.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 4,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "uninformed searches",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "In the context of search algorithms, what is the main difference between uninformed and informed search strategies?",
+          "answer": "Uninformed search strategies do not rely on additional domain-specific knowledge and often use brute-force methods, evaluating nodes until they find the goal. Informed search strategies, however, utilize extra information about the problem, such as heuristic functions, to more efficiently guide the search process towards the goal.",
+          "explanation": "Uninformed search strategies, also known as blind searches, do not use any knowledge beyond the problem's definition to determine their actions. Examples include breadth-first search and depth-first search. Informed search strategies, on the other hand, make use of heuristics or other information beyond the problem's initial setup to predict the likelihood of a solution path being closer to the goal. Examples include A* and greedy best-first search.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 5,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "ensemble methods",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "What is the primary reason for employing ensemble methods with unstable base classifiers?",
+          "answer": "The primary reason for using ensemble methods with unstable base classifiers is that these classifiers tend to overfit the training data due to their high variance. By aggregating predictions from multiple classifiers, ensemble methods can reduce this variance, leading to more stable and accurate predictions.",
+          "explanation": "Unstable base classifiers, like decision trees, are known for their sensitivity to small changes in the training data. This can lead to high variance and overfitting. Ensemble methods, such as bagging and boosting, combine the predictions of several such classifiers to average out the errors, thus improving the model's generalization ability.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 6,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "supervised learning",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "What is the primary goal of supervised learning in machine learning?",
+          "answer": "The primary goal of supervised learning is to develop a model that accurately maps input features to output labels using labeled training data. This enables the model to make precise predictions for new, unseen data by minimizing the error between the actual and predicted outputs.",
+          "explanation": "Supervised learning involves training a model on a labeled dataset, which means each training example has an associated output label. The model learns the relationship between the input features and the output labels to predict the labels of new data accurately. The accuracy of the predictions is achieved by minimizing the difference, or error, between the predicted outputs and the actual outputs observed in the training data.",
+          "verification_code": "",
+          "from_cache": true
+        }
+      ]
+    },
+    {
+      "name": "Section B - Descriptive / Analytical Questions",
+      "title": "Questions",
+      "instructions": "Answer in detail. Internal choice may be provided",
+      "questions": [
+        {
+          "question_number": 7,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "A* search",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "What is A* search, and how does it differ from uninformed search strategies?",
+          "answer": "A* search is an informed search algorithm that uses both the actual cost to reach a node and a heuristic estimate of the cost to reach the goal from that node. This combination helps in efficiently finding the shortest path. In contrast, uninformed search strategies do not use such heuristic information and often explore paths without specific guidance towards the goal, potentially leading to less efficient searches.",
+          "explanation": "A* search is classified as an informed search because it uses heuristics to guide its search toward the goal, making it more efficient in finding the shortest path. The heuristic function estimates the minimum cost from the current node to the goal, which is not present in uninformed searches like Breadth-First Search or Depth-First Search. These uninformed strategies lack additional information about the goal's location or the cost to reach it, often resulting in exhaustive exploration of paths.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 8,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "Informed searches",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "What is an informed search strategy, and how does it improve search efficiency compared to uninformed search strategies?",
+          "answer": "An informed search strategy uses problem-specific knowledge to guide the search process more efficiently towards a solution. It employs heuristic information, such as an estimate of the cost to reach the goal from a given state, to reduce the search space and find the goal faster. In contrast, uninformed strategies lack this domain-specific guidance and are more reliant on brute-force exploration methods.",
+          "explanation": "Informed search strategies enhance efficiency by using heuristics to better estimate the most promising path to the goal, thus minimizing unnecessary exploration. This approach contrasts with uninformed strategies, which explore blindly without any additional information about the problem domain. Examples of informed strategies include A* and greedy best-first search, which utilize heuristics to prioritize paths that appear more promising.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 9,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "uninformed searches",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "In the context of search algorithms, what is the main difference between uninformed and informed search strategies?",
+          "answer": "Uninformed search strategies do not rely on additional domain-specific knowledge and often use brute-force methods, evaluating nodes until they find the goal. Informed search strategies, however, utilize extra information about the problem, such as heuristic functions, to more efficiently guide the search process towards the goal.",
+          "explanation": "Uninformed search strategies, also known as blind searches, do not use any knowledge beyond the problem's definition to determine their actions. Examples include breadth-first search and depth-first search. Informed search strategies, on the other hand, make use of heuristics or other information beyond the problem's initial setup to predict the likelihood of a solution path being closer to the goal. Examples include A* and greedy best-first search.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 10,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "ensemble methods",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "What is the primary reason for employing ensemble methods with unstable base classifiers?",
+          "answer": "The primary reason for using ensemble methods with unstable base classifiers is that these classifiers tend to overfit the training data due to their high variance. By aggregating predictions from multiple classifiers, ensemble methods can reduce this variance, leading to more stable and accurate predictions.",
+          "explanation": "Unstable base classifiers, like decision trees, are known for their sensitivity to small changes in the training data. This can lead to high variance and overfitting. Ensemble methods, such as bagging and boosting, combine the predictions of several such classifiers to average out the errors, thus improving the model's generalization ability.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 11,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "supervised learning",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "What is the primary goal of supervised learning in machine learning?",
+          "answer": "The primary goal of supervised learning is to develop a model that accurately maps input features to output labels using labeled training data. This enables the model to make precise predictions for new, unseen data by minimizing the error between the actual and predicted outputs.",
+          "explanation": "Supervised learning involves training a model on a labeled dataset, which means each training example has an associated output label. The model learns the relationship between the input features and the output labels to predict the labels of new data accurately. The accuracy of the predictions is achieved by minimizing the difference, or error, between the predicted outputs and the actual outputs observed in the training data.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 12,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "Hunts algorithm",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "**Short Answer Question Template:**\n\nContext: The Hunt\u2013Szymanski algorithm is an alternative to the classic dynamic programming method for computing the Longest Common Subsequence (LCS) of two sequences. Let A have length n, B have length m, and let r be the number of matching index pairs (i, j) with A[i] = B[j].\n\nQuestion: (a) Briefly describe the core idea behind the Hunt\u2013Szymanski algorithm for LCS. (b) State its time complexity in terms of n, m, and r, and contrast that with the standard dynamic programming approach.\n\n**Answer:** (a) Hunt\u2013Szymanski reduces LCS to a longest increasing subsequence (LIS) problem by, for each element of A, listing the positions in B where that element occurs and concatenating those positions into a sequence of indices (typically reversing each list so indices increase left-to-right). The LCS corresponds to an LIS in that sequence, which can be found with a patience-sorting (binary-search) method. (b) Building the lists takes O(n + r) time and finding the LIS takes O(r log m) time, so the overall running time is O((n + r) log m). This can be much faster than the standard dynamic programming O(n\u00b7m) when r is small compared with n\u00b7m.\n\n**Key Points:**\n- Map matches (i, j) to positions in B to obtain a sequence of length r.\n- Reduce LCS to LIS on that sequence; use patience-sorting / binary search to compute LIS in O(r log m).\n- Preprocessing (building occurrence lists) costs O(n + r), giving total O((n + r) log m).\n- Standard DP costs O(n\u00b7m) time and O(min(n,m)) to O(n\u00b7m) space, so Hunt\u2013Szymanski is advantageous when matches r are sparse.\n",
+          "answer": "(a) Hunt\u2013Szymanski transforms LCS into an LIS problem by listing, for each element of A, the positions in B where that element appears and concatenating those positions into one sequence; an LCS corresponds to a longest increasing subsequence of that sequence, which is found by a patience-sorting (binary-search) method. (b) Building the lists costs O(n + r) and computing the LIS costs O(r log m), for a total of O((n + r) log m), which can be substantially faster than the standard dynamic programming time O(n\u00b7m) when r is much smaller than n\u00b7m.",
+          "explanation": "Reasoning and complexity breakdown:\n- For each element of A, locate all matching positions in B. If there are r total matching pairs, producing the concatenated index sequence takes O(n + r) time (traversing A and appending matches).\n- The concatenated sequence has length r. Computing an LIS on values in the range 1..m using the patience-sorting technique (maintaining an array of pile-tops and binary-searching) takes O(r log L) where L \u2264 m (commonly stated as O(r log m)).\n- Summing gives O((n + r) + r log m) = O((n + r) log m) (the log factor dominates the r term in typical accounting). This is often written as O((r + n) log n) when m \u2248 n.\n- In contrast, the classic DP fills an n\u00d7m table in O(n\u00b7m) time and O(n\u00b7m) or O(min(n,m)) space; thus Hunt\u2013Szymanski is asymptotically better when matches are sparse (r \u226a n\u00b7m). \n\nReference: Hunt and Szymanski, 1977 (original algorithm reducing LCS to LIS).",
+          "verification_code": "",
+          "from_cache": true
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-20T02:43:07.076998",
+  "generation_stats": {}
+}

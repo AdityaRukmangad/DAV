@@ -1,0 +1,37 @@
+{
+  "id": "c9eac67a",
+  "template_id": "c9eac67a",
+  "template_name": "Untitled Paper",
+  "subject": "Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 2,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly in 2-3 sentences",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Questions",
+          "topic": "decision tree pruning ",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "Short Answer Question Template:\n\nContext: You trained a decision tree and evaluated several pruned subtrees on a held-out validation set.\n\nQuestion: Select the best subtree from the table below and justify your choice in 2\u20133 short sentences.\n\n| Subtree ID | Leaves | Training Error | Validation Error |\n|------------|-------:|---------------:|-----------------:|\n| Full       |     10 |           0.02 |             0.10 |\n| A          |      6 |           0.05 |             0.08 |\n| B          |      4 |           0.08 |             0.07 |\n| C          |      2 |           0.12 |             0.09 |\n\nInstructions: Answer in 2\u20133 short sentences, naming the subtree and briefly justifying why it was chosen (consider validation error, overfitting, and model complexity).",
+          "answer": "Choose Subtree B (4 leaves). It has the lowest validation error (0.07), indicating the best generalization on the held-out validation set; although its training error (0.08) is higher than the full tree, that suggests pruning reduced overfitting and improved out-of-sample performance.",
+          "explanation": "Reasoning:\n- Use validation error to select among pruned subtrees because it estimates out-of-sample performance.\n- Subtree B has the lowest validation error (0.07), so it best balances fit and generalization.\n- The higher training error relative to the full tree indicates pruning reduced overfitting; B keeps model complexity low (4 leaves) while achieving the best validation performance.\nAdditional note: If validation errors were very close, prefer the simpler model or confirm choice on an independent test set.",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-19T02:39:47.683845",
+  "generation_stats": {}
+}

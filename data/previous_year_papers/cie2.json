@@ -1,0 +1,143 @@
+{
+  "exam_name": "CIE-II",
+  "academic_year": "2024-2025",
+  "semester": "V",
+  "course_code": "IS3531A",
+  "course_name": "Artificial Intelligence and Machine Learning",
+  "total_marks": 60,
+  "duration_minutes": 120,
+  "questions": [
+    {
+      "question_number": 1,
+      "section": "QUIZ",
+      "question_type": "short",
+      "marks": 1,
+      "difficulty": "Easy",
+      "topic": "Problem Representation",
+      "co_mapping": ["CO4"],
+      "bloom_level": "Remember (L1)",
+      "question_text": "The process of removing details from a representation is called ________."
+    },
+    {
+      "question_number": 2,
+      "section": "QUIZ",
+      "question_type": "short",
+      "marks": 1,
+      "difficulty": "Medium",
+      "topic": "Search Tree",
+      "co_mapping": ["CO3"],
+      "bloom_level": "Analyze (L3)",
+      "question_text": "The depth of a tree is given by 'd'. While using Iterative deepening search, the children of root are generated ________ times."
+    },
+    {
+      "question_number": 3,
+      "section": "QUIZ",
+      "question_type": "short",
+      "marks": 1,
+      "difficulty": "Medium",
+      "topic": "Heuristics",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Understand (L2)",
+      "question_text": "Suggest a method to characterize the quality of a heuristic."
+    },
+    {
+      "question_number": 4,
+      "section": "QUIZ",
+      "question_type": "short",
+      "marks": 1,
+      "difficulty": "Easy",
+      "topic": "Problem Components",
+      "co_mapping": ["CO5"],
+      "bloom_level": "Remember (L1)",
+      "question_text": "A node in a tree is represented by 4 components. Which are they?"
+    },
+    {
+      "question_number": 5,
+      "section": "QUIZ",
+      "question_type": "short",
+      "marks": 1,
+      "difficulty": "Medium",
+      "topic": "k-NN",
+      "co_mapping": ["CO1"],
+      "bloom_level": "Understand (L2)",
+      "question_text": "k-NN algorithm is sensitive to the choice of K. Recommend a way to reduce it."
+    },
+    {
+      "question_number": 6,
+      "section": "QUIZ",
+      "question_type": "short",
+      "marks": 2,
+      "difficulty": "Medium",
+      "topic": "Naive Bayes",
+      "co_mapping": ["CO4"],
+      "bloom_level": "Apply (L3)",
+      "question_text": "The Naive Bayes classifier is robust to irrelevant attributes. Give reason."
+    },
+    {
+      "question_number": 7,
+      "section": "QUIZ",
+      "question_type": "short",
+      "marks": 2,
+      "difficulty": "Medium",
+      "topic": "Algorithm Evaluation",
+      "co_mapping": ["CO5"],
+      "bloom_level": "Understand (L2)",
+      "question_text": "Suggest 4 different ways to evaluate the performance of an algorithm."
+    },
+    {
+      "question_number": "1",
+      "section": "TEST",
+      "question_type": "numerical",
+      "marks": 10,
+      "difficulty": "Medium",
+      "topic": "Uninformed Search",
+      "co_mapping": ["CO1"],
+      "bloom_level": "Apply (L3)",
+      "question_text": "Apply BFS and DFS to the provided graph and compare the results. Show all the necessary steps during the traversal and reasons. Also discuss the pros and cons of BFS and DFS."
+    },
+    {
+      "question_number": "2",
+      "section": "TEST",
+      "question_type": "numerical",
+      "marks": 10,
+      "difficulty": "Hard",
+      "topic": "A* Algorithm",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Analyze (L4)",
+      "question_text": "Find the most cost-effective path to reach from start state A to final state J using A* Algorithm for the graph in Figure 1."
+    },
+    {
+      "question_number": "3",
+      "section": "TEST",
+      "question_type": "conceptual",
+      "marks": 10,
+      "difficulty": "Medium",
+      "topic": "Search Theory",
+      "co_mapping": ["CO5"],
+      "bloom_level": "Apply (L3)",
+      "question_text": "State whether you agree or disagree with the following statements with valid reasons: a. DFS always expands at least as many nodes as A* with an admissible heuristic. b. h(n)=0 is an admissible heuristic for the 8-puzzle. c. A* is of no use in robotics because percepts, states, and actions are continuous. d. BFS is complete even if zero step costs are allowed."
+    },
+    {
+      "question_number": "4",
+      "section": "TEST",
+      "question_type": "numerical",
+      "marks": 10,
+      "difficulty": "Hard",
+      "topic": "Naive Bayes",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Analyze (L4)",
+      "question_text": "Using Table 1: (a) Estimate conditional probabilities for A, B, and C. (b) Predict the class label for test sample (A=0, B=1, C=0) using Naive Bayes. (c) Estimate probabilities using m-estimate approach (p=1/2, m=4). (d) Repeat prediction with m-estimate probabilities."
+    },
+    {
+      "question_number": "5",
+      "section": "TEST",
+      "question_type": "numerical",
+      "marks": 10,
+      "difficulty": "Medium",
+      "topic": "K-NN",
+      "co_mapping": ["CO5"],
+      "bloom_level": "Apply (L3)",
+      "question_text": "Using K-NN Algorithm (k=5), classify the unknown instance: brightness=20 and saturation=25 into Red or Blue class. Also give any 5 characteristics of K-NN algorithm."
+    }
+  ]
+}

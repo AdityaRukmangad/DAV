@@ -1,0 +1,198 @@
+{
+  "id": "8a749882",
+  "template_id": "8a749882",
+  "template_name": "Untitled Paper",
+  "subject": "Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 36,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Answer Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "Naive Bayes",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "What is the assumption made by the Na\u00efve Bayes classifier regarding the relationship between features?",
+          "answer": "The Na\u00efve Bayes classifier assumes that all features are conditionally independent given the class label. This assumption implies that the presence or absence of one feature does not affect the presence or absence of any other feature, provided the class variable is known. This simplifies the computation of probabilities within the Na\u00efve Bayes framework.",
+          "explanation": "The Na\u00efve Bayes classifier is based on Bayes' theorem and is particularly known for its simplifying assumption that all features are independent given the class label. This independence assumption helps in efficiently calculating the likelihood of different class labels, even in high-dimensional spaces, but may not always hold true in real-world datasets.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 2,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "Logistic Regression",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "In logistic regression, what is the significance of the parameters 'w' and 'b'?",
+          "answer": "In logistic regression, the parameters 'w' and 'b' are crucial in defining the decision boundary. The vector 'w' represents the weights of the features in the data, and 'b' is the bias term. Together, they create the linear predictor, expressed as wT x + b, to calculate the log-odds and estimate the probability of a data instance belonging to a particular class.",
+          "explanation": "The parameters 'w' and 'b' are fundamental in logistic regression because they establish the linear relationship between the input features and the output probability. 'w', the weight vector, scales each feature according to its importance, while 'b', the bias, shifts the decision boundary. This forms the foundation of the model's capability to predict class membership.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 3,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "Ensemble Methods",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "What is the primary reason for employing ensemble methods with unstable base classifiers?",
+          "answer": "The primary reason for using ensemble methods with unstable base classifiers is that these classifiers tend to overfit the training data due to their high variance. By aggregating predictions from multiple classifiers, ensemble methods can reduce this variance, leading to more stable and accurate predictions.",
+          "explanation": "Unstable base classifiers, like decision trees, are known for their sensitivity to small changes in the training data. This can lead to high variance and overfitting. Ensemble methods, such as bagging and boosting, combine the predictions of several such classifiers to average out the errors, thus improving the model's generalization ability.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 4,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "Supervised Learning",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "What is the primary goal of supervised learning in machine learning?",
+          "answer": "The primary goal of supervised learning is to develop a model that accurately maps input features to output labels using labeled training data. This enables the model to make precise predictions for new, unseen data by minimizing the error between the actual and predicted outputs.",
+          "explanation": "Supervised learning involves training a model on a labeled dataset, which means each training example has an associated output label. The model learns the relationship between the input features and the output labels to predict the labels of new data accurately. The accuracy of the predictions is achieved by minimizing the difference, or error, between the predicted outputs and the actual outputs observed in the training data.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 5,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "Model Overfitting",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "What is model overfitting, and how does it affect the comparison between test errors and training errors?",
+          "answer": "Model overfitting happens when a model is excessively complex, which results in low training errors but higher test errors. It occurs because the model captures noise in the training data rather than the underlying patterns, causing it to perform poorly on new, unseen data.",
+          "explanation": "Model overfitting typically results from a model being overly complex, such as having too many parameters. While this complexity can allow the model to fit the training data very closely, it does not generalize well to new data. As a result, the model will have low error on the training data but higher error on testing data due to its inability to adapt to unseen patterns. This indicates a lack of generalization.",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 6,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "Decision tree classification",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "What is post-pruning in decision tree classification, and how does it help improve the generalization error of the model?",
+          "answer": "Post-pruning in decision tree classification involves reducing the size of a fully grown tree by trimming its branches from the bottom up. If removing a subtree and replacing it with a leaf node results in a lower generalization error, the subtree is pruned. This process helps simplify the model and reduces overfitting, thereby improving its performance on unseen data.",
+          "explanation": "Post-pruning is a method used in decision tree classification to reduce the complexity of the model and prevent overfitting. By removing nodes that contribute little to predictive power or increase the risk of overfitting, the model becomes more generalizable to unseen data, thus reducing the generalization error.",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    },
+    {
+      "name": "Section B - Descriptive / Analytical Questions",
+      "title": "Questions",
+      "instructions": "Answer in detail. Internal choice may be provided",
+      "questions": [
+        {
+          "question_number": 7,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "Logistic Regression",
+          "question_type": "numerical",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "In logistic regression, what is the significance of the parameters 'w' and 'b'?",
+          "answer": "In logistic regression, the parameters 'w' and 'b' are crucial in defining the decision boundary. The vector 'w' represents the weights of the features in the data, and 'b' is the bias term. Together, they create the linear predictor, expressed as wT x + b, to calculate the log-odds and estimate the probability of a data instance belonging to a particular class.",
+          "explanation": "The parameters 'w' and 'b' are fundamental in logistic regression because they establish the linear relationship between the input features and the output probability. 'w', the weight vector, scales each feature according to its importance, while 'b', the bias, shifts the decision boundary. This forms the foundation of the model's capability to predict class membership.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 8,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "Ensemble Methods",
+          "question_type": "numerical",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "What is the primary reason for employing ensemble methods with unstable base classifiers?",
+          "answer": "The primary reason for using ensemble methods with unstable base classifiers is that these classifiers tend to overfit the training data due to their high variance. By aggregating predictions from multiple classifiers, ensemble methods can reduce this variance, leading to more stable and accurate predictions.",
+          "explanation": "Unstable base classifiers, like decision trees, are known for their sensitivity to small changes in the training data. This can lead to high variance and overfitting. Ensemble methods, such as bagging and boosting, combine the predictions of several such classifiers to average out the errors, thus improving the model's generalization ability.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 9,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "Supervised Learning",
+          "question_type": "numerical",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "What is the primary goal of supervised learning in machine learning?",
+          "answer": "The primary goal of supervised learning is to develop a model that accurately maps input features to output labels using labeled training data. This enables the model to make precise predictions for new, unseen data by minimizing the error between the actual and predicted outputs.",
+          "explanation": "Supervised learning involves training a model on a labeled dataset, which means each training example has an associated output label. The model learns the relationship between the input features and the output labels to predict the labels of new data accurately. The accuracy of the predictions is achieved by minimizing the difference, or error, between the predicted outputs and the actual outputs observed in the training data.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 10,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "Model Overfitting",
+          "question_type": "numerical",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "What is model overfitting, and how does it affect the comparison between test errors and training errors?",
+          "answer": "Model overfitting happens when a model is excessively complex, which results in low training errors but higher test errors. It occurs because the model captures noise in the training data rather than the underlying patterns, causing it to perform poorly on new, unseen data.",
+          "explanation": "Model overfitting typically results from a model being overly complex, such as having too many parameters. While this complexity can allow the model to fit the training data very closely, it does not generalize well to new data. As a result, the model will have low error on the training data but higher error on testing data due to its inability to adapt to unseen patterns. This indicates a lack of generalization.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 11,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "Decision tree classification",
+          "question_type": "numerical",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "What is post-pruning in decision tree classification, and how does it help improve the generalization error of the model?",
+          "answer": "Post-pruning in decision tree classification involves reducing the size of a fully grown tree by trimming its branches from the bottom up. If removing a subtree and replacing it with a leaf node results in a lower generalization error, the subtree is pruned. This process helps simplify the model and reduces overfitting, thereby improving its performance on unseen data.",
+          "explanation": "Post-pruning is a method used in decision tree classification to reduce the complexity of the model and prevent overfitting. By removing nodes that contribute little to predictive power or increase the risk of overfitting, the model becomes more generalizable to unseen data, thus reducing the generalization error.",
+          "verification_code": "",
+          "from_cache": true
+        },
+        {
+          "question_number": 12,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "Naive Bayes",
+          "question_type": "numerical",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "What is the assumption made by the Na\u00efve Bayes classifier regarding the relationship between features?",
+          "answer": "The Na\u00efve Bayes classifier assumes that all features are conditionally independent given the class label. This assumption implies that the presence or absence of one feature does not affect the presence or absence of any other feature, provided the class variable is known. This simplifies the computation of probabilities within the Na\u00efve Bayes framework.",
+          "explanation": "The Na\u00efve Bayes classifier is based on Bayes' theorem and is particularly known for its simplifying assumption that all features are independent given the class label. This independence assumption helps in efficiently calculating the likelihood of different class labels, even in high-dimensional spaces, but may not always hold true in real-world datasets.",
+          "verification_code": "",
+          "from_cache": true
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-20T01:03:13.902633",
+  "generation_stats": {}
+}

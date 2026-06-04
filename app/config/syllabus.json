@@ -1,0 +1,215 @@
+{
+  "course_name": "Artificial Intelligence and Machine Learning",
+  "course_code": "IS353IA",
+  "semester": "V",
+  "category": "Professional Core Course",
+  "credits": {
+    "lecture": 3,
+    "tutorial": 0,
+    "practical": 1
+  },
+  "units": [
+    {
+      "unit_number": 1,
+      "unit_name": "Introduction to AI and Uninformed Search",
+      "hours": 9,
+      "topics": [
+        {
+          "name": "Introduction to Artificial Intelligence",
+          "subtopics": [
+            "What is AI"
+          ]
+        },
+        {
+          "name": "Intelligent Agents",
+          "subtopics": [
+            "Agents and Environment",
+            "Rationality",
+            "Nature of Environments",
+            "Structure of Agents"
+          ]
+        },
+        {
+          "name": "Problem Solving and Uninformed Search",
+          "subtopics": [
+            "Problem-Solving Agents",
+            "Breadth First Search",
+            "Depth First Search",
+            "Depth Limited Search",
+            "Iterative Deepening Depth First Search"
+          ]
+        }
+      ],
+      "co_mapping": ["CO1", "CO3"],
+      "bloom_levels": ["Remember", "Understand", "Apply"]
+    },
+    {
+      "unit_number": 2,
+      "unit_name": "Informed Search and Adversarial Search",
+      "hours": 9,
+      "topics": [
+        {
+          "name": "Informed (Heuristic) Search",
+          "subtopics": [
+            "A* Search",
+            "Heuristic Functions"
+          ]
+        },
+        {
+          "name": "Beyond Classical Search",
+          "subtopics": [
+            "Local Search Algorithms",
+            "Optimization Problems",
+            "Hill Climbing Search",
+            "Simulated Annealing",
+            "Local Beam Search",
+            "Genetic Algorithms"
+          ]
+        },
+        {
+          "name": "Adversarial Search",
+          "subtopics": [
+            "Games",
+            "Optimal Decision in Games",
+            "Alpha-Beta Pruning"
+          ]
+        }
+      ],
+      "co_mapping": ["CO1", "CO2"],
+      "bloom_levels": ["Understand", "Apply", "Analyze"]
+    },
+    {
+      "unit_number": 3,
+      "unit_name": "Supervised Learning and Model Selection",
+      "hours": 9,
+      "topics": [
+        {
+          "name": "Supervised Learning",
+          "subtopics": [
+            "Basic Concepts",
+            "General Framework for Classification"
+          ]
+        },
+        {
+          "name": "Decision Tree Classifier",
+          "subtopics": [
+            "Decision Tree Induction Algorithm",
+            "Attribute Test Conditions",
+            "Measures for Attribute Selection",
+            "Characteristics of Decision Trees"
+          ]
+        },
+        {
+          "name": "Model Overfitting",
+          "subtopics": [
+            "Reasons for Model Overfitting"
+          ]
+        },
+        {
+          "name": "Model Selection and Evaluation",
+          "subtopics": [
+            "Validation Set",
+            "Model Complexity",
+            "Statistical Bounds",
+            "Model Selection for Decision Trees",
+            "Model Evaluation"
+          ]
+        }
+      ],
+      "co_mapping": ["CO1", "CO5"],
+      "bloom_levels": ["Understand", "Analyze", "Evaluate"]
+    },
+    {
+      "unit_number": 4,
+      "unit_name": "Probabilistic and Ensemble Learning",
+      "hours": 9,
+      "topics": [
+        {
+          "name": "Nearest Neighbor Classifiers",
+          "subtopics": [
+            "Characteristics of Nearest Neighbor Classifiers"
+          ]
+        },
+        {
+          "name": "Naive Bayes Classifier",
+          "subtopics": [
+            "Basics of Probability Theory",
+            "Naive Bayes Assumption"
+          ]
+        },
+        {
+          "name": "Logistic Regression",
+          "subtopics": [
+            "Generalized Linear Model",
+            "Learning Model Parameters",
+            "Characteristics of Logistic Regression"
+          ]
+        },
+        {
+          "name": "Ensemble Methods",
+          "subtopics": [
+            "Ensemble Construction Methods",
+            "Bagging",
+            "Boosting",
+            "Random Forests"
+          ]
+        }
+      ],
+      "co_mapping": ["CO1", "CO2", "CO5"],
+      "bloom_levels": ["Apply", "Analyze", "Evaluate"]
+    },
+    {
+      "unit_number": 5,
+      "unit_name": "Unsupervised Learning and Clustering",
+      "hours": 9,
+      "topics": [
+        {
+          "name": "Unsupervised Learning",
+          "subtopics": [
+            "Overview",
+            "Cluster Analysis",
+            "Types of Clustering",
+            "Types of Clusters"
+          ]
+        },
+        {
+          "name": "K-Means Clustering",
+          "subtopics": [
+            "Basic K-Means Algorithm",
+            "Additional Issues",
+            "Bisecting K-Means",
+            "K-Means as Optimization Problem",
+            "Strengths and Weaknesses"
+          ]
+        },
+        {
+          "name": "Cluster Evaluation",
+          "subtopics": [
+            "Cohesion and Separation",
+            "Proximity Matrix",
+            "Determining Number of Clusters",
+            "Supervised Cluster Validity Measures",
+            "Significance of Cluster Validity",
+            "Choosing Cluster Validity Measure"
+          ]
+        }
+      ],
+      "co_mapping": ["CO1", "CO5"],
+      "bloom_levels": ["Understand", "Analyze", "Evaluate"]
+    }
+  ],
+  "course_outcomes": {
+    "CO1": "Explain and apply AI and ML algorithms to real-world problems",
+    "CO2": "Design and develop AI and ML solutions for society and industry",
+    "CO3": "Use modern tools to create AI and ML solutions",
+    "CO4": "Communicate and analyze societal impact of AI and ML solutions",
+    "CO5": "Perform evaluation, modeling, and validation of AI and ML systems"
+  },
+  "co_po_mapping": {
+    "CO1": {"PO1": 3, "PO2": 2, "PO4": 2},
+    "CO2": {"PO3": 3, "PO5": 2},
+    "CO3": {"PO5": 3},
+    "CO4": {"PO9": 3, "PO10": 3},
+    "CO5": {"PO4": 3, "PO12": 2}
+  }
+}

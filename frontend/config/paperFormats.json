@@ -1,0 +1,207 @@
+{
+  "exam_formats": {
+    "CIE": {
+      "title": "Continuous Internal Evaluation (CIE) Examination",
+      "duration_minutes": 120,
+      "maximum_marks": 50,
+      "general_instructions": [
+        "Answer all questions unless otherwise specified",
+        "Figures to the right indicate full marks",
+        "Use neat diagrams wherever applicable",
+        "Assume suitable data if required and state clearly"
+      ],
+      "sections": [
+        {
+          "name": "Section A - Short Answer Questions",
+          "section_type": "short",
+          "instructions": "Answer briefly",
+          "question_pattern": {
+            "question_type": "very_short_or_short",
+            "marks_per_question": [1, 2],
+            "number_of_questions": 6,
+            "total_marks": 10,
+            "allowed_question_styles": [
+              "Definition",
+              "Reason",
+              "True/False with justification",
+              "List components",
+              "One-line explanation"
+            ],
+            "bloom_levels": ["L1", "L2"],
+            "course_outcomes": ["CO1", "CO2", "CO3"]
+          }
+        },
+        {
+          "name": "Section B - Descriptive / Analytical Questions",
+          "section_type": "long",
+          "instructions": "Answer in detail. Internal choice may be provided",
+          "question_pattern": {
+            "question_type": "descriptive_or_problem_solving",
+            "marks_per_question": [5, 6, 8, 10],
+            "number_of_questions": 6,
+            "total_marks": 50,
+            "internal_choice": true,
+            "allowed_question_styles": [
+              "Algorithm application",
+              "Numerical problem solving",
+              "Case study",
+              "Compare and analyze",
+              "Agree/Disagree with justification",
+              "Data-based interpretation"
+            ],
+            "bloom_levels": ["L3", "L4", "L5", "L6"],
+            "course_outcomes": ["CO2", "CO3", "CO4", "CO5"]
+          }
+        }
+      ],
+      "mapping_schemes": {
+        "blooms_taxonomy": {
+          "L1": "Remember",
+          "L2": "Understand",
+          "L3": "Apply",
+          "L4": "Analyze",
+          "L5": "Evaluate",
+          "L6": "Create"
+        },
+        "course_outcomes": {
+          "CO1": "Explain and apply AI/ML fundamentals",
+          "CO2": "Design AI/ML solutions",
+          "CO3": "Use modern AI/ML tools",
+          "CO4": "Analyze societal impact of AI/ML",
+          "CO5": "Evaluate and validate AI/ML models"
+        },
+        "co_po_mapping_scale": {
+          "1": "Low",
+          "2": "Medium",
+          "3": "High"
+        }
+      }
+    },
+    "SEE": {
+      "title": "Semester End Examination (SEE)",
+      "course_name": "Artificial Intelligence and Machine Learning",
+      "scheme": "2022",
+      "duration_minutes": 180,
+      "maximum_marks": 100,
+      "general_instructions": [
+        "Answer all questions from Part A",
+        "Part A answers should be written in the first three pages of the answer book only",
+        "Answer FIVE full questions from Part B",
+        "In Part B, Question 2 is compulsory",
+        "Answer any ONE full question from each pair: (3 or 4), (5 or 6), (7 or 8), (9 or 10)"
+      ],
+      "sections": [
+        {
+          "name": "Part A - Short Answer Questions",
+          "section_type": "short",
+          "instructions": "Answer briefly",
+          "question_pattern": {
+            "question_numbers": "1.1 to 1.15",
+            "number_of_questions": 15,
+            "marks_per_question": [1, 2],
+            "total_marks": 20,
+            "question_types": [
+              "Definition",
+              "Differentiate",
+              "Give reason",
+              "Fill in the blank",
+              "Short conceptual explanation"
+            ],
+            "bloom_levels": ["L1", "L2"],
+            "course_outcomes": ["CO1", "CO2"]
+          }
+        },
+        {
+          "name": "Part B - Descriptive / Analytical Questions",
+          "section_type": "long",
+          "instructions": "Answer FIVE full questions as per choice scheme",
+          "question_pattern": {
+            "total_questions_listed": 9,
+            "questions_to_answer": 5,
+            "total_marks": 80,
+            "structure": [
+              {
+                "question_number": 2,
+                "compulsory": true,
+                "sub_questions": [
+                  { "sub_part": "a", "marks": 6, "type": "descriptive" },
+                  { "sub_part": "b", "marks": 10, "type": "problem_solving / graph traversal" }
+                ],
+                "total_marks": 16
+              },
+              {
+                "choice_pairs": [
+                  {
+                    "questions": [3, 4],
+                    "pattern": [
+                      { "sub_part": "a", "marks": 10 },
+                      { "sub_part": "b", "marks": 6 }
+                    ],
+                    "total_marks": 16
+                  },
+                  {
+                    "questions": [5, 6],
+                    "pattern": [
+                      { "sub_part": "a", "marks": 10 },
+                      { "sub_part": "b", "marks": 6 }
+                    ],
+                    "total_marks": 16
+                  },
+                  {
+                    "questions": [7, 8],
+                    "pattern": [
+                      { "sub_part": "a", "marks": 8 },
+                      { "sub_part": "b", "marks": 8 }
+                    ],
+                    "total_marks": 16
+                  },
+                  {
+                    "questions": [9, 10],
+                    "pattern": [
+                      { "sub_part": "a", "marks": 8 },
+                      { "sub_part": "b", "marks": 8 }
+                    ],
+                    "total_marks": 16
+                  }
+                ]
+              }
+            ],
+            "question_types": [
+              "Algorithm explanation and comparison",
+              "Graph traversal and path finding",
+              "Numerical problem solving",
+              "Data-based analysis",
+              "Critical evaluation",
+              "Comparative analysis"
+            ],
+            "bloom_levels": ["L3", "L4", "L5", "L6"],
+            "course_outcomes": ["CO2", "CO3", "CO4", "CO5"]
+          }
+        }
+      ],
+      "mapping_schemes": {
+        "blooms_taxonomy": {
+          "L1": "Remember",
+          "L2": "Understand",
+          "L3": "Apply",
+          "L4": "Analyze",
+          "L5": "Evaluate",
+          "L6": "Create"
+        },
+        "course_outcomes": {
+          "CO1": "Explain AI and ML fundamentals",
+          "CO2": "Apply AI/ML algorithms to problem solving",
+          "CO3": "Analyze and compare AI/ML techniques",
+          "CO4": "Evaluate performance and trade-offs of models",
+          "CO5": "Design and assess AI/ML solutions"
+        },
+        "co_po_mapping_scale": {
+          "1": "Low",
+          "2": "Medium",
+          "3": "High"
+        }
+      }
+    }
+  }
+}
+

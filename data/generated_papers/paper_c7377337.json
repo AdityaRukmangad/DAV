@@ -1,0 +1,198 @@
+{
+  "id": "c7377337",
+  "template_id": "c7377337",
+  "template_name": "Untitled Paper",
+  "subject": "Machine Learning",
+  "duration_minutes": 120,
+  "total_marks": 60,
+  "instructions": [
+    "Answer all questions",
+    "Show your working for partial credit"
+  ],
+  "sections": [
+    {
+      "name": "Section A - Short Answer Questions",
+      "title": "Questions",
+      "instructions": "Answer briefly",
+      "questions": [
+        {
+          "question_number": 1,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "hunts algo",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 2,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "informed search",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 1,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 3,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "decision tree",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 4,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "a* search",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 5,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "supervised learning",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 6,
+          "part_of_section": "Section A - Short Answer Questions",
+          "topic": "hunts algo",
+          "question_type": "short",
+          "difficulty": "Medium",
+          "marks": 2,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    },
+    {
+      "name": "Section B - Descriptive / Analytical Questions",
+      "title": "Questions",
+      "instructions": "Answer in detail. Internal choice may be provided",
+      "questions": [
+        {
+          "question_number": 7,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "informed search",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 8,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "decision tree",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 5,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 9,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "a* search",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 10,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "supervised learning",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 11,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "hunts algo",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        },
+        {
+          "question_number": 12,
+          "part_of_section": "Section B - Descriptive / Analytical Questions",
+          "topic": "informed search",
+          "question_type": "long",
+          "difficulty": "Medium",
+          "marks": 10,
+          "parts_marks": [],
+          "question_text": "",
+          "answer": "",
+          "explanation": "",
+          "verification_code": "",
+          "from_cache": false
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-01-20T04:28:42.697079",
+  "generation_stats": {}
+}

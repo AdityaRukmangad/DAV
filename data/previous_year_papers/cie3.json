@@ -1,0 +1,165 @@
+{
+  "exam_name": "CIE III",
+  "academic_year": "2024-2025",
+  "semester": "V",
+  "course_code": "IS3531A",
+  "course_name": "Artificial Intelligence and Machine Learning",
+  "total_marks": 60,
+  "duration_minutes": 120,
+  "questions": [
+    {
+      "question_number": 1,
+      "section": "QUIZ",
+      "question_type": "short",
+      "marks": 2,
+      "difficulty": "Medium",
+      "topic": "Model Selection",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Apply (L3)",
+      "question_text": "Consider a data given below (Fig 01), points drawn from sin curve and adding some noise to them. Explain the concept of model selection, while emphasizing concepts of Under fitting."
+    },
+    {
+      "question_number": 2,
+      "section": "QUIZ",
+      "question_type": "short",
+      "marks": 2,
+      "difficulty": "Easy",
+      "topic": "Model Selection",
+      "co_mapping": ["CO1"],
+      "bloom_level": "Remember (L1)",
+      "question_text": "For the same figure (Fig 01), Explain the concept of model selection, while emphasizing concepts of Over fitting."
+    },
+    {
+      "question_number": 3,
+      "section": "QUIZ",
+      "question_type": "short",
+      "marks": 2,
+      "difficulty": "Easy",
+      "topic": "Clustering",
+      "co_mapping": ["CO1"],
+      "bloom_level": "Remember (L1)",
+      "question_text": "Define Cohesion and separation of clustering."
+    },
+    {
+      "question_number": 4,
+      "section": "QUIZ",
+      "question_type": "fill-in-the-blank",
+      "marks": 2,
+      "difficulty": "Easy",
+      "topic": "Ensemble Learning",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Understand (L2)",
+      "question_text": "In bagging base classifiers need to run in ________ while in boosting base classifiers should run in ________."
+    },
+    {
+      "question_number": 5,
+      "section": "QUIZ",
+      "question_type": "short",
+      "marks": 2,
+      "difficulty": "Medium",
+      "topic": "Random Forests",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Apply (L3)",
+      "question_text": "How does the presence of a large number (>80%) of irrelevant features in the input data affect the performance of Random Forests?"
+    },
+    {
+      "question_number": "1.A",
+      "section": "TEST",
+      "question_type": "long",
+      "marks": 5,
+      "difficulty": "Easy",
+      "topic": "Game Theory",
+      "co_mapping": ["CO1"],
+      "bloom_level": "Understand (L2)",
+      "question_text": "What does the utility function of a game represent? Using the concept of the utility function, explain why a game is referred to as a zero-sum game."
+    },
+    {
+      "question_number": "1.B",
+      "section": "TEST",
+      "question_type": "long",
+      "marks": 5,
+      "difficulty": "Medium",
+      "topic": "Adversarial Search",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Understand (L2)",
+      "question_text": "Explain the Alpha-Beta Pruning algorithm with a suitable example. Discuss how it improves the efficiency of the Minimax algorithm."
+    },
+    {
+      "question_number": "2.A",
+      "section": "TEST",
+      "question_type": "long",
+      "marks": 5,
+      "difficulty": "Easy",
+      "topic": "Model Performance",
+      "co_mapping": ["CO5"],
+      "bloom_level": "Remember (L1)",
+      "question_text": "What is the generalization error of a classification model? How do ensemble methods enhance the classification accuracy of the base model?"
+    },
+    {
+      "question_number": "2.B",
+      "section": "TEST",
+      "question_type": "long",
+      "marks": 5,
+      "difficulty": "Easy",
+      "topic": "Ensemble Learning",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Understand (L2)",
+      "question_text": "What is Bagging? Explain how it works."
+    },
+    {
+      "question_number": "3.A",
+      "section": "TEST",
+      "question_type": "long",
+      "marks": 10,
+      "difficulty": "Medium",
+      "topic": "Ensemble Learning",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Understand (L2)",
+      "question_text": "Provide an overview of the AdaBoost algorithm, outline its steps (Algorithm), and explain how the weights are adjusted in the AdaBoost mechanism."
+    },
+    {
+      "question_number": "4.A",
+      "section": "TEST",
+      "question_type": "numerical",
+      "marks": 5,
+      "difficulty": "Medium",
+      "topic": "Ensemble Learning",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Apply (L3)",
+      "question_text": "Using a majority voting ensemble method for the given 3 classifiers and 5 instances, determine the final predictions. Calculate the accuracy of the ensemble model and compare it with the accuracy of individual classifiers."
+    },
+    {
+      "question_number": "4.B",
+      "section": "TEST",
+      "question_type": "long",
+      "marks": 5,
+      "difficulty": "Easy",
+      "topic": "Clustering",
+      "co_mapping": ["CO5"],
+      "bloom_level": "Understand (L2)",
+      "question_text": "What is cluster analysis? Explain the different types of clustering techniques."
+    },
+    {
+      "question_number": "5.A",
+      "section": "TEST",
+      "question_type": "long",
+      "marks": 5,
+      "difficulty": "Easy",
+      "topic": "K-means",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Remember (L1)",
+      "question_text": "Explain the basic K-means algorithm with a step-by-step example."
+    },
+    {
+      "question_number": "5.B",
+      "section": "TEST",
+      "question_type": "long",
+      "marks": 5,
+      "difficulty": "Medium",
+      "topic": "Clustering Evaluation",
+      "co_mapping": ["CO2"],
+      "bloom_level": "Apply (L3)",
+      "question_text": "Explain how cohesion and separation are used for unsupervised cluster evaluation."
+    }
+  ]
+}
