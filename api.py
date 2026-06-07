@@ -453,7 +453,7 @@ async def get_suggestions_by_pdf():
         from app.config.syllabus_loader import get_syllabus_loader
         from langchain_openai import ChatOpenAI
         import json
-        
+
         registry = DocumentRegistry()
         ingested_docs = registry.get_ingested_documents()
         existing_pdfs = list(UPLOAD_DIR.glob("*.pdf"))
@@ -466,7 +466,16 @@ async def get_suggestions_by_pdf():
 
         pdf_suggestions = []
         rag_engine = get_rag_engine()
-        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        gemini_key = os.getenv("GEMINI_API_KEY")
+        if gemini_key:
+            llm = ChatOpenAI(
+                model="gemini-2.0-flash",
+                api_key=gemini_key,
+                base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+                temperature=0,
+            )
+        else:
+            llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
         for pdf_file in existing_pdfs:
             filename = pdf_file.name
