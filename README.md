@@ -93,11 +93,23 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Set up environment variables
-export OPENAI_API_KEY="your-openai-api-key"
-export ENABLE_PEDAGOGY_TAGGER="false"  # Optional
-export ENABLE_GUARDIAN="false"         # Optional
+# Set up environment variables — copy the example and fill in your key
+cp .env.example .env
+```
 
+Edit `.env` and add your API key. **Gemini is recommended** (free tier available):
+
+```bash
+# Option 1: Google Gemini (recommended)
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Option 2: OpenAI (fallback)
+# OPENAI_API_KEY=your_openai_api_key_here
+```
+
+Get a free Gemini API key at [aistudio.google.com](https://aistudio.google.com) → API Keys.
+
+```bash
 # Initialize database
 python -c "from app.core.question_bank import init_db; init_db()"
 
@@ -212,23 +224,27 @@ validation:
 ### Environment Variables
 
 ```bash
-# Required
-OPENAI_API_KEY=your-api-key
+# ── API Key (pick one) ────────────────────────────────────────
+GEMINI_API_KEY=your_gemini_key      # Recommended — free tier at aistudio.google.com
+# OPENAI_API_KEY=your_openai_key    # Fallback if not using Gemini
 
-# Optional Features (default: false)
-ENABLE_PEDAGOGY_TAGGER=true   # Enable CO/PO tagging (Step 3)
-ENABLE_GUARDIAN=true          # Enable syllabus validation (Step 5)
+# ── Optional Features (default: false) ───────────────────────
+ENABLE_PEDAGOGY_TAGGER=false        # Enable CO/PO tagging (Step 3)
+ENABLE_GUARDIAN=false               # Enable syllabus validation (Step 5)
 
-# Bloom-Adaptive RAG tuning (Step 2)
+# ── Bloom-Adaptive RAG tuning (Step 2) ───────────────────────
 BLOOM_RAG_ENABLED=true
 BLOOM_K_LOW=4
 BLOOM_K_MED=8
 BLOOM_K_HIGH=13
-
-# Model Configuration
-DEFAULT_LLM_MODEL=gpt-4o
-FAST_LLM_MODEL=gpt-4o-mini
 ```
+
+**Gemini models used:**
+
+| Mode | Model | Used for |
+|---|---|---|
+| instant / auto | `gemini-2.0-flash` | Bloom detection, tagging, most generation |
+| thinking | `gemini-2.5-flash-preview-05-20` | Code generation, review, complex reasoning |
 
 ---
 
@@ -328,7 +344,8 @@ frontend/components/DAVModule.tsx
 - LangChain (LLM integration)
 - ChromaDB (vector store)
 - SQLite (question bank)
-- OpenAI (GPT-4o / GPT-4o-mini)
+- **Google Gemini** via OpenAI-compatible endpoint (primary LLM)
+- OpenAI GPT-4o (optional fallback)
 
 **Frontend:**
 - React 18 + TypeScript
@@ -409,10 +426,15 @@ CREATE TABLE templates (
 
 ## Troubleshooting
 
-**1. OPENAI_API_KEY not set**
+**1. API key not set**
 ```bash
-export OPENAI_API_KEY="your-key-here"
+# Gemini (recommended)
+echo "GEMINI_API_KEY=your-key-here" >> .env
+
+# Or OpenAI fallback
+echo "OPENAI_API_KEY=your-key-here" >> .env
 ```
+Get a free Gemini key at [aistudio.google.com](https://aistudio.google.com) → API Keys.
 
 **2. ChromaDB not initialized**
 ```bash
@@ -451,7 +473,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - Built with LangGraph, LangChain, and FastAPI
-- LLMs powered by OpenAI (GPT-4o)
+- LLMs powered by Google Gemini (2.0 Flash / 2.5 Flash)
 - Vector embeddings by Sentence Transformers
 - Charts rendered with Recharts
 - Inspired by the code-first generation paradigm
