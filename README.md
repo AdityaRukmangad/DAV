@@ -39,36 +39,53 @@ An intelligent, multi-agent system for generating high-quality evaluation questi
 
 ### Step 6: Data Analytics & Visualization (DAV)
 
-A full analytics dashboard powered by a dedicated backend service and React frontend with interactive charts.
+A full analytics dashboard powered by a dedicated backend service and React frontend with interactive charts. Covers all 6 DAV components from the project specification.
 
 **Backend service** (`app/services/dav_service.py`):
-- **Data Cleaning** — removes duplicate rows, standardizes difficulty casing, fills missing Bloom/CO/PO values
-- **Overview Stats** — total questions, unique topics, difficulty variance & std dev, Bloom balance score
-- **Bloom Distribution** — per-level counts, per-topic breakdown, and a Difficulty × Bloom heatmap matrix
-- **Syllabus Coverage** — compares question topics against `config/syllabus.yaml` to identify gap topics per unit
-- **Difficulty Trends** — daily/weekly stacked question counts, cumulative growth curve, avg difficulty score over time
-- **CO-PO Attainment Matrix** — NBA/NAAC-style CO × PO matrix with 4-level attainment scoring
-- **EDA Report** — mean difficulty, variance, top-10 topics, data quality %, accuracy proxies
 
-**Frontend dashboard** (`frontend/components/DAVModule.tsx`) — 6-tab interface:
+| Function | Purpose |
+|---|---|
+| `clean_data()` | Remove duplicates, standardize difficulty casing, fill missing Bloom/CO/PO |
+| `get_overview()` | Total questions, unique topics, difficulty variance & std dev, Bloom balance score |
+| `get_bloom_distribution()` | Per-level counts, per-topic breakdown, Difficulty × Bloom heatmap matrix |
+| `get_topic_coverage()` | Maps questions to `syllabus.yaml` — coverage % and gap topics per unit |
+| `get_difficulty_trends()` | Daily/weekly stacked counts, cumulative growth curve, avg difficulty over time |
+| `get_copo_matrix()` | NBA/NAAC CO × PO attainment matrix with 4-level scoring |
+| `get_eda_report()` | Mean difficulty, variance, top-10 topics, data quality %, accuracy proxies |
+| `get_paper_balance()` | Compares actual Bloom distribution against ideal — flags imbalances, gives suggestions |
+| `get_similarity_report()` | Jaccard similarity scan — detects exact-duplicate, near-duplicate, similar question pairs |
+| `submit_feedback()` | Bulk insert student response records into `student_feedback` table |
+| `get_feedback_analysis()` | Per-question accuracy, weak topic detection, score distribution, difficult question flags |
+| `get_copo_consistency()` | Validates CO/PO tags against Bloom-level rules — flags mismatches for accreditation |
+
+**Frontend dashboard** (`frontend/components/DAVModule.tsx`) — 10-tab interface:
 
 | Tab | Visualizations |
 |---|---|
-| Overview | Difficulty pie chart, source pie chart, stat chips (variance, std dev, Bloom balance), data cleaning trigger |
+| Overview | Difficulty pie, source pie, stat chips (variance, std dev, Bloom balance), data cleaning |
 | Bloom's | Bar chart by cognitive level, Difficulty × Bloom intensity heatmap |
-| Coverage | Unit coverage radar chart, per-unit bar chart, expandable topic accordion (✓/✗), gap topics panel |
-| Trends | Stacked bar (Easy/Medium/Hard), cumulative growth line chart, avg difficulty line chart |
-| CO-PO | NBA attainment matrix (4-level color coded), CO distribution bar, PO distribution bar |
-| EDA | Stats row, Bloom bar, Top-10 topics, content quality bars, data completeness gap bars, CO pie |
+| Coverage | Unit coverage radar, per-unit bar chart, expandable topic accordion (✓/✗), gap topics |
+| Trends | Stacked bar (Easy/Medium/Hard), cumulative growth line, avg difficulty line |
+| CO-PO | NBA attainment matrix (4-level color coded), CO bar, PO bar |
+| EDA | Stats row, Bloom bar, Top-10 topics, content quality bars, completeness gaps, CO pie |
+| Balance | Actual vs ideal Bloom bar chart, difficulty actual vs ideal, deviation table, suggestions |
+| Similarity | Threshold slider, flagged pair cards with side-by-side question previews |
+| Feedback | Score distribution bar, topic performance (color-coded), weak topics, difficult questions |
+| Consistency | CO/PO issue pie, Bloom→CO rules reference, filterable issue list with fix guidance |
 
-**API endpoints** (`/api/v1/dav/*`):
-- `GET /api/v1/dav/overview`
-- `GET /api/v1/dav/bloom-distribution`
-- `GET /api/v1/dav/topic-coverage`
-- `GET /api/v1/dav/difficulty-trends`
-- `GET /api/v1/dav/copo-matrix`
-- `GET /api/v1/dav/eda-report`
+**All API endpoints** (`/api/v1/dav/*`):
+- `GET  /api/v1/dav/overview`
+- `GET  /api/v1/dav/bloom-distribution`
+- `GET  /api/v1/dav/topic-coverage`
+- `GET  /api/v1/dav/difficulty-trends`
+- `GET  /api/v1/dav/copo-matrix`
+- `GET  /api/v1/dav/eda-report`
 - `POST /api/v1/dav/clean`
+- `GET  /api/v1/dav/paper-balance`
+- `GET  /api/v1/dav/similarity?threshold=0.55`
+- `GET  /api/v1/dav/feedback`
+- `POST /api/v1/dav/feedback`
+- `GET  /api/v1/dav/copo-consistency`
 
 ---
 
@@ -178,11 +195,28 @@ curl http://localhost:8000/api/v1/dav/topic-coverage
 # CO-PO attainment matrix
 curl http://localhost:8000/api/v1/dav/copo-matrix
 
-# Trigger data cleaning
-curl -X POST http://localhost:8000/api/v1/dav/clean
-
 # Full EDA report
 curl http://localhost:8000/api/v1/dav/eda-report
+
+# Paper balance check (Bloom distribution vs ideal)
+curl http://localhost:8000/api/v1/dav/paper-balance
+
+# Similar/duplicate question detection
+curl "http://localhost:8000/api/v1/dav/similarity?threshold=0.55"
+
+# CO/PO mapping consistency check
+curl http://localhost:8000/api/v1/dav/copo-consistency
+
+# Student feedback analysis
+curl http://localhost:8000/api/v1/dav/feedback
+
+# Submit student feedback (bulk)
+curl -X POST http://localhost:8000/api/v1/dav/feedback \
+  -H "Content-Type: application/json" \
+  -d '{"feedbacks": [{"question_id": 1, "student_id": "s1", "score": 72, "correct": true, "difficulty_felt": "Medium"}]}'
+
+# Data cleaning pass
+curl -X POST http://localhost:8000/api/v1/dav/clean
 ```
 
 ### 5. Generate a Paper
@@ -275,13 +309,18 @@ BLOOM_K_HIGH=13
 - `GET /api/v1/analytics` — Question bank analytics
 
 ### DAV — Data Analytics & Visualization (Step 6)
-- `GET /api/v1/dav/overview` — Summary stats and difficulty distribution
-- `GET /api/v1/dav/bloom-distribution` — Bloom level breakdown + heatmap
-- `GET /api/v1/dav/topic-coverage` — Syllabus coverage vs gap topics
-- `GET /api/v1/dav/difficulty-trends` — Daily/weekly generation trends
-- `GET /api/v1/dav/copo-matrix` — NBA CO×PO attainment matrix
-- `GET /api/v1/dav/eda-report` — Full exploratory data analysis report
+- `GET  /api/v1/dav/overview` — Summary stats and difficulty distribution
+- `GET  /api/v1/dav/bloom-distribution` — Bloom level breakdown + heatmap
+- `GET  /api/v1/dav/topic-coverage` — Syllabus coverage vs gap topics
+- `GET  /api/v1/dav/difficulty-trends` — Daily/weekly generation trends
+- `GET  /api/v1/dav/copo-matrix` — NBA CO×PO attainment matrix
+- `GET  /api/v1/dav/eda-report` — Full exploratory data analysis report
 - `POST /api/v1/dav/clean` — Data cleaning pass (dedup, standardize, fill)
+- `GET  /api/v1/dav/paper-balance` — Bloom balance checker vs ideal distribution
+- `GET  /api/v1/dav/similarity?threshold=0.55` — Similar/duplicate question detection
+- `GET  /api/v1/dav/feedback` — Student performance feedback analysis
+- `POST /api/v1/dav/feedback` — Submit student feedback records
+- `GET  /api/v1/dav/copo-consistency` — CO/PO mapping consistency validation
 
 ---
 
@@ -319,21 +358,26 @@ Bloom Analyzer → Scout → [Cache Check]
 ### DAV Data Flow
 
 ```
-SQLite question_bank.db
+SQLite question_bank.db + student_feedback table
          ↓
 app/services/dav_service.py
-  ├── clean_data()           → dedup, standardize, fill nulls
-  ├── get_overview()         → summary stats, variance, Bloom balance
-  ├── get_bloom_distribution() → bar data + heatmap matrix
-  ├── get_topic_coverage()   → coverage % vs config/syllabus.yaml
-  ├── get_difficulty_trends() → daily/weekly time series
-  ├── get_copo_matrix()      → NBA attainment levels
-  └── get_eda_report()       → full statistical EDA
+  ├── clean_data()              → dedup, standardize, fill nulls
+  ├── get_overview()            → summary stats, variance, Bloom balance
+  ├── get_bloom_distribution()  → bar data + heatmap matrix
+  ├── get_topic_coverage()      → coverage % vs config/syllabus.yaml
+  ├── get_difficulty_trends()   → daily/weekly time series
+  ├── get_copo_matrix()         → NBA attainment levels
+  ├── get_eda_report()          → full statistical EDA
+  ├── get_paper_balance()       → actual vs ideal Bloom distribution
+  ├── get_similarity_report()   → Jaccard similarity, duplicate detection
+  ├── submit_feedback()         → store student response records
+  ├── get_feedback_analysis()   → accuracy, weak topics, difficult questions
+  └── get_copo_consistency()    → Bloom→CO→PO rule validation
          ↓
-/api/v1/dav/* endpoints
+/api/v1/dav/* endpoints (12 total)
          ↓
-frontend/components/DAVModule.tsx
-  (Recharts: Bar, Pie, Line, Radar, Heatmap)
+frontend/components/DAVModule.tsx — 10 tabs
+  (Recharts: Bar, Pie, Line, Radar, Cell heatmap)
 ```
 
 ### Technology Stack
@@ -379,9 +423,21 @@ CREATE TABLE templates (
     course_outcome TEXT,
     program_outcome TEXT
 );
+
+-- Step 6: Student feedback (auto-created by DAV service)
+CREATE TABLE IF NOT EXISTS student_feedback (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question_id INTEGER,
+    student_id TEXT,
+    score INTEGER,           -- 0–100
+    time_taken_sec INTEGER,
+    correct INTEGER,         -- 1 or 0
+    difficulty_felt TEXT,    -- 'Easy', 'Medium', 'Hard'
+    created_at REAL
+);
 ```
 
-> The schema auto-migrates on startup — existing databases are updated without data loss.
+> Both tables auto-migrate / auto-create on startup — no manual setup needed.
 
 ---
 
@@ -408,7 +464,7 @@ CREATE TABLE templates (
 ├── frontend/
 │   ├── App.tsx                     # Nav + tab routing (includes Analytics tab)
 │   ├── components/
-│   │   ├── DAVModule.tsx           # DAV dashboard — 6-tab chart UI (Step 6)
+│   │   ├── DAVModule.tsx           # DAV dashboard — 10-tab chart UI (Step 6)
 │   │   ├── GenerationModule.tsx    # Question generation UI
 │   │   ├── PaperGeneratorModule.tsx
 │   │   ├── KnowledgeHubModule.tsx
@@ -456,6 +512,18 @@ python main.py --upload path/to/pdf
 - Confirm backend is running: `curl http://localhost:8000/api/v1/dav/overview`
 - Run data cleaning: `curl -X POST http://localhost:8000/api/v1/dav/clean`
 
+**6. Balance tab shows no rating**
+- Requires at least 1 question in the bank — the balance score is computed from existing data
+
+**7. Similarity tab shows no pairs**
+- Need at least 2 questions; try lowering the threshold slider below 55%
+
+**8. Feedback tab shows "No feedback yet"**
+- Click **Load Sample Feedback Data** in the UI to inject mock data, or POST records to `/api/v1/dav/feedback`
+
+**9. Consistency tab shows 100% with no issues**
+- Expected when the DB is empty or all tags are correctly assigned; generate questions with `ENABLE_PEDAGOGY_TAGGER=true` to populate CO/PO data
+
 ---
 
 ## Contributing
@@ -480,6 +548,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-**Version**: 3.0.0 (with DAV Analytics Dashboard)
+**Version**: 3.1.0 (full DAV spec — 10 tabs, 12 endpoints)
 **Status**: Production Ready
 **Last Updated**: June 2025
