@@ -1,4 +1,4 @@
-# Core LangChain (Aligned versions)
+# Core LangChain — pinned to working compatible set
 langchain==0.3.0
 langchain-core==0.3.0
 langchain-community==0.3.0
@@ -7,8 +7,13 @@ langchain-openai==0.2.0
 # Vector Store & Embeddings
 langchain-chroma==0.1.4
 langchain-huggingface==0.1.0
-chromadb>=0.5.0
+chromadb==0.5.3
 sentence-transformers>=3.0.0
+
+# LangGraph — pinned checkpoint/sdk to match langgraph 0.2.28
+langgraph==0.2.28
+langgraph-checkpoint==1.0.12
+langgraph-sdk==0.1.42
 
 # Reranking
 flashrank==0.2.4
@@ -30,5 +35,8 @@ python-multipart>=0.0.9
 
 # Utilities
 pydantic>=2.7.0
-numpy>=1.26.0
+numpy>=1.24.0,<2          # NumPy 2.x breaks chromadb 0.4.x / 0.5.x
+tenacity>=8.1.0,<9        # langchain-community requires <9
+msgpack>=1.0.0            # required by langgraph-checkpoint
 requests>=2.31.0
+PyYAML>=6.0.0
