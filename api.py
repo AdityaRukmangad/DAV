@@ -1572,7 +1572,25 @@ from app.services.dav_service import (
     get_copo_matrix,
     get_eda_report,
     clean_data,
+    get_paper_balance,
+    get_similarity_report,
+    get_feedback_analysis,
+    submit_feedback,
+    get_copo_consistency,
 )
+
+
+class FeedbackRecord(BaseModel):
+    question_id: int
+    student_id: str = "anon"
+    score: int = Field(default=0, ge=0, le=100)
+    time_taken_sec: int = Field(default=0, ge=0)
+    correct: bool = False
+    difficulty_felt: str = "Medium"
+
+
+class BulkFeedbackRequest(BaseModel):
+    feedbacks: List[FeedbackRecord]
 
 
 @app.get("/api/v1/dav/overview")
@@ -1634,5 +1652,51 @@ async def dav_clean():
     """Trigger a data cleaning pass — dedup, standardize, fill missing values."""
     try:
         return clean_data()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/v1/dav/paper-balance")
+async def dav_paper_balance():
+    """Compare actual Bloom distribution against ideal — returns imbalances and suggestions."""
+    try:
+        return get_paper_balance()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/v1/dav/similarity")
+async def dav_similarity(threshold: float = 0.55):
+    """Detect similar and duplicate questions using Jaccard similarity."""
+    try:
+        return get_similarity_report(threshold=threshold)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/v1/dav/feedback")
+async def dav_feedback():
+    """Analyze student feedback — difficult questions, weak topics, score distribution."""
+    try:
+        return get_feedback_analysis()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/v1/dav/feedback")
+async def dav_submit_feedback(request: BulkFeedbackRequest):
+    """Submit bulk student feedback records."""
+    try:
+        data = [f.model_dump() for f in request.feedbacks]
+        return submit_feedback(data)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/v1/dav/copo-consistency")
+async def dav_copo_consistency():
+    """Validate CO/PO tags against Bloom level rules — flags mismatches."""
+    try:
+        return get_copo_consistency()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

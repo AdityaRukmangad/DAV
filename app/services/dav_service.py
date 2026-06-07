@@ -8,6 +8,7 @@ syllabus coverage, and Bloom distribution analytics.
 import sqlite3
 import json
 import math
+import re
 from typing import Dict, List, Optional, Any
 from pathlib import Path
 from collections import defaultdict, Counter
@@ -504,4 +505,418 @@ def get_eda_report() -> Dict:
                 sum(1 for r in rows if r.get("explanation_text", "").strip()) / total * 100, 1
             ),
         },
+    }
+
+
+# =============================================================================
+# 1. PAPER BALANCE CHECKER
+# =============================================================================
+
+# Ideal Bloom distribution for a balanced exam paper (%)
+IDEAL_BLOOM_DIST = {1: 10, 2: 15, 3: 20, 4: 25, 5: 15, 6: 15}
+
+def get_paper_balance(paper_id: Optional[int] = None) -> Dict:
+    """
+    Compare actual Bloom distribution of question bank (or a specific paper)
+    against the ideal distribution. Returns imbalance scores and suggestions.
+    """
+    rows = _fetch_all()
+    if not rows:
+        return {"error": "No questions found"}
+
+    bloom_vals = [r.get("bloom_level") or 2 for r in rows]
+    total = len(bloom_vals)
+    actual_counts = Counter(bloom_vals)
+
+    actual_pct = {lvl: round(actual_counts.get(lvl, 0) / total * 100, 1) for lvl in range(1, 7)}
+    ideal_pct = IDEAL_BLOOM_DIST
+
+    # Deviation per level
+    levels = []
+    suggestions = []
+    for lvl in range(1, 7):
+        actual = actual_pct[lvl]
+        ideal = ideal_pct[lvl]
+        deviation = round(actual - ideal, 1)
+        status = "balanced"
+        if deviation > 8:
+            status = "over-represented"
+            suggestions.append(f"Reduce {BLOOM_LABELS[lvl]} (L{lvl}) questions — {actual}% vs ideal {ideal}%")
+        elif deviation < -8:
+            status = "under-represented"
+            suggestions.append(f"Add more {BLOOM_LABELS[lvl]} (L{lvl}) questions — only {actual}% vs ideal {ideal}%")
+
+        levels.append({
+            "bloom_level": lvl,
+            "label": BLOOM_LABELS[lvl],
+            "actual_pct": actual,
+            "ideal_pct": ideal,
+            "deviation": deviation,
+            "status": status,
+            "actual_count": actual_counts.get(lvl, 0),
+        })
+
+    # Overall balance score: 100 - mean absolute deviation
+    mad = sum(abs(l["deviation"]) for l in levels) / 6
+    balance_score = round(max(0, 100 - mad * 2), 1)
+
+    # Difficulty balance
+    difficulties = [r.get("difficulty", "Medium") or "Medium" for r in rows]
+    diff_counts = Counter(difficulties)
+    diff_pct = {d: round(diff_counts.get(d, 0) / total * 100, 1) for d in ["Easy", "Medium", "Hard"]}
+    ideal_diff = {"Easy": 30, "Medium": 45, "Hard": 25}
+    diff_suggestions = []
+    for d, ideal in ideal_diff.items():
+        actual_d = diff_pct.get(d, 0)
+        if abs(actual_d - ideal) > 10:
+            direction = "Reduce" if actual_d > ideal else "Add more"
+            diff_suggestions.append(f"{direction} {d} questions — {actual_d}% vs ideal {ideal}%")
+
+    return {
+        "balance_score": balance_score,
+        "total_questions": total,
+        "bloom_levels": levels,
+        "difficulty_distribution": diff_pct,
+        "ideal_difficulty": ideal_diff,
+        "suggestions": suggestions + diff_suggestions,
+        "rating": "Excellent" if balance_score >= 80 else ("Good" if balance_score >= 60 else ("Fair" if balance_score >= 40 else "Poor")),
+    }
+
+
+# =============================================================================
+# 2. REPETITION & SIMILAR QUESTION DETECTION
+# =============================================================================
+
+def _tokenize(text: str) -> set:
+    """Simple word-level tokenizer — lowercase, strip punctuation."""
+    text = text.lower()
+    text = re.sub(r"[^a-z0-9\s]", " ", text)
+    return set(text.split())
+
+
+def _jaccard(a: set, b: set) -> float:
+    if not a or not b:
+        return 0.0
+    return len(a & b) / len(a | b)
+
+
+def get_similarity_report(threshold: float = 0.55) -> Dict:
+    """
+    Detect semantically similar and near-duplicate questions using
+    Jaccard similarity on question text tokens.
+    Returns pairs above threshold sorted by similarity score.
+    """
+    rows = _fetch_all()
+    if len(rows) < 2:
+        return {"pairs": [], "total_questions": len(rows), "flagged_count": 0}
+
+    # Pre-tokenize all questions
+    tokenized = []
+    for r in rows:
+        text = (r.get("question_text") or "").strip()
+        tokenized.append({
+            "id": r["id"],
+            "topic": r.get("topic", ""),
+            "difficulty": r.get("difficulty", ""),
+            "bloom_level": r.get("bloom_level") or 2,
+            "text_preview": text[:120] + ("…" if len(text) > 120 else ""),
+            "tokens": _tokenize(text),
+        })
+
+    pairs = []
+    n = len(tokenized)
+    for i in range(n):
+        for j in range(i + 1, n):
+            sim = _jaccard(tokenized[i]["tokens"], tokenized[j]["tokens"])
+            if sim >= threshold:
+                label = "exact duplicate" if sim >= 0.95 else ("near-duplicate" if sim >= 0.75 else "similar")
+                pairs.append({
+                    "question_a_id": tokenized[i]["id"],
+                    "question_b_id": tokenized[j]["id"],
+                    "question_a_preview": tokenized[i]["text_preview"],
+                    "question_b_preview": tokenized[j]["text_preview"],
+                    "topic_a": tokenized[i]["topic"],
+                    "topic_b": tokenized[j]["topic"],
+                    "similarity_score": round(sim, 3),
+                    "label": label,
+                })
+
+    pairs.sort(key=lambda x: -x["similarity_score"])
+
+    # Summary by label
+    label_counts = Counter(p["label"] for p in pairs)
+
+    return {
+        "total_questions": n,
+        "flagged_count": len(pairs),
+        "threshold_used": threshold,
+        "label_summary": dict(label_counts),
+        "pairs": pairs[:50],  # Return top 50 pairs max
+    }
+
+
+# =============================================================================
+# 3. STUDENT PERFORMANCE FEEDBACK ANALYSIS
+# =============================================================================
+
+FEEDBACK_DB_PATH = Path("question_bank.db")
+
+def _ensure_feedback_table():
+    with sqlite3.connect(FEEDBACK_DB_PATH) as conn:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS student_feedback (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                question_id INTEGER,
+                student_id TEXT,
+                score INTEGER,         -- 0-100
+                time_taken_sec INTEGER,
+                correct INTEGER,       -- 1 or 0
+                difficulty_felt TEXT,  -- 'Easy','Medium','Hard'
+                created_at REAL
+            )
+        """)
+        conn.commit()
+
+
+def submit_feedback(feedbacks: List[Dict]) -> Dict:
+    """
+    Bulk insert student feedback records.
+    Each record: {question_id, student_id, score, time_taken_sec, correct, difficulty_felt}
+    """
+    import time
+    _ensure_feedback_table()
+    inserted = 0
+    with sqlite3.connect(FEEDBACK_DB_PATH) as conn:
+        for fb in feedbacks:
+            try:
+                conn.execute("""
+                    INSERT INTO student_feedback
+                    (question_id, student_id, score, time_taken_sec, correct, difficulty_felt, created_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    fb.get("question_id"),
+                    fb.get("student_id", "anon"),
+                    fb.get("score", 0),
+                    fb.get("time_taken_sec", 0),
+                    1 if fb.get("correct") else 0,
+                    fb.get("difficulty_felt", "Medium"),
+                    time.time(),
+                ))
+                inserted += 1
+            except Exception:
+                continue
+        conn.commit()
+    return {"inserted": inserted}
+
+
+def get_feedback_analysis() -> Dict:
+    """
+    Analyze student feedback to identify difficult questions,
+    weak topic areas, and performance patterns.
+    """
+    _ensure_feedback_table()
+
+    with sqlite3.connect(FEEDBACK_DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        feedback_rows = conn.execute("SELECT * FROM student_feedback").fetchall()
+        question_rows = conn.execute("SELECT id, topic, bloom_level, difficulty, question_text FROM templates").fetchall()
+
+    if not feedback_rows:
+        return {"total_responses": 0, "message": "No student feedback submitted yet."}
+
+    fb = [dict(r) for r in feedback_rows]
+    questions = {r["id"]: dict(r) for r in question_rows}
+
+    total = len(fb)
+    # Per-question aggregation
+    q_stats: Dict[int, Dict] = defaultdict(lambda: {
+        "scores": [], "times": [], "correct": 0, "total": 0, "difficulty_felt": []
+    })
+    for f in fb:
+        qid = f["question_id"]
+        q_stats[qid]["scores"].append(f["score"] or 0)
+        q_stats[qid]["times"].append(f["time_taken_sec"] or 0)
+        q_stats[qid]["correct"] += f["correct"] or 0
+        q_stats[qid]["total"] += 1
+        q_stats[qid]["difficulty_felt"].append(f["difficulty_felt"] or "Medium")
+
+    # Identify difficult questions (accuracy < 50%)
+    difficult_questions = []
+    for qid, stats in q_stats.items():
+        acc = round(stats["correct"] / stats["total"] * 100, 1) if stats["total"] else 0
+        avg_score = round(sum(stats["scores"]) / len(stats["scores"]), 1) if stats["scores"] else 0
+        avg_time = round(sum(stats["times"]) / len(stats["times"]), 1) if stats["times"] else 0
+        q_info = questions.get(qid, {})
+        difficult_questions.append({
+            "question_id": qid,
+            "topic": q_info.get("topic", "Unknown"),
+            "bloom_level": q_info.get("bloom_level", 2),
+            "bloom_label": BLOOM_LABELS.get(q_info.get("bloom_level", 2), ""),
+            "accuracy_pct": acc,
+            "avg_score": avg_score,
+            "avg_time_sec": avg_time,
+            "response_count": stats["total"],
+            "flagged": acc < 50,
+        })
+    difficult_questions.sort(key=lambda x: x["accuracy_pct"])
+
+    # Topic-level weakness
+    topic_stats: Dict[str, Dict] = defaultdict(lambda: {"scores": [], "correct": 0, "total": 0})
+    for f in fb:
+        qid = f["question_id"]
+        topic = questions.get(qid, {}).get("topic", "Unknown")
+        topic_stats[topic]["scores"].append(f["score"] or 0)
+        topic_stats[topic]["correct"] += f["correct"] or 0
+        topic_stats[topic]["total"] += 1
+
+    topic_performance = sorted([
+        {
+            "topic": t,
+            "avg_score": round(sum(s["scores"]) / len(s["scores"]), 1) if s["scores"] else 0,
+            "accuracy_pct": round(s["correct"] / s["total"] * 100, 1) if s["total"] else 0,
+            "response_count": s["total"],
+        }
+        for t, s in topic_stats.items()
+    ], key=lambda x: x["avg_score"])
+
+    # Overall stats
+    all_scores = [f["score"] or 0 for f in fb]
+    overall_acc = round(sum(f["correct"] or 0 for f in fb) / total * 100, 1)
+    avg_score = round(sum(all_scores) / len(all_scores), 1)
+
+    # Score distribution buckets
+    buckets = {"0-25": 0, "26-50": 0, "51-75": 0, "76-100": 0}
+    for s in all_scores:
+        if s <= 25: buckets["0-25"] += 1
+        elif s <= 50: buckets["26-50"] += 1
+        elif s <= 75: buckets["51-75"] += 1
+        else: buckets["76-100"] += 1
+
+    return {
+        "total_responses": total,
+        "overall_accuracy_pct": overall_acc,
+        "avg_score": avg_score,
+        "score_distribution": buckets,
+        "weak_topics": [t for t in topic_performance if t["accuracy_pct"] < 50],
+        "topic_performance": topic_performance,
+        "difficult_questions": difficult_questions[:20],
+        "flagged_question_count": sum(1 for q in difficult_questions if q["flagged"]),
+    }
+
+
+# =============================================================================
+# 4. CO/PO MAPPING CONSISTENCY CHECK
+# =============================================================================
+
+# Expected CO for each Bloom level range
+BLOOM_CO_RULES = {
+    1: ["CO1"],
+    2: ["CO1", "CO2"],
+    3: ["CO2", "CO3"],
+    4: ["CO3", "CO4"],
+    5: ["CO4", "CO5"],
+    6: ["CO5"],
+}
+
+# Expected PO for each CO
+CO_PO_RULES = {
+    "CO1": ["PO1", "PO2"],
+    "CO2": ["PO1", "PO2", "PO3"],
+    "CO3": ["PO2", "PO3", "PO4"],
+    "CO4": ["PO3", "PO4", "PO5"],
+    "CO5": ["PO4", "PO5", "PO6"],
+}
+
+
+def get_copo_consistency() -> Dict:
+    """
+    Validate CO/PO tag assignments against Bloom level rules.
+    Flags questions where the CO/PO doesn't match the cognitive level.
+    """
+    rows = _fetch_all()
+    if not rows:
+        return {
+            "total_questions": 0, "consistent_count": 0, "issue_count": 0,
+            "consistency_score": 100, "issue_breakdown": {}, "co_mismatch_count": 0,
+            "po_mismatch_count": 0, "missing_tags_count": 0, "issues": [],
+            "bloom_co_rules": {str(k): v for k, v in BLOOM_CO_RULES.items()},
+        }
+
+    total = len(rows)
+    issues = []
+    co_mismatch = 0
+    po_mismatch = 0
+    missing_tags = 0
+
+    for r in rows:
+        bloom = r.get("bloom_level") or 2
+        co = r.get("course_outcome") or ""
+        po = r.get("program_outcome") or ""
+        qid = r["id"]
+        topic = r.get("topic", "Unknown")
+        text_preview = (r.get("question_text") or "")[:100]
+
+        if not co or not po:
+            missing_tags += 1
+            issues.append({
+                "question_id": qid,
+                "topic": topic,
+                "bloom_level": bloom,
+                "bloom_label": BLOOM_LABELS.get(bloom, ""),
+                "co": co or "—",
+                "po": po or "—",
+                "issue_type": "missing_tag",
+                "message": f"Missing {'CO' if not co else 'PO'} tag",
+                "text_preview": text_preview,
+            })
+            continue
+
+        expected_cos = BLOOM_CO_RULES.get(bloom, [])
+        co_ok = co in expected_cos
+        expected_pos = CO_PO_RULES.get(co, [])
+        po_ok = po in expected_pos
+
+        if not co_ok:
+            co_mismatch += 1
+            issues.append({
+                "question_id": qid,
+                "topic": topic,
+                "bloom_level": bloom,
+                "bloom_label": BLOOM_LABELS.get(bloom, ""),
+                "co": co,
+                "po": po,
+                "issue_type": "co_mismatch",
+                "message": f"Bloom L{bloom} ({BLOOM_LABELS.get(bloom,'')}) should map to {expected_cos}, got {co}",
+                "text_preview": text_preview,
+            })
+        elif not po_ok:
+            po_mismatch += 1
+            issues.append({
+                "question_id": qid,
+                "topic": topic,
+                "bloom_level": bloom,
+                "bloom_label": BLOOM_LABELS.get(bloom, ""),
+                "co": co,
+                "po": po,
+                "issue_type": "po_mismatch",
+                "message": f"{co} should map to {expected_pos}, got {po}",
+                "text_preview": text_preview,
+            })
+
+    consistent = total - len(issues)
+    consistency_score = round(consistent / total * 100, 1) if total else 100
+
+    issue_type_counts = Counter(i["issue_type"] for i in issues)
+
+    return {
+        "total_questions": total,
+        "consistent_count": consistent,
+        "issue_count": len(issues),
+        "consistency_score": consistency_score,
+        "issue_breakdown": dict(issue_type_counts),
+        "co_mismatch_count": co_mismatch,
+        "po_mismatch_count": po_mismatch,
+        "missing_tags_count": missing_tags,
+        "issues": issues[:100],
+        "bloom_co_rules": {str(k): v for k, v in BLOOM_CO_RULES.items()},
     }
