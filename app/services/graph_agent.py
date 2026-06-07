@@ -14,7 +14,7 @@ load_dotenv()  # Load .env file
 from typing import TypedDict, Dict, List, Optional
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from langgraph.graph import StateGraph, END
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI  # also used for Gemini via OpenAI-compatible endpoint
 from langchain_core.messages import SystemMessage, HumanMessage
 from pydantic import BaseModel, Field
 
@@ -131,8 +131,12 @@ _llm_cache: Dict[str, any] = {}
 
 def get_llm(json_mode=False, mode="auto"):
     """Get cached LLM instance. Creates once, reuses thereafter."""
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key: raise ValueError("OPENAI_API_KEY missing")
+    # Support both Gemini (GEMINI_API_KEY) and OpenAI (OPENAI_API_KEY)
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    openai_key = os.getenv("OPENAI_API_KEY")
+    api_key = gemini_key or openai_key
+    if not api_key:
+        raise ValueError("No API key found. Set GEMINI_API_KEY or OPENAI_API_KEY in your .env")
 
     # Create cache key from configuration
     schema_name = json_mode.__name__ if json_mode else "none"
@@ -141,23 +145,33 @@ def get_llm(json_mode=False, mode="auto"):
     if cache_key in _llm_cache:
         return _llm_cache[cache_key]
 
-    # Updated to use faster, production-ready GPT-4 models
-    # instant: Fast responses for simple tasks (bloom detection, tagging)
-    # auto: Balanced speed/quality for main generation
-    # thinking: Complex reasoning (code generation, review)
-    model_map = {"instant": "gpt-4o-mini", "auto": "gpt-4o", "thinking": "gpt-4-turbo"}
-    selected = model_map.get(mode, "gpt-4o")
-
-    # Set appropriate temperature based on task
-    temp_map = {"instant": 0.7, "auto": 0.8, "thinking": 0.9}
-    temperature = temp_map.get(mode, 0.8)
-
-    llm = ChatOpenAI(
-        model=selected,
-        api_key=api_key,
-        temperature=temperature,
-        request_timeout=120
-    )
+    if gemini_key:
+        # Gemini models via OpenAI-compatible endpoint
+        # instant: fast/cheap  auto: balanced  thinking: best quality
+        model_map = {
+            "instant": "gemini-2.0-flash",
+            "auto":    "gemini-2.0-flash",
+            "thinking": "gemini-2.5-flash-preview-05-20",
+        }
+        selected = model_map.get(mode, "gemini-2.0-flash")
+        llm = ChatOpenAI(
+            model=selected,
+            api_key=gemini_key,
+            base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+            temperature=0.7,
+            request_timeout=120,
+        )
+    else:
+        # OpenAI fallback
+        model_map = {"instant": "gpt-4o-mini", "auto": "gpt-4o", "thinking": "gpt-4-turbo"}
+        selected = model_map.get(mode, "gpt-4o")
+        temp_map = {"instant": 0.7, "auto": 0.8, "thinking": 0.9}
+        llm = ChatOpenAI(
+            model=selected,
+            api_key=openai_key,
+            temperature=temp_map.get(mode, 0.8),
+            request_timeout=120,
+        )
 
     result = llm.with_structured_output(json_mode) if json_mode else llm
     _llm_cache[cache_key] = result
