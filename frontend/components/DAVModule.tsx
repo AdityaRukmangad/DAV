@@ -20,6 +20,7 @@ interface Overview {
   source_distribution: Record<string, number>;
   questions_last_7_days: number;
   bloom_balance_score: number;
+  unclassified_bloom_count?: number;
 }
 
 interface BloomData {
@@ -78,11 +79,14 @@ interface BloomLevel {
 interface PaperBalance {
   balance_score: number;
   total_questions: number;
+  classified_questions?: number;
+  unclassified_questions?: number;
   bloom_levels: BloomLevel[];
   difficulty_distribution: Record<string, number>;
   ideal_difficulty: Record<string, number>;
   suggestions: string[];
   rating: string;
+  scope?: string;
 }
 
 interface SimilarPair {
@@ -228,8 +232,11 @@ const OverviewSection: React.FC<{ data: Overview; onClean: () => void; cleaning:
         <StatChip label="Total Questions" value={data.total_questions} color="bg-indigo-50 text-indigo-700" />
         <StatChip label="Unique Topics" value={data.unique_topics} color="bg-purple-50 text-purple-700" />
         <StatChip label="Last 7 Days" value={data.questions_last_7_days} color="bg-emerald-50 text-emerald-700" />
-        <StatChip label="Avg Bloom" value={data.avg_bloom_level} color="bg-amber-50 text-amber-700" />
+        <StatChip label="Avg Bloom" value={data.avg_bloom_level} sub="classified questions only" color="bg-amber-50 text-amber-700" />
         <StatChip label="Bloom Balance" value={`${data.bloom_balance_score}%`} sub="higher = better" color="bg-blue-50 text-blue-700" />
+        {!!data.unclassified_bloom_count && (
+          <StatChip label="Unclassified" value={data.unclassified_bloom_count} sub="no Bloom tag" color="bg-slate-100 text-slate-600" />
+        )}
         <StatChip label="Mean Difficulty" value={data.mean_difficulty_score} color="bg-rose-50 text-rose-700" />
         <StatChip label="Std Dev" value={data.difficulty_std_dev} color="bg-slate-50 text-slate-700" />
       </div>
@@ -365,7 +372,7 @@ const CoverageSection: React.FC<{ data: CoverageData }> = ({ data }) => {
 
   return (
     <div className="space-y-6">
-      <SectionHeader icon="📚" title="Syllabus Coverage" desc="Topics covered vs gaps per unit — NBA compliance view" />
+      <SectionHeader icon="📚" title="Syllabus Coverage" desc="Question Bank topics vs syllabus units — NBA compliance view (not question-paper coverage)" />
 
       {/* Summary chips */}
       <div className="flex flex-wrap gap-3">
@@ -775,13 +782,16 @@ const PaperBalanceSection: React.FC<{ data: PaperBalance }> = ({ data }) => {
 
   return (
     <div className="space-y-6">
-      <SectionHeader icon="⚖️" title="Question Paper Balance Checker" desc="Compares your paper's Bloom distribution against the ideal — flags cognitive imbalances" />
+      <SectionHeader icon="⚖️" title="Question Bank Balance Checker" desc="Compares the ENTIRE question bank's Bloom distribution against the ideal — not a single paper (papers aren't linked back to bank rows yet)" />
 
       <div className="flex flex-wrap gap-3 items-center">
         <div className={`px-5 py-3 rounded-2xl font-bold text-lg ${RATING_COLOR[data.rating] || 'text-ink bg-slate-50'}`}>
           {data.rating} — {data.balance_score}%
         </div>
-        <StatChip label="Total Questions" value={data.total_questions} color="bg-indigo-50 text-indigo-700" />
+        <StatChip label="Total in Question Bank" value={data.total_questions} color="bg-indigo-50 text-indigo-700" />
+        {!!data.unclassified_questions && (
+          <StatChip label="Unclassified (no Bloom tag)" value={data.unclassified_questions} color="bg-amber-50 text-amber-700" />
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

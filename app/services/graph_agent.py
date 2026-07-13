@@ -1744,7 +1744,7 @@ def tag_pedagogy(state: AgentState) -> Dict:
     OPTIONAL node - controlled by ENABLE_PEDAGOGY_TAGGER env variable.
     """
     # Check if pedagogy tagger is enabled
-    tagger_enabled = os.getenv("ENABLE_PEDAGOGY_TAGGER", "false").lower() == "true"
+    tagger_enabled = os.getenv("ENABLE_PEDAGOGY_TAGGER", "true").lower() == "true"
     if not tagger_enabled:
         logger.info("[Pedagogy Tagger] DISABLED (ENABLE_PEDAGOGY_TAGGER=false)")
         return {}  # Skip tagging
@@ -1881,6 +1881,21 @@ def save_result(state: AgentState) -> Dict:
         logger.info("[CACHE] Skipping save - question was from cache")
         return {}
     if q and 'question' in q:
+        # Bloom level / CO / PO live on the graph state, not inside question_data.
+        # Copy them across so they actually get persisted (fixes analytics always
+        # showing default Bloom level / CO1, since save_template only reads full_data).
+        q['bloom_level'] = state.get('bloom_level')
+        q['course_outcome'] = state.get('course_outcome')
+        q['program_outcome'] = state.get('program_outcome')
+
+        # Resolve syllabus unit for this topic (independent of Guardian being enabled)
+        # so the question bank stops defaulting every question to "Unit 1".
+        guardian = get_guardian()
+        unit_num = guardian.config.find_topic_unit(state['topic'])
+        unit_info = next((u for u in guardian.config.units if u.get('unit') == unit_num), None) if unit_num else None
+        q['unit_number'] = unit_num
+        q['unit_name'] = unit_info.get('name') if unit_info else None
+
         question_id = save_template(
             state['topic'],
             state['target_difficulty'],
@@ -2001,7 +2016,7 @@ def build_graph():
             return "retry"
 
         # STEP 3: Route through pedagogy_tagger if enabled, otherwise go to Guardian
-        tagger_enabled = os.getenv("ENABLE_PEDAGOGY_TAGGER", "false").lower() == "true"
+        tagger_enabled = os.getenv("ENABLE_PEDAGOGY_TAGGER", "true").lower() == "true"
         if tagger_enabled:
             return "tag"
         else:
@@ -2180,6 +2195,13 @@ def run_agent(topic: str, difficulty: str = "Medium", question_type: str = None,
             final_data['course_outcome'] = result.get('course_outcome')
             final_data['program_outcome'] = result.get('program_outcome')
 
+            # STEP 5: Add syllabus unit mapping (fixes "all questions Unit 1")
+            guardian = get_guardian()
+            unit_num = guardian.config.find_topic_unit(topic)
+            unit_info = next((u for u in guardian.config.units if u.get('unit') == unit_num), None) if unit_num else None
+            final_data['unit_number'] = unit_num
+            final_data['unit_name'] = unit_info.get('name') if unit_info else None
+
             # STEP 4: Add question ID for provenance
             final_data['question_id'] = result.get('question_id')
 
@@ -2336,6 +2358,13 @@ def run_agent_streaming(topic: str, difficulty: str = "Medium", question_type: s
             # STEP 3: Add Pedagogy tags
             final_data['course_outcome'] = accumulated_state.get('course_outcome')
             final_data['program_outcome'] = accumulated_state.get('program_outcome')
+
+            # STEP 5: Add syllabus unit mapping (fixes "all questions Unit 1")
+            guardian = get_guardian()
+            unit_num = guardian.config.find_topic_unit(topic)
+            unit_info = next((u for u in guardian.config.units if u.get('unit') == unit_num), None) if unit_num else None
+            final_data['unit_number'] = unit_num
+            final_data['unit_name'] = unit_info.get('name') if unit_info else None
 
             # Auto-tag the question
             question_type = final_data.get('question_type', '')

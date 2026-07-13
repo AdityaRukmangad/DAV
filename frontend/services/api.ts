@@ -16,25 +16,6 @@ import {
 const API_BASE = (import.meta.env?.VITE_API_URL as string) || 'http://localhost:8000/api/v1';
 
 // MOCK DATA for demonstration when backend is offline
-const MOCK_QUESTION: GenerationResponse = {
-  status: "success",
-  data: {
-    difficulty_rating: "Expert",
-    question: "Analyze the computational complexity of the Transformer attention mechanism given a sequence length N and embedding dimension d. \n\nDerive the specific matrix multiplication costs for Query, Key, and Value projections, and the subsequent Scaled Dot-Product Attention.",
-    answer: "The complexity is O(N^2 * d + N * d^2).",
-    explanation: "1. Q, K, V Projections: For each of N tokens, we project to dimension d. Matrix size is (N, d) x (d, d). Cost: O(N * d^2) for each of Q, K, V.\n2. Attention Scores (Q * K^T): (N, d) x (d, N) = (N, N). Cost: O(N^2 * d).\n3. Weighted Sum (Scores * V): (N, N) x (N, d) = (N, d). Cost: O(N^2 * d).\n\nDominant terms are O(N^2 * d) (quadratic in sequence length) and O(N * d^2) (linear in sequence length but quadratic in embedding).",
-    verification_code: "def attention_complexity(N, d):\n    # Projections (Q, K, V)\n    proj_cost = 3 * (N * (d**2))\n    \n    # Q * K^T (N x d) * (d x N) -> (N x N)\n    score_calc = (N**2) * d\n    \n    # Softmax * V (N x N) * (N x d) -> (N x d)\n    weighted_sum = (N**2) * d\n    \n    total = proj_cost + score_calc + weighted_sum\n    return total\n\n# Verification\nN, d = 1000, 512\nprint(f\"Ops: {attention_complexity(N, d):.2e}\")",
-    source: "Attention Is All You Need",
-    source_urls: ["https://arxiv.org/abs/1706.03762"],
-    computed_answer: "O(N²d)",
-    options: []
-  },
-  meta: {
-    duration_seconds: 0.84,
-    engine: "TRIBUNAL-V5"
-  }
-};
-
 const MOCK_UPLOAD: UploadResponse = {
   filename: "manual.pdf",
   status: "success",
@@ -60,35 +41,38 @@ const MOCK_UPLOAD: UploadResponse = {
  * Expected Response (JSON): GenerationResponse (see types.ts)
  */
 export const generateQuestion = async (topic: string, difficulty: string, syllabusContext?: string): Promise<GenerationResponse> => {
-  try {
-    console.log(`[API] Fetching ${API_BASE}/generate...`);
-    const response = await fetch(`${API_BASE}/generate`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-        topic, 
-        difficulty,
-        ...(syllabusContext && { syllabus_context: syllabusContext })
-      }),
-    });
+  console.log(`[API] Fetching ${API_BASE}/generate...`);
+  const response = await fetch(`${API_BASE}/generate`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      topic,
+      difficulty,
+      ...(syllabusContext && { syllabus_context: syllabusContext })
+    }),
+  });
 
-    if (!response.ok) {
-      throw new Error(`Server error: ${response.status}`);
+  if (!response.ok) {
+    // IMPORTANT: previously this fell through to silently return canned
+    // MOCK_QUESTION data on any failure (including real backend/API-key
+    // errors), tagged as `status: "success"`. That made real generation
+    // failures invisible, and — since the mock has no bloom_level/CO/unit —
+    // every mock-backed question got saved to the bank with the hardcoded
+    // fallback values ("Apply"/"CO1"/"Unit 1"), polluting the analytics tab.
+    // Surface the real error instead so the UI shows what's actually wrong.
+    let detail = '';
+    try {
+      const body = await response.json();
+      detail = body?.detail || body?.error || '';
+    } catch {
+      // response wasn't JSON — ignore
     }
-
-    return response.json();
-  } catch (error) {
-    console.warn(`[API] Backend unreachable at ${API_BASE}/generate. Using Mock Data.`);
-    await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network latency
-    
-    // Return a deep copy with modified data based on input to make it feel real
-    const mock = JSON.parse(JSON.stringify(MOCK_QUESTION));
-    mock.data.difficulty_rating = difficulty;
-    if (topic) mock.data.question = `[${topic.toUpperCase()}] ` + mock.data.question;
-    return mock;
+    throw new Error(detail || `Server error: ${response.status}`);
   }
+
+  return response.json();
 };
 
 /**

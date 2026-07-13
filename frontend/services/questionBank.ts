@@ -1,5 +1,3 @@
-import { saveQuestionToBank } from '../services/questionBank';
-
 export interface SaveQuestionPayload {
   question_text: string;
   marks: number;

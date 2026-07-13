@@ -23,6 +23,7 @@ DIFFICULTY_ORDER = {"Easy": 1, "Medium": 2, "Hard": 3}
 DIFFICULTY_SCORE = {"Easy": 1, "Medium": 2, "Hard": 3}
 
 BLOOM_LABELS = {
+    0: "Unclassified",
     1: "Remember",
     2: "Understand",
     3: "Apply",
@@ -37,6 +38,7 @@ CO_LABELS = {
     "CO3": "Application & Design",
     "CO4": "Evaluation & Optimization",
     "CO5": "Innovation & Research",
+    "Unclassified": "Unclassified",
 }
 
 PO_LABELS = {
@@ -46,7 +48,25 @@ PO_LABELS = {
     "PO4": "Investigation",
     "PO5": "Modern Tool Usage",
     "PO6": "Ethics & Society",
+    "Unclassified": "Unclassified",
 }
+
+
+def _bloom_val(r: Dict) -> int:
+    """Bloom level for a row, or 0 ('Unclassified') if never tagged. Never guesses a real level."""
+    val = r.get("bloom_level")
+    try:
+        return int(val) if val else 0
+    except (TypeError, ValueError):
+        return 0
+
+
+def _co_val(r: Dict) -> str:
+    return r.get("course_outcome") or "Unclassified"
+
+
+def _po_val(r: Dict) -> str:
+    return r.get("program_outcome") or "Unclassified"
 
 
 # =============================================================================
@@ -78,9 +98,13 @@ def clean_data() -> Dict:
     Performs a cleaning pass on the question_bank:
     - Removes exact duplicate (topic+difficulty+question_text) rows
     - Standardizes difficulty casing
-    - Fills missing bloom_level with inferred default (2)
-    - Fills missing course_outcome / program_outcome with 'Unknown'
     Returns a report of what was fixed.
+
+    NOTE: this intentionally does NOT invent Bloom levels or CO/PO tags for rows
+    that never got classified (e.g. generated before the classifier ran). Faking
+    those as "Understand"/"CO1" made the analytics tabs look uniform/wrong even
+    when the underlying data was fine — missing values are surfaced as
+    "Unclassified" in the analytics endpoints instead.
     """
     if not DB_PATH.exists():
         return {"error": "Database not found"}
@@ -88,9 +112,6 @@ def clean_data() -> Dict:
     report = {
         "duplicates_removed": 0,
         "difficulty_standardized": 0,
-        "bloom_filled": 0,
-        "co_filled": 0,
-        "po_filled": 0,
     }
 
     with sqlite3.connect(DB_PATH) as conn:
@@ -110,18 +131,6 @@ def clean_data() -> Dict:
             c.execute("UPDATE templates SET difficulty=? WHERE LOWER(difficulty)=?", (std, raw))
             report["difficulty_standardized"] += c.rowcount
 
-        # 3. Fill missing bloom_level
-        c.execute("UPDATE templates SET bloom_level=2 WHERE bloom_level IS NULL OR bloom_level=0")
-        report["bloom_filled"] = c.rowcount
-
-        # 4. Fill missing CO
-        c.execute("UPDATE templates SET course_outcome='CO1' WHERE course_outcome IS NULL OR course_outcome=''")
-        report["co_filled"] = c.rowcount
-
-        # 5. Fill missing PO
-        c.execute("UPDATE templates SET program_outcome='PO1' WHERE program_outcome IS NULL OR program_outcome=''")
-        report["po_filled"] = c.rowcount
-
         conn.commit()
 
     return report
@@ -140,8 +149,9 @@ def get_overview() -> Dict:
     difficulties = [r.get("difficulty", "Medium") or "Medium" for r in rows]
     diff_counts = Counter(difficulties)
 
-    bloom_vals = [r.get("bloom_level") or 2 for r in rows]
-    avg_bloom = round(sum(bloom_vals) / len(bloom_vals), 2)
+    bloom_vals = [_bloom_val(r) for r in rows]
+    classified_bloom = [b for b in bloom_vals if b > 0]
+    avg_bloom = round(sum(classified_bloom) / len(classified_bloom), 2) if classified_bloom else 0
 
     diff_scores = [DIFFICULTY_SCORE.get(d, 2) for d in difficulties]
     mean_diff = round(sum(diff_scores) / len(diff_scores), 2)
@@ -168,12 +178,14 @@ def get_overview() -> Dict:
         "avg_bloom_level": avg_bloom,
         "source_distribution": dict(sources),
         "questions_last_7_days": recent,
-        "bloom_balance_score": _bloom_balance(bloom_vals),
+        "bloom_balance_score": _bloom_balance(classified_bloom),
+        "unclassified_bloom_count": len(bloom_vals) - len(classified_bloom),
     }
 
 
 def _bloom_balance(bloom_vals: List[int]) -> float:
-    """Score 0-100 measuring how evenly distributed Bloom levels are (higher = more balanced)."""
+    """Score 0-100 measuring how evenly distributed Bloom levels are (higher = more balanced).
+    Only considers questions that actually have a Bloom level assigned."""
     if not bloom_vals:
         return 0.0
     counts = Counter(bloom_vals)
@@ -194,45 +206,41 @@ def get_bloom_distribution() -> Dict:
     if not rows:
         return {"data": [], "by_topic": {}}
 
-    # Overall distribution
-    bloom_counts = Counter(r.get("bloom_level") or 2 for r in rows)
+    # Overall distribution (0 = Unclassified, i.e. never Bloom-tagged — not silently "Understand")
+    bloom_counts = Counter(_bloom_val(r) for r in rows)
+    levels = list(range(1, 7)) + ([0] if bloom_counts.get(0) else [])
     overall = [
         {
             "bloom_level": lvl,
             "label": BLOOM_LABELS.get(lvl, f"Level {lvl}"),
             "count": bloom_counts.get(lvl, 0),
         }
-        for lvl in range(1, 7)
+        for lvl in levels
     ]
 
     # Per-topic breakdown
     topic_bloom: Dict[str, Counter] = defaultdict(Counter)
     for r in rows:
         topic = (r.get("topic") or "Unknown").lower().strip()
-        lvl = r.get("bloom_level") or 2
-        topic_bloom[topic][lvl] += 1
+        topic_bloom[topic][_bloom_val(r)] += 1
 
     by_topic = {}
     for topic, counter in topic_bloom.items():
+        topic_levels = list(range(1, 7)) + ([0] if counter.get(0) else [])
         by_topic[topic] = [
             {"bloom_level": lvl, "label": BLOOM_LABELS.get(lvl, f"L{lvl}"), "count": counter.get(lvl, 0)}
-            for lvl in range(1, 7)
+            for lvl in topic_levels
         ]
 
     # Difficulty × Bloom heatmap data
-    heatmap = []
+    heatmap_matrix: Dict[str, Dict[int, int]] = defaultdict(lambda: defaultdict(int))
     for r in rows:
         diff = r.get("difficulty", "Medium") or "Medium"
-        lvl = r.get("bloom_level") or 2
-        heatmap.append({"difficulty": diff, "bloom_level": lvl})
-
-    heatmap_matrix: Dict[str, Dict[int, int]] = defaultdict(lambda: defaultdict(int))
-    for entry in heatmap:
-        heatmap_matrix[entry["difficulty"]][entry["bloom_level"]] += 1
+        heatmap_matrix[diff][_bloom_val(r)] += 1
 
     heatmap_data = []
     for diff in ["Easy", "Medium", "Hard"]:
-        for lvl in range(1, 7):
+        for lvl in levels:
             heatmap_data.append({
                 "difficulty": diff,
                 "bloom_level": lvl,
@@ -246,6 +254,33 @@ def get_bloom_distribution() -> Dict:
 # =============================================================================
 # TOPIC COVERAGE (vs Syllabus)
 # =============================================================================
+
+def _topic_matches(syllabus_topic: str, question_topic: str) -> bool:
+    """
+    Whether a free-text question-bank topic (as typed/generated at question-creation
+    time) should count as covering a syllabus topic string.
+
+    Previously this was a plain two-way substring check (`a in b or b in a`), which
+    both over-matched (any short syllabus topic like "AI" matches almost anything)
+    and under-matched (question topics rarely use the exact syllabus wording), making
+    the coverage numbers unreliable in both directions. This adds word-overlap
+    (Jaccard) similarity and a minimum length guard on the substring check.
+    """
+    if syllabus_topic == question_topic:
+        return True
+    # Require a reasonably long overlap for the substring check to avoid short
+    # common words (e.g. "ai", "data") triggering false positives.
+    shorter, longer = sorted([syllabus_topic, question_topic], key=len)
+    if len(shorter) >= 6 and shorter in longer:
+        return True
+    tokens_a = set(syllabus_topic.split())
+    tokens_b = set(question_topic.split())
+    if tokens_a and tokens_b:
+        jaccard = len(tokens_a & tokens_b) / len(tokens_a | tokens_b)
+        if jaccard >= 0.5:
+            return True
+    return False
+
 
 def get_topic_coverage() -> Dict:
     rows = _fetch_all()
@@ -269,10 +304,10 @@ def get_topic_coverage() -> Dict:
         for t in topics:
             t_lower = t.lower().strip()
             count = question_topics.get(t_lower, 0)
-            # Also check partial matches
+            # Also check fuzzy matches (question topics rarely match syllabus wording verbatim)
             if count == 0:
                 for qt, qc in question_topics.items():
-                    if t_lower in qt or qt in t_lower:
+                    if _topic_matches(t_lower, qt):
                         count = qc
                         break
             covered = count > 0
@@ -296,6 +331,9 @@ def get_topic_coverage() -> Dict:
             "covered_topics": unit_covered,
             "coverage_pct": coverage_pct,
             "topics": topic_details,
+            "questions_generated_for_unit": sum(
+                1 for r in rows if r.get("unit_number") == unit_num
+            ),
         })
 
     total_syllabus_topics = sum(u["total_topics"] for u in coverage_data)
@@ -309,6 +347,7 @@ def get_topic_coverage() -> Dict:
         "gap_count": len(gap_topics),
         "units": coverage_data,
         "gap_topics": gap_topics,
+        "source": "question_bank",  # this is Question Bank coverage, not question-paper coverage
     }
 
 
@@ -383,12 +422,12 @@ def get_copo_matrix() -> Dict:
     valid_pos = list(PO_LABELS.keys())
 
     for r in rows:
-        co = r.get("course_outcome") or "CO1"
-        po = r.get("program_outcome") or "PO1"
+        co = _co_val(r)
+        po = _po_val(r)
         if co not in valid_cos:
-            co = "CO1"
+            co = "Unclassified"
         if po not in valid_pos:
-            po = "PO1"
+            po = "Unclassified"
         co_po_counts[co][po] += 1
         co_total[co] += 1
         po_total[po] += 1
@@ -450,7 +489,8 @@ def get_eda_report() -> Dict:
         return {"total": 0, "message": "No data available for EDA."}
 
     difficulties = [r.get("difficulty", "Medium") or "Medium" for r in rows]
-    bloom_vals = [r.get("bloom_level") or 2 for r in rows]
+    bloom_vals = [_bloom_val(r) for r in rows]
+    classified_bloom = [b for b in bloom_vals if b > 0]
     diff_scores = [DIFFICULTY_SCORE.get(d, 2) for d in difficulties]
 
     mean_d = sum(diff_scores) / len(diff_scores)
@@ -460,8 +500,8 @@ def get_eda_report() -> Dict:
     topic_counts = Counter(t.lower().strip() for t in topics if t)
     top_topics = topic_counts.most_common(10)
 
-    cos = Counter(r.get("course_outcome") or "CO1" for r in rows)
-    pos = Counter(r.get("program_outcome") or "PO1" for r in rows)
+    cos = Counter(_co_val(r) for r in rows)
+    pos = Counter(_po_val(r) for r in rows)
 
     missing_bloom = sum(1 for r in rows if not r.get("bloom_level"))
     missing_co = sum(1 for r in rows if not r.get("course_outcome"))
@@ -480,8 +520,8 @@ def get_eda_report() -> Dict:
         },
         "bloom": {
             "distribution": {BLOOM_LABELS.get(k, str(k)): v for k, v in Counter(bloom_vals).items()},
-            "mean_level": round(sum(bloom_vals) / len(bloom_vals), 2),
-            "balance_score": _bloom_balance(bloom_vals),
+            "mean_level": round(sum(classified_bloom) / len(classified_bloom), 2) if classified_bloom else 0,
+            "balance_score": _bloom_balance(classified_bloom),
         },
         "topics": {
             "unique_count": len(topic_counts),
@@ -517,18 +557,30 @@ IDEAL_BLOOM_DIST = {1: 10, 2: 15, 3: 20, 4: 25, 5: 15, 6: 15}
 
 def get_paper_balance(paper_id: Optional[int] = None) -> Dict:
     """
-    Compare actual Bloom distribution of question bank (or a specific paper)
-    against the ideal distribution. Returns imbalance scores and suggestions.
+    Compare actual Bloom distribution of the question bank against the ideal
+    distribution. Returns imbalance scores and suggestions.
+
+    NOTE: `paper_id` is accepted but NOT currently wired up — generated papers are
+    stored as standalone JSON files (see paper_generator.py) with no foreign key
+    back to question_bank.db, so there is no way to filter this to "just one
+    paper" yet. This always reflects the WHOLE question bank, which is what the
+    UI's "Balance" tab shows (it never actually passes a paper_id). Percentages
+    below are computed only over questions that have a Bloom level assigned —
+    unclassified rows (e.g. generated before tagging existed) are reported
+    separately instead of being silently folded into "Understand".
     """
     rows = _fetch_all()
     if not rows:
         return {"error": "No questions found"}
 
-    bloom_vals = [r.get("bloom_level") or 2 for r in rows]
+    bloom_vals = [_bloom_val(r) for r in rows]
     total = len(bloom_vals)
-    actual_counts = Counter(bloom_vals)
+    classified = [b for b in bloom_vals if b > 0]
+    classified_total = len(classified) or 1
+    unclassified_count = total - len(classified)
+    actual_counts = Counter(classified)
 
-    actual_pct = {lvl: round(actual_counts.get(lvl, 0) / total * 100, 1) for lvl in range(1, 7)}
+    actual_pct = {lvl: round(actual_counts.get(lvl, 0) / classified_total * 100, 1) for lvl in range(1, 7)}
     ideal_pct = IDEAL_BLOOM_DIST
 
     # Deviation per level
@@ -575,11 +627,14 @@ def get_paper_balance(paper_id: Optional[int] = None) -> Dict:
     return {
         "balance_score": balance_score,
         "total_questions": total,
+        "classified_questions": len(classified),
+        "unclassified_questions": unclassified_count,
         "bloom_levels": levels,
         "difficulty_distribution": diff_pct,
         "ideal_difficulty": ideal_diff,
         "suggestions": suggestions + diff_suggestions,
         "rating": "Excellent" if balance_score >= 80 else ("Good" if balance_score >= 60 else ("Fair" if balance_score >= 40 else "Poor")),
+        "scope": "entire_question_bank",
     }
 
 
@@ -618,7 +673,7 @@ def get_similarity_report(threshold: float = 0.55) -> Dict:
             "id": r["id"],
             "topic": r.get("topic", ""),
             "difficulty": r.get("difficulty", ""),
-            "bloom_level": r.get("bloom_level") or 2,
+            "bloom_level": _bloom_val(r),
             "text_preview": text[:120] + ("…" if len(text) > 120 else ""),
             "tokens": _tokenize(text),
         })
@@ -849,7 +904,7 @@ def get_copo_consistency() -> Dict:
     missing_tags = 0
 
     for r in rows:
-        bloom = r.get("bloom_level") or 2
+        bloom = _bloom_val(r)
         co = r.get("course_outcome") or ""
         po = r.get("program_outcome") or ""
         qid = r["id"]
