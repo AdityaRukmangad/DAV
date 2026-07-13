@@ -69,13 +69,17 @@ const KnowledgeHubModule: React.FC = () => {
       
       console.log('Raw PYQ data:', pyq);
       
-      // Ensure the data structure is correct
+      // getSyllabusInfo() returns null on any fetch failure (backend down, network
+      // error, etc.) — guard against that before touching its properties.
       const processedSyllabus: SyllabusInfo = {
-        course_info: syllabus.course_info || { code: '', name: '', semester: 0, credits: 0 },
-        course_outcomes: Array.isArray(syllabus.course_outcomes) ? syllabus.course_outcomes : [],
-        co_po_mapping: syllabus.co_po_mapping || {},
-        units: Array.isArray(syllabus.units) ? syllabus.units : []
+        course_info: syllabus?.course_info || { code: '', name: '', semester: 0, credits: 0 },
+        course_outcomes: Array.isArray(syllabus?.course_outcomes) ? syllabus.course_outcomes : [],
+        co_po_mapping: syllabus?.co_po_mapping || {},
+        units: Array.isArray(syllabus?.units) ? syllabus.units : []
       };
+      if (!syllabus) {
+        setError('Could not load syllabus data — make sure the backend is running.');
+      }
       
       // Process PYQ data with safe defaults
       const processedPyq: PYQPapersResponse = {
