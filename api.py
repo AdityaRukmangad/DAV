@@ -466,8 +466,17 @@ async def get_suggestions_by_pdf():
 
         pdf_suggestions = []
         rag_engine = get_rag_engine()
+        # Same provider precedence as graph_agent.py's get_llm(): Groq > Gemini > OpenAI
+        groq_key = os.getenv("GROQ_API_KEY")
         gemini_key = os.getenv("GEMINI_API_KEY")
-        if gemini_key:
+        if groq_key:
+            llm = ChatOpenAI(
+                model="openai/gpt-oss-120b",
+                api_key=groq_key,
+                base_url="https://api.groq.com/openai/v1",
+                temperature=0,
+            )
+        elif gemini_key:
             # gemini-2.0-flash was retired (shutdown June 1, 2026) — see the
             # matching note in graph_agent.py's get_llm(). Use the current GA model.
             llm = ChatOpenAI(

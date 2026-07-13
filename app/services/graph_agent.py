@@ -131,12 +131,15 @@ _llm_cache: Dict[str, any] = {}
 
 def get_llm(json_mode=False, mode="auto"):
     """Get cached LLM instance. Creates once, reuses thereafter."""
-    # Support both Gemini (GEMINI_API_KEY) and OpenAI (OPENAI_API_KEY)
+    # Support Groq, Gemini, and OpenAI. Precedence: GROQ_API_KEY > GEMINI_API_KEY
+    # > OPENAI_API_KEY — so switching providers (e.g. Gemini hit its quota) is
+    # just "add GROQ_API_KEY to .env", no need to remove the other keys.
+    groq_key = os.getenv("GROQ_API_KEY")
     gemini_key = os.getenv("GEMINI_API_KEY")
     openai_key = os.getenv("OPENAI_API_KEY")
-    api_key = gemini_key or openai_key
+    api_key = groq_key or gemini_key or openai_key
     if not api_key:
-        raise ValueError("No API key found. Set GEMINI_API_KEY or OPENAI_API_KEY in your .env")
+        raise ValueError("No API key found. Set GROQ_API_KEY, GEMINI_API_KEY, or OPENAI_API_KEY in your .env")
 
     # Create cache key from configuration
     schema_name = json_mode.__name__ if json_mode else "none"
@@ -145,7 +148,26 @@ def get_llm(json_mode=False, mode="auto"):
     if cache_key in _llm_cache:
         return _llm_cache[cache_key]
 
-    if gemini_key:
+    if groq_key:
+        # Groq models via its OpenAI-compatible endpoint. Groq deprecated its
+        # Llama chat models (llama-3.3-70b-versatile, llama-3.1-8b-instant) —
+        # do NOT use those, they 404 the same way gemini-2.0-flash did. The
+        # current recommended general-purpose/tool-calling models are the
+        # openai/gpt-oss family (verified against console.groq.com/docs/models).
+        model_map = {
+            "instant": "openai/gpt-oss-20b",
+            "auto":    "openai/gpt-oss-120b",
+            "thinking": "openai/gpt-oss-120b",
+        }
+        selected = model_map.get(mode, "openai/gpt-oss-120b")
+        llm = ChatOpenAI(
+            model=selected,
+            api_key=groq_key,
+            base_url="https://api.groq.com/openai/v1",
+            temperature=0.7,
+            request_timeout=120,
+        )
+    elif gemini_key:
         # Gemini models via OpenAI-compatible endpoint
         # instant: fast/cheap  auto: balanced  thinking: best quality
         # NOTE: gemini-2.0-flash was retired (shutdown June 1, 2026) and
