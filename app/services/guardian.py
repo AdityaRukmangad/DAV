@@ -7,87 +7,76 @@ It checks:
 2. Unit alignment
 3. Allows ONE regeneration attempt if validation fails
 
-Config: ENABLE_GUARDIAN (default: false) for backward compatibility
+Reads the SAME syllabus (app/config/syllabus.json) used everywhere else in the
+app (topic picker, PDF-to-unit matching) via SyllabusLoader — previously this
+read a separate, stale config/syllabus.yaml with different units/topics, which
+is why generated questions never matched a real unit and always fell back to
+Unit 1.
+
+Config: GUARDIAN_ENABLED env var (default: true) for strict validation.
+Unit resolution (find_topic_unit) always runs regardless of this flag, since
+it's just a syllabus lookup and analytics/unit-tagging depend on it.
 """
 
 import os
-import yaml
-from pathlib import Path
-from typing import Dict, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 from difflib import SequenceMatcher
 from app.tools.utils import get_logger
+from app.config.syllabus_loader import get_syllabus_loader
 
 logger = get_logger("Guardian")
 
-# Path to syllabus config
-SYLLABUS_CONFIG_PATH = Path("config/syllabus.yaml")
 
 class SyllabusConfig:
-    """Syllabus configuration loaded from YAML"""
+    """Adapts SyllabusLoader (app/config/syllabus.json) to Guardian's needs."""
 
-    def __init__(self, config_path: Path = SYLLABUS_CONFIG_PATH):
-        self.config_path = config_path
-        self.enabled = False
-        self.units = []
-        self.validation_settings = {}
-        self.course_info = {}
-        self.load_config()
+    def __init__(self):
+        self.loader = get_syllabus_loader()
+        self.enabled = os.getenv("GUARDIAN_ENABLED", "true").lower() == "true"
+        self.units = self.loader.get_all_units()
+        self.validation_settings = {
+            "similarity_threshold": 0.5,
+            "strict_threshold": 0.75,
+        }
+        self.course_info = self.loader.get_course_info()
 
-    def load_config(self):
-        """Load syllabus configuration from YAML file"""
-        if not self.config_path.exists():
-            logger.warning(f"Syllabus config not found at {self.config_path}. Guardian disabled.")
-            return
+        if self.enabled:
+            logger.info(f"Guardian enabled for course: {self.course_info.get('name', 'Unknown')}")
+            logger.info(f"Loaded {len(self.units)} units from syllabus.json")
 
-        try:
-            with open(self.config_path, 'r') as f:
-                config = yaml.safe_load(f)
-
-            self.enabled = config.get('enabled', False)
-            self.units = config.get('units', [])
-            self.validation_settings = config.get('validation', {})
-            self.course_info = config.get('course', {})
-
-            if self.enabled:
-                logger.info(f"Guardian enabled for course: {self.course_info.get('name', 'Unknown')}")
-                logger.info(f"Loaded {len(self.units)} units from syllabus")
-        except Exception as e:
-            logger.error(f"Failed to load syllabus config: {e}")
-            self.enabled = False
-
-    def get_all_topics(self) -> list:
-        """Get flattened list of all topics from all units"""
+    def get_all_topics(self) -> List[str]:
+        """Get flattened list of all topic names + subtopics from all units"""
         topics = []
         for unit in self.units:
-            topics.extend(unit.get('topics', []))
+            topics.extend(self.loader.extract_all_topic_keywords(unit.get("unit_number")))
         return topics
 
     def find_topic_unit(self, topic: str) -> Optional[int]:
         """Find which unit a topic belongs to"""
         topic_lower = topic.lower()
+        best_unit, best_score = None, 0.0
         for unit in self.units:
-            for unit_topic in unit.get('topics', []):
-                if self._is_similar(topic_lower, unit_topic.lower()):
-                    return unit.get('unit')
-        return None
+            unit_num = unit.get("unit_number")
+            keywords = self.loader.extract_all_topic_keywords(unit_num)
+            for kw in keywords:
+                if self._is_similar(topic_lower, kw.lower()):
+                    score = SequenceMatcher(None, topic_lower, kw.lower()).ratio()
+                    if score > best_score:
+                        best_unit, best_score = unit_num, score
+        return best_unit
 
-
-    def _is_similar(self, text1: str, text2: str, threshold: float = 0.6) -> bool:
+    def _is_similar(self, text1: str, text2: str, threshold: float = 0.5) -> bool:
         """Check if two texts are similar using fuzzy matching"""
-        # Exact match
         if text1 == text2:
             return True
 
-        # Substring match
         if text1 in text2 or text2 in text1:
             return True
 
-        # Sequence similarity
         ratio = SequenceMatcher(None, text1, text2).ratio()
         if ratio >= threshold:
             return True
 
-        # Token-based Jaccard similarity
         tokens1 = set(text1.split())
         tokens2 = set(text2.split())
         if tokens1 and tokens2:
@@ -127,43 +116,35 @@ class Guardian:
             - reason: Explanation if invalid
             - unit_number: Which unit the topic belongs to (if valid)
         """
+        unit_num = self.config.find_topic_unit(topic)
+
         if not self.is_enabled():
-            # Guardian disabled, pass validation
-            return True, None, None
+            # Guardian validation disabled, pass but still report resolved unit
+            return True, None, unit_num
 
         topic_lower = topic.lower()
         all_topics = self.config.get_all_topics()
 
-        # Determine threshold based on Bloom level
-        # Higher Bloom = stricter threshold to prevent creative tangents
         if bloom_level and bloom_level >= 5:
-            threshold = self.config.validation_settings.get('strict_threshold', 0.8)
+            threshold = self.config.validation_settings.get("strict_threshold", 0.75)
         else:
-            threshold = self.config.validation_settings.get('similarity_threshold', 0.6)
+            threshold = self.config.validation_settings.get("similarity_threshold", 0.5)
 
-        # Check against all syllabus topics
         for syllabus_topic in all_topics:
-            syllabus_topic_lower = syllabus_topic.lower()
-
-            # Use config's similarity method
-            if self.config._is_similar(topic_lower, syllabus_topic_lower, threshold):
-                # Find unit
-                unit_num = self.config.find_topic_unit(topic)
+            if self.config._is_similar(topic_lower, syllabus_topic.lower(), threshold):
                 self.logger.info(f"✓ Topic '{topic}' validated (matched: '{syllabus_topic}', unit: {unit_num})")
                 return True, None, unit_num
 
-        # Topic not found in syllabus
         reason = f"Topic '{topic}' not found in course syllabus. Please choose a topic from the defined units."
         self.logger.warning(f"✗ {reason}")
 
-        # Suggest similar topics
         suggestions = self._find_similar_topics(topic, all_topics, limit=3)
         if suggestions:
             reason += f" Similar topics: {', '.join(suggestions)}"
 
-        return False, reason, None
+        return False, reason, unit_num
 
-    def _find_similar_topics(self, topic: str, syllabus_topics: list, limit: int = 3) -> list:
+    def _find_similar_topics(self, topic: str, syllabus_topics: List[str], limit: int = 3) -> List[str]:
         """Find similar topics in syllabus for suggestions"""
         topic_lower = topic.lower()
         similarities = []
@@ -172,7 +153,6 @@ class Guardian:
             ratio = SequenceMatcher(None, topic_lower, syl_topic.lower()).ratio()
             similarities.append((syl_topic, ratio))
 
-        # Sort by similarity and return top N
         similarities.sort(key=lambda x: x[1], reverse=True)
         return [topic for topic, ratio in similarities[:limit] if ratio > 0.3]
 

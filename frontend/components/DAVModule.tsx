@@ -58,6 +58,7 @@ interface CoPoData {
   matrix: MatrixEntry[];
   co_summary: { co: string; label: string; count: number; pct: number }[];
   po_summary: { po: string; label: string; count: number; pct: number }[];
+  untagged_count?: number;
 }
 
 interface EDAReport {
@@ -78,6 +79,8 @@ interface BloomLevel {
 interface PaperBalance {
   balance_score: number;
   total_questions: number;
+  bloom_classified_questions?: number;
+  unclassified_questions?: number;
   bloom_levels: BloomLevel[];
   difficulty_distribution: Record<string, number>;
   ideal_difficulty: Record<string, number>;
@@ -298,7 +301,7 @@ const BloomSection: React.FC<{ data: BloomData }> = ({ data }) => {
 
   return (
     <div className="space-y-6">
-      <SectionHeader icon="🧠" title="Bloom's Taxonomy Distribution" desc="Cognitive level spread across all questions" />
+      <SectionHeader icon="🧠" title="Bloom's Taxonomy Distribution" desc="Cognitive level spread across every question in the question bank (auto-detected at generation time)" />
 
       <Card title="Bloom Level Count" subtitle="Questions per cognitive level">
         <ResponsiveContainer width="100%" height={260}>
@@ -365,7 +368,7 @@ const CoverageSection: React.FC<{ data: CoverageData }> = ({ data }) => {
 
   return (
     <div className="space-y-6">
-      <SectionHeader icon="📚" title="Syllabus Coverage" desc="Topics covered vs gaps per unit — NBA compliance view" />
+      <SectionHeader icon="📚" title="Syllabus Coverage" desc="Which syllabus topics/subtopics have at least one generated question in the question bank — per-unit gaps for NBA compliance" />
 
       {/* Summary chips */}
       <div className="flex flex-wrap gap-3">
@@ -544,8 +547,10 @@ const TrendsSection: React.FC<{ data: TrendData }> = ({ data }) => {
 
 
 const CoPoSection: React.FC<{ data: CoPoData }> = ({ data }) => {
-  const COS = ['CO1', 'CO2', 'CO3', 'CO4', 'CO5'];
-  const POS = ['PO1', 'PO2', 'PO3', 'PO4', 'PO5', 'PO6'];
+  const COS = Array.from(new Set((data.matrix || []).map(m => m.co))).sort();
+  const POS = Array.from(new Set((data.matrix || []).map(m => m.po))).sort(
+    (a, b) => parseInt(a.replace('PO', '')) - parseInt(b.replace('PO', ''))
+  );
 
   const getCell = (co: string, po: string): MatrixEntry | undefined =>
     (data.matrix || []).find(m => m.co === co && m.po === po);
@@ -555,8 +560,13 @@ const CoPoSection: React.FC<{ data: CoPoData }> = ({ data }) => {
       <SectionHeader
         icon="🏛️"
         title="CO-PO Attainment Matrix"
-        desc="NBA/NAAC compliance — Course Outcome × Program Outcome mapping"
+        desc="NBA/NAAC compliance — Course Outcome × Program Outcome mapping, computed from every tagged question in the question bank"
       />
+      {!!data.untagged_count && (
+        <div className="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2">
+          {data.untagged_count} question(s) have no CO/PO tag yet and are excluded from this matrix — enable the pedagogy tagger (ENABLE_PEDAGOGY_TAGGER=true) and regenerate to tag them.
+        </div>
+      )}
 
       {/* Legend */}
       <div className="flex flex-wrap gap-2 text-xs">
@@ -775,13 +785,16 @@ const PaperBalanceSection: React.FC<{ data: PaperBalance }> = ({ data }) => {
 
   return (
     <div className="space-y-6">
-      <SectionHeader icon="⚖️" title="Question Paper Balance Checker" desc="Compares your paper's Bloom distribution against the ideal — flags cognitive imbalances" />
+      <SectionHeader icon="⚖️" title="Question Bank Balance Checker" desc="Compares the ENTIRE question bank's Bloom distribution against the ideal — flags cognitive imbalances across all generated questions" />
 
       <div className="flex flex-wrap gap-3 items-center">
         <div className={`px-5 py-3 rounded-2xl font-bold text-lg ${RATING_COLOR[data.rating] || 'text-ink bg-slate-50'}`}>
           {data.rating} — {data.balance_score}%
         </div>
-        <StatChip label="Total Questions" value={data.total_questions} color="bg-indigo-50 text-indigo-700" />
+        <StatChip label="Total Questions in Bank" value={data.total_questions} color="bg-indigo-50 text-indigo-700" />
+        {!!data.unclassified_questions && (
+          <StatChip label="Unclassified (no Bloom level)" value={data.unclassified_questions} color="bg-amber-50 text-amber-700" />
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

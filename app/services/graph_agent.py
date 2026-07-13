@@ -130,22 +130,51 @@ def analyze_topic_type(topic: str, context: str) -> bool:
 _llm_cache: Dict[str, any] = {}
 
 def get_llm(json_mode=False, mode="auto"):
-    """Get cached LLM instance. Creates once, reuses thereafter."""
-    # Support both Gemini (GEMINI_API_KEY) and OpenAI (OPENAI_API_KEY)
+    """Get cached LLM instance. Creates once, reuses thereafter.
+
+    Provider selection (LLM_PROVIDER env var: "ollama" | "gemini" | "openai"):
+      - Explicit LLM_PROVIDER wins if set.
+      - Otherwise: GEMINI_API_KEY > OPENAI_API_KEY > local Ollama.
+    """
+    provider = (os.getenv("LLM_PROVIDER") or "").strip().lower()
     gemini_key = os.getenv("GEMINI_API_KEY")
     openai_key = os.getenv("OPENAI_API_KEY")
-    api_key = gemini_key or openai_key
-    if not api_key:
-        raise ValueError("No API key found. Set GEMINI_API_KEY or OPENAI_API_KEY in your .env")
+    ollama_model = os.getenv("OLLAMA_MODEL", "llama3.1")
+    ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+
+    if not provider:
+        if gemini_key:
+            provider = "gemini"
+        elif openai_key:
+            provider = "openai"
+        else:
+            provider = "ollama"
+
+    if provider == "gemini" and not gemini_key:
+        raise ValueError("LLM_PROVIDER=gemini but GEMINI_API_KEY is not set in your .env")
+    if provider == "openai" and not openai_key:
+        raise ValueError("LLM_PROVIDER=openai but OPENAI_API_KEY is not set in your .env")
 
     # Create cache key from configuration
     schema_name = json_mode.__name__ if json_mode else "none"
-    cache_key = f"{mode}:{schema_name}"
+    cache_key = f"{provider}:{mode}:{schema_name}"
 
     if cache_key in _llm_cache:
         return _llm_cache[cache_key]
 
-    if gemini_key:
+    if provider == "ollama":
+        # Local Ollama server (OpenAI-incompatible native API)
+        try:
+            from langchain_ollama import ChatOllama
+        except ImportError:
+            from langchain_community.chat_models import ChatOllama
+        temp_map = {"instant": 0.5, "auto": 0.7, "thinking": 0.8}
+        llm = ChatOllama(
+            model=ollama_model,
+            base_url=ollama_base_url,
+            temperature=temp_map.get(mode, 0.7),
+        )
+    elif provider == "gemini":
         # Gemini models via OpenAI-compatible endpoint
         # instant: fast/cheap  auto: balanced  thinking: best quality
         model_map = {
@@ -175,7 +204,7 @@ def get_llm(json_mode=False, mode="auto"):
 
     result = llm.with_structured_output(json_mode) if json_mode else llm
     _llm_cache[cache_key] = result
-    logger.debug(f"[LLM Cache] Created new instance for {cache_key}")
+    logger.debug(f"[LLM Cache] Created new instance for {cache_key} (provider={provider})")
     return result
 
 def get_fallback_llm(json_mode=False):
@@ -415,6 +444,7 @@ class AgentState(TypedDict):
     program_outcome: Optional[str]  # PO1, PO2, etc.
     # PROVENANCE FIELDS (Step 4)
     question_id: Optional[int]  # Database ID after saving (for explainability)
+    unit_number: Optional[int]  # Syllabus unit the topic belongs to
     # GUARDIAN FIELDS (Step 5)
     guardian_validated: bool  # True if Guardian approved the question
     guardian_attempt_count: int  # Number of Guardian validation attempts (max 1 regeneration)
@@ -489,9 +519,9 @@ Question Type: {question_type or "unknown"}
 
 Be precise. Return the most appropriate single level based on what the topic is asking for."""
 
-    llm = get_llm(json_mode=BloomAnalysis, mode="instant")  # Use fast model for classification
-
     try:
+        llm = get_llm(json_mode=BloomAnalysis, mode="instant")  # Use fast model for classification
+
         response = llm.invoke([
             SystemMessage(content=system_prompt),
             HumanMessage(content="Classify this topic's Bloom level.")
@@ -1794,9 +1824,8 @@ RULES:
 
 Return structured JSON with: course_outcome, program_outcome, reasoning"""
 
-    llm = get_llm(json_mode=PedagogyTags, mode="instant")  # Fast model for tagging
-
     try:
+        llm = get_llm(json_mode=PedagogyTags, mode="instant")  # Fast model for tagging
         response = llm.invoke([
             SystemMessage(content=system_prompt),
             HumanMessage(content="Tag this question.")
@@ -1826,6 +1855,16 @@ Return structured JSON with: course_outcome, program_outcome, reasoning"""
 # --- STEP 5: GUARDIAN SYLLABUS VALIDATOR ---
 
 from app.services.guardian import get_guardian
+
+
+def _unit_name_for(unit_num: Optional[int]) -> Optional[str]:
+    """Resolve a syllabus unit's display name from app/config/syllabus.json."""
+    if unit_num is None:
+        return None
+    for unit in get_guardian().config.units:
+        if unit.get('unit_number') == unit_num:
+            return unit.get('unit_name')
+    return None
 
 @timed_node("guardian")
 def validate_syllabus(state: AgentState) -> Dict:
@@ -1881,6 +1920,10 @@ def save_result(state: AgentState) -> Dict:
         logger.info("[CACHE] Skipping save - question was from cache")
         return {}
     if q and 'question' in q:
+        # Resolve the syllabus unit for this topic regardless of whether Guardian
+        # validation is enabled — find_topic_unit() is a pure syllabus lookup.
+        unit_num = get_guardian().config.find_topic_unit(state['topic'])
+        q['unit_number'] = unit_num
         question_id = save_template(
             state['topic'],
             state['target_difficulty'],
@@ -1891,9 +1934,9 @@ def save_result(state: AgentState) -> Dict:
             source_urls=state.get('source_urls', [])
         )
         if question_id:
-            # Store question ID in state for API response
-            return {'question_id': question_id}
-    return {}
+            # Store question ID and unit in state for API response
+            return {'question_id': question_id, 'unit_number': unit_num}
+    return {'unit_number': unit_num}
 
 def build_graph():
     workflow = StateGraph(AgentState)
@@ -2183,6 +2226,11 @@ def run_agent(topic: str, difficulty: str = "Medium", question_type: str = None,
             # STEP 4: Add question ID for provenance
             final_data['question_id'] = result.get('question_id')
 
+            # STEP 5: Add syllabus unit for provenance (resolved regardless of Guardian on/off)
+            unit_num = result.get('unit_number')
+            final_data['unit_number'] = unit_num
+            final_data['unit_name'] = _unit_name_for(unit_num)
+
             # Auto-tag the question
             question_type = final_data.get('question_type', '')
             final_data['tags'] = auto_tag_question(topic, question_type, difficulty)
@@ -2336,6 +2384,11 @@ def run_agent_streaming(topic: str, difficulty: str = "Medium", question_type: s
             # STEP 3: Add Pedagogy tags
             final_data['course_outcome'] = accumulated_state.get('course_outcome')
             final_data['program_outcome'] = accumulated_state.get('program_outcome')
+
+            # STEP 5: Add syllabus unit for provenance
+            unit_num = accumulated_state.get('unit_number')
+            final_data['unit_number'] = unit_num
+            final_data['unit_name'] = _unit_name_for(unit_num)
 
             # Auto-tag the question
             question_type = final_data.get('question_type', '')

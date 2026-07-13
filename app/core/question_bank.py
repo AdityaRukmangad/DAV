@@ -31,7 +31,8 @@ def init_db():
                 source_type TEXT,
                 source_urls TEXT,
                 full_json TEXT,
-                created_at REAL
+                created_at REAL,
+                unit INTEGER
             )
         ''')
 
@@ -51,7 +52,8 @@ def init_db():
             'retrieved_doc_ids': 'TEXT',
             # STEP 3: Pedagogy Tagger columns
             'course_outcome': 'TEXT',
-            'program_outcome': 'TEXT'
+            'program_outcome': 'TEXT',
+            'unit': 'INTEGER'
         }
 
         for col_name, col_type in required_columns.items():
@@ -84,16 +86,17 @@ def save_template(topic: str, difficulty: str, question_text: str, code: str, so
     doc_ids_str = json.dumps(full_data.get('retrieved_doc_ids', [])) if full_data else '[]'
     course_outcome = full_data.get('course_outcome') if full_data else None
     program_outcome = full_data.get('program_outcome') if full_data else None
+    unit = full_data.get('unit_number') if full_data else None
 
     with sqlite3.connect(DB_PATH) as conn:
         c = conn.cursor()
         c.execute(
             """INSERT INTO templates
                (topic, difficulty, question_text, answer_text, explanation_text, verification_code, source_type, source_urls, full_json, created_at,
-                bloom_level, retrieved_chunk_ids, retrieved_doc_ids, course_outcome, program_outcome)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                bloom_level, retrieved_chunk_ids, retrieved_doc_ids, course_outcome, program_outcome, unit)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (topic.lower(), difficulty, question_text, answer, explanation, code, source, urls_str, json_str, time.time(),
-             bloom_level, chunk_ids_str, doc_ids_str, course_outcome, program_outcome)
+             bloom_level, chunk_ids_str, doc_ids_str, course_outcome, program_outcome, unit)
         )
         question_id = c.lastrowid
         conn.commit()
