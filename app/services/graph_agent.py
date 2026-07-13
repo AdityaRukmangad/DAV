@@ -132,25 +132,32 @@ _llm_cache: Dict[str, any] = {}
 def get_llm(json_mode=False, mode="auto"):
     """Get cached LLM instance. Creates once, reuses thereafter.
 
-    Provider selection (LLM_PROVIDER env var: "grok" | "gemini" | "openai"):
+    Provider selection (LLM_PROVIDER env var: "groq" | "grok" | "gemini" | "openai"):
       - Explicit LLM_PROVIDER wins if set.
-      - Otherwise: GROK_API_KEY > GEMINI_API_KEY > OPENAI_API_KEY.
+      - Otherwise: GROQ_API_KEY > GROK_API_KEY > GEMINI_API_KEY > OPENAI_API_KEY.
+    Note: "groq" (GroqCloud, fast Llama/Mixtral hosting) and "grok" (xAI) are
+    two different services with near-identical names — don't mix up the keys.
     """
     provider = (os.getenv("LLM_PROVIDER") or "").strip().lower()
+    groq_key = os.getenv("GROQ_API_KEY")
     grok_key = os.getenv("GROK_API_KEY")
     gemini_key = os.getenv("GEMINI_API_KEY")
     openai_key = os.getenv("OPENAI_API_KEY")
 
     if not provider:
-        if grok_key:
+        if groq_key:
+            provider = "groq"
+        elif grok_key:
             provider = "grok"
         elif gemini_key:
             provider = "gemini"
         elif openai_key:
             provider = "openai"
         else:
-            provider = "grok"
+            provider = "groq"
 
+    if provider == "groq" and not groq_key:
+        raise ValueError("LLM_PROVIDER=groq but GROQ_API_KEY is not set in your .env")
     if provider == "grok" and not grok_key:
         raise ValueError("LLM_PROVIDER=grok but GROK_API_KEY is not set in your .env")
     if provider == "gemini" and not gemini_key:
@@ -165,7 +172,24 @@ def get_llm(json_mode=False, mode="auto"):
     if cache_key in _llm_cache:
         return _llm_cache[cache_key]
 
-    if provider == "grok":
+    if provider == "groq":
+        # GroqCloud via its OpenAI-compatible endpoint (fast Llama hosting)
+        # instant: fast/cheap  auto: balanced  thinking: best quality
+        model_map = {
+            "instant": "llama-3.1-8b-instant",
+            "auto":    "llama-3.3-70b-versatile",
+            "thinking": "llama-3.3-70b-versatile",
+        }
+        selected = model_map.get(mode, "llama-3.3-70b-versatile")
+        temp_map = {"instant": 0.5, "auto": 0.7, "thinking": 0.8}
+        llm = ChatOpenAI(
+            model=selected,
+            api_key=groq_key,
+            base_url="https://api.groq.com/openai/v1",
+            temperature=temp_map.get(mode, 0.7),
+            request_timeout=120,
+        )
+    elif provider == "grok":
         # xAI's Grok via its OpenAI-compatible endpoint
         # instant: fast/cheap  auto: balanced  thinking: best quality
         model_map = {
