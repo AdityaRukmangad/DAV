@@ -16,8 +16,12 @@ langgraph==0.2.28
 langgraph-checkpoint==1.0.12
 langgraph-sdk==0.1.42
 
-# Reranking
-flashrank==0.2.4
+# Reranking (optional — improves retrieval quality, not required for generation to work).
+# flashrank pulls in llama-cpp-python as a hard dependency, which needs a C++
+# compiler to build from source on Windows. Uncomment if you have build tools
+# installed (Visual Studio "Desktop development with C++") or a prebuilt wheel
+# for llama-cpp-python; rag_service.py degrades gracefully without it.
+# flashrank==0.2.4
 
 # PDF Processing
 pypdf>=3.0.0

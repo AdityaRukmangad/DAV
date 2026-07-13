@@ -10,7 +10,16 @@ import hashlib
 from typing import List, Tuple, Dict, Set, Optional, Any
 from dataclasses import dataclass, field
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from flashrank import Ranker, RerankRequest
+try:
+    from flashrank import Ranker, RerankRequest
+    FLASHRANK_AVAILABLE = True
+except ImportError:
+    # flashrank pulls in llama-cpp-python, which needs a C++ compiler to build
+    # from source on Windows. Reranking is a quality nicety, not a hard
+    # requirement — retrieval falls back to unreranked results when absent.
+    Ranker = None
+    RerankRequest = None
+    FLASHRANK_AVAILABLE = False
 
 from app.rag import get_rag_engine
 from app.tools.utils import get_logger
@@ -265,13 +274,15 @@ class HybridRetriever:
 
     @property
     def ranker(self):
-        if not self._ranker and self.config.use_reranking:
+        if not self._ranker and self.config.use_reranking and FLASHRANK_AVAILABLE:
             # Fix for Windows: Set cache directory to a valid location
             import tempfile
             cache_dir = os.path.join(tempfile.gettempdir(), "flashrank_cache")
             os.makedirs(cache_dir, exist_ok=True)
             self._ranker = Ranker(model_name="ms-marco-MiniLM-L-12-v2", cache_dir=cache_dir)
             logger.info(f"[Ranker] Initialized with cache dir: {cache_dir}")
+        elif not FLASHRANK_AVAILABLE and self.config.use_reranking:
+            logger.warning("[Ranker] flashrank not installed — retrieval will use unreranked results")
         return self._ranker
 
     def _search_single(self, query: str, k: int = 10) -> List:
