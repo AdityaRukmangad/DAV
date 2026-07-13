@@ -132,24 +132,27 @@ _llm_cache: Dict[str, any] = {}
 def get_llm(json_mode=False, mode="auto"):
     """Get cached LLM instance. Creates once, reuses thereafter.
 
-    Provider selection (LLM_PROVIDER env var: "ollama" | "gemini" | "openai"):
+    Provider selection (LLM_PROVIDER env var: "grok" | "gemini" | "openai"):
       - Explicit LLM_PROVIDER wins if set.
-      - Otherwise: GEMINI_API_KEY > OPENAI_API_KEY > local Ollama.
+      - Otherwise: GROK_API_KEY > GEMINI_API_KEY > OPENAI_API_KEY.
     """
     provider = (os.getenv("LLM_PROVIDER") or "").strip().lower()
+    grok_key = os.getenv("GROK_API_KEY")
     gemini_key = os.getenv("GEMINI_API_KEY")
     openai_key = os.getenv("OPENAI_API_KEY")
-    ollama_model = os.getenv("OLLAMA_MODEL", "llama3.1")
-    ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 
     if not provider:
-        if gemini_key:
+        if grok_key:
+            provider = "grok"
+        elif gemini_key:
             provider = "gemini"
         elif openai_key:
             provider = "openai"
         else:
-            provider = "ollama"
+            provider = "grok"
 
+    if provider == "grok" and not grok_key:
+        raise ValueError("LLM_PROVIDER=grok but GROK_API_KEY is not set in your .env")
     if provider == "gemini" and not gemini_key:
         raise ValueError("LLM_PROVIDER=gemini but GEMINI_API_KEY is not set in your .env")
     if provider == "openai" and not openai_key:
@@ -162,17 +165,22 @@ def get_llm(json_mode=False, mode="auto"):
     if cache_key in _llm_cache:
         return _llm_cache[cache_key]
 
-    if provider == "ollama":
-        # Local Ollama server (OpenAI-incompatible native API)
-        try:
-            from langchain_ollama import ChatOllama
-        except ImportError:
-            from langchain_community.chat_models import ChatOllama
+    if provider == "grok":
+        # xAI's Grok via its OpenAI-compatible endpoint
+        # instant: fast/cheap  auto: balanced  thinking: best quality
+        model_map = {
+            "instant": "grok-3-mini",
+            "auto":    "grok-3",
+            "thinking": "grok-4",
+        }
+        selected = model_map.get(mode, "grok-3")
         temp_map = {"instant": 0.5, "auto": 0.7, "thinking": 0.8}
-        llm = ChatOllama(
-            model=ollama_model,
-            base_url=ollama_base_url,
+        llm = ChatOpenAI(
+            model=selected,
+            api_key=grok_key,
+            base_url="https://api.x.ai/v1",
             temperature=temp_map.get(mode, 0.7),
+            request_timeout=120,
         )
     elif provider == "gemini":
         # Gemini models via OpenAI-compatible endpoint
@@ -202,7 +210,10 @@ def get_llm(json_mode=False, mode="auto"):
             request_timeout=120,
         )
 
-    result = llm.with_structured_output(json_mode) if json_mode else llm
+    # method="function_calling" is the most broadly compatible structured-output
+    # mode across third-party OpenAI-compatible endpoints (Grok, Gemini) — the
+    # newer "json_schema" strict mode isn't guaranteed to be supported by them.
+    result = llm.with_structured_output(json_mode, method="function_calling") if json_mode else llm
     _llm_cache[cache_key] = result
     logger.debug(f"[LLM Cache] Created new instance for {cache_key} (provider={provider})")
     return result
