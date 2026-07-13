@@ -148,12 +148,18 @@ def get_llm(json_mode=False, mode="auto"):
     if gemini_key:
         # Gemini models via OpenAI-compatible endpoint
         # instant: fast/cheap  auto: balanced  thinking: best quality
+        # NOTE: gemini-2.0-flash was retired (shutdown June 1, 2026) and
+        # gemini-2.5-flash-preview-05-20 was a dated preview snapshot that
+        # got retired even sooner — both returned HTTP 404 "model no longer
+        # available", which made every LLM call in the generation pipeline
+        # fail identically. gemini-3.5-flash is the current GA, non-preview,
+        # non-deprecated model ID (released May 2026, no announced shutdown).
         model_map = {
-            "instant": "gemini-2.0-flash",
-            "auto":    "gemini-2.0-flash",
-            "thinking": "gemini-2.5-flash-preview-05-20",
+            "instant": "gemini-3.5-flash",
+            "auto":    "gemini-3.5-flash",
+            "thinking": "gemini-3.5-flash",
         }
-        selected = model_map.get(mode, "gemini-2.0-flash")
+        selected = model_map.get(mode, "gemini-3.5-flash")
         llm = ChatOpenAI(
             model=selected,
             api_key=gemini_key,
@@ -1874,12 +1880,21 @@ def validate_syllabus(state: AgentState) -> Dict:
 
 @timed_node("archivist")
 def save_result(state: AgentState) -> Dict:
-    if not state.get('verification_passed'): return {}
+    # NOTE: every branch here must return a non-empty dict. This node runs
+    # right before END, and when generation fails end-to-end (bad API key,
+    # rate limit, retired model, network blip — anything that makes both the
+    # main path and the fallback path fail) `verification_passed` stays
+    # False, and returning bare `{}` from the terminal node makes LangGraph
+    # 0.2.28 raise "Must write to at least one of [...]" — a confusing
+    # internal error that replaced the real, useful failure reason. Always
+    # writing `question_id` (even as None) keeps the real error visible.
+    if not state.get('verification_passed'):
+        return {'question_id': None}
     q = state.get('question_data', {})
     # Don't save if it came from cache (already in bank)
     if q.get('from_cache'):
         logger.info("[CACHE] Skipping save - question was from cache")
-        return {}
+        return {'question_id': q.get('id')}
     if q and 'question' in q:
         # Bloom level / CO / PO live on the graph state, not inside question_data.
         # Copy them across so they actually get persisted (fixes analytics always
@@ -1908,7 +1923,7 @@ def save_result(state: AgentState) -> Dict:
         if question_id:
             # Store question ID in state for API response
             return {'question_id': question_id}
-    return {}
+    return {'question_id': None}
 
 def build_graph():
     workflow = StateGraph(AgentState)

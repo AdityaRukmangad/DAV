@@ -468,8 +468,10 @@ async def get_suggestions_by_pdf():
         rag_engine = get_rag_engine()
         gemini_key = os.getenv("GEMINI_API_KEY")
         if gemini_key:
+            # gemini-2.0-flash was retired (shutdown June 1, 2026) — see the
+            # matching note in graph_agent.py's get_llm(). Use the current GA model.
             llm = ChatOpenAI(
-                model="gemini-2.0-flash",
+                model="gemini-3.5-flash",
                 api_key=gemini_key,
                 base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
                 temperature=0,
