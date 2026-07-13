@@ -16,7 +16,14 @@ langgraph-checkpoint==1.0.12
 langgraph-sdk==0.1.42
 
 # Reranking
-flashrank==0.2.4
+# NOTE: 0.2.4/0.2.5/0.2.6 hard-depend on llama-cpp-python, which needs a C++
+# compiler + CMake to build from source and has no prebuilt wheel for many
+# Windows/Python combos ("CMake configuration failed" during pip install).
+# 0.2.7+ made llama-cpp-python an optional 'listwise' extra — the default
+# cross-encoder model used in rag_service.py (ms-marco-MiniLM-L-12-v2) never
+# touches that code path, so plain `pip install flashrank` no longer needs a
+# C++ toolchain at all. Same Ranker/RerankRequest API — no code changes needed.
+flashrank==0.2.7
 
 # PDF Processing
 pypdf>=3.0.0
