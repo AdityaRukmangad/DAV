@@ -8,6 +8,7 @@ import { Icons } from './ui/SystemIcons';
 import CodeViewer from './ui/CodeViewer';
 import ProvenanceModal from './ProvenanceModal';
 import { saveQuestionToBank } from '../services/questionBank';
+import { notifyDataChanged } from '../services/events';
 
 // Markdown component styles
 const markdownComponents = {
@@ -170,6 +171,9 @@ const GenerationModule: React.FC<GenerationModuleProps> = ({
             source_pages: res.data.source_pages,
             question_id: res.data.question_id,
           });
+
+          // The question bank (SQLite) just got a new row — tell Analytics to refresh.
+          notifyDataChanged();
         }
       }
     } catch (err: any) {

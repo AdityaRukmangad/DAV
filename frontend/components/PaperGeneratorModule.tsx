@@ -35,6 +35,7 @@ import {
   PDFSuggestion
 } from '../types';
 import paperFormats from '../config/paperFormats.json';
+import { notifyDataChanged } from '../services/events';
 
 const DIFFICULTIES = ['Easy', 'Medium', 'Hard'] as const;
 const QUESTION_TYPES = [
@@ -691,6 +692,8 @@ const PaperGeneratorModule: React.FC<PaperGeneratorModuleProps> = ({ onNavigateT
               await fetchPapers();
               setSelectedPaper(paper);
               setViewMode('view');
+              // Every question in the paper is also a new question-bank row — refresh Analytics.
+              notifyDataChanged();
             }
             resolve();
           }

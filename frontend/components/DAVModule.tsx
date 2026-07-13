@@ -1,9 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import {
   BarChart, Bar, PieChart, Pie, Cell, LineChart, Line,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
 } from 'recharts';
+import { onDataChanged } from '../services/events';
+
+// Auto-refresh cadence while an Analytics tab is open, so a paper generating
+// in the background (Papers tab stays mounted behind the scenes) is picked
+// up without the user needing to manually hit refresh.
+const AUTO_REFRESH_MS = 12000;
 
 // =============================================================================
 // TYPES
@@ -1265,8 +1271,8 @@ const DAVModule: React.FC = () => {
   const [consistency, setConsistency] = useState<CoPoConsistency | null>(null);
   const [simThreshold, setSimThreshold] = useState(0.55);
 
-  const fetchTab = useCallback(async (tab: DAVTab, extra?: Record<string, unknown>) => {
-    setLoading(true);
+  const fetchTab = useCallback(async (tab: DAVTab, extra?: Record<string, unknown>, silent = false) => {
+    if (!silent) setLoading(true);
     setError(null);
     try {
       const endpointMap: Record<DAVTab, string> = {
@@ -1281,7 +1287,7 @@ const DAVModule: React.FC = () => {
         feedback:     `${API}/feedback`,
         consistency:  `${API}/copo-consistency`,
       };
-      const res = await fetch(endpointMap[tab]);
+      const res = await fetch(endpointMap[tab], { cache: 'no-store' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       if (tab === 'overview') setOverview(data);
@@ -1295,15 +1301,51 @@ const DAVModule: React.FC = () => {
       else if (tab === 'feedback') setFeedback(data);
       else if (tab === 'consistency') setConsistency(data);
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : 'Failed to load data');
+      // Silent background refreshes shouldn't surface transient network blips as page errors
+      if (!silent) setError(e instanceof Error ? e.message : 'Failed to load data');
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   }, [simThreshold]);
 
   useEffect(() => {
     fetchTab(activeTab);
   }, [activeTab, fetchTab]);
+
+  // Keep the currently viewed tab reachable for effects below without
+  // re-subscribing them every time the user switches tabs.
+  const activeTabRef = useRef(activeTab);
+  activeTabRef.current = activeTab;
+
+  // 1. Instant refresh: fires the moment a question/paper is generated
+  //    anywhere in the app (see services/events.ts), even if that happened
+  //    on a different tab that stayed mounted in the background.
+  useEffect(() => {
+    return onDataChanged(() => fetchTab(activeTabRef.current, undefined, true));
+  }, [fetchTab]);
+
+  // 2. Fallback polling: catches anything the event above misses (e.g. a
+  //    paper still streaming when this tab was opened) without needing a
+  //    manual refresh click.
+  useEffect(() => {
+    const id = setInterval(() => fetchTab(activeTabRef.current, undefined, true), AUTO_REFRESH_MS);
+    return () => clearInterval(id);
+  }, [fetchTab]);
+
+  // 3. Refresh when the browser tab/window regains focus (e.g. user tabbed
+  //    away to generate something, then tabbed back).
+  useEffect(() => {
+    const onFocus = () => fetchTab(activeTabRef.current, undefined, true);
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') onFocus();
+    };
+    window.addEventListener('focus', onFocus);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      window.removeEventListener('focus', onFocus);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [fetchTab]);
 
   const handleSimilarityRefresh = (t: number) => {
     setSimThreshold(t);
@@ -1388,6 +1430,10 @@ const DAVModule: React.FC = () => {
         >
           ↺
         </button>
+        <span className="flex items-center gap-1 px-2 text-xs text-emerald-600" title="Auto-updates when new questions/papers are generated">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          Live
+        </span>
       </div>
 
       {/* Clean result banner */}
