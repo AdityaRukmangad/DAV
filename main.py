@@ -57,7 +57,7 @@ except ImportError as e:
     sys.stderr.write(f"CRITICAL ERROR: {e}\n")
     sys.exit(1)
 
-load_dotenv()
+load_dotenv(override=True)
 # Initialize logging but keep it to file, not console (unless error)
 initialize_logging()
 logger = get_logger("CLI")

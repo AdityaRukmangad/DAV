@@ -53,7 +53,7 @@ from app.services.metrics import get_metrics
 from app.config import reload_config
 from app.tools.utils import get_logger, initialize_logging
 
-load_dotenv()
+load_dotenv(override=True)
 initialize_logging()
 logger = get_logger("FastAPI")
 

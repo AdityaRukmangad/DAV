@@ -9,7 +9,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from dotenv import load_dotenv
-load_dotenv()  # Load .env file
+load_dotenv(override=True)  # Load .env file — override=True so .env always wins over stale shell-level vars
 
 from typing import TypedDict, Dict, List, Optional
 from concurrent.futures import ThreadPoolExecutor, as_completed
