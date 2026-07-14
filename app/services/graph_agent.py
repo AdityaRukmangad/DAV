@@ -639,33 +639,16 @@ def check_sources(state: AgentState) -> Dict:
     if keyword_contexts:
         logger.info(f"Detected content keywords: {list(keyword_contexts.keys())}")
 
-    # SAFETY CHECK: If PDF context is too weak, trigger fallback immediately
-    if pdf_context and len(pdf_context) > 200:
-        logger.info(f"PDF context found from {filename}, pages: {pages}")
-        context_parts.append(f"--- AUTHORITATIVE SOURCE: UPLOADED PDF TEXTBOOK ---\n{pdf_context}\n\n--- CRITICAL: Use ONLY the formulas and methods from this PDF. ---")
-        sources.append("pdf")
-    else:
-        logger.error("No PDF context found - Cannot generate without PDF source.")
-        return {
-            'retrieved_context': "",
-            'source_type': "no_source",
-            'source_urls': [],
-            'source_pages': [],
-            'source_filename': None,
-            'detected_keywords': {},
-            'db_template': None,
-            'use_fallback': True,
-            'retrieved_chunk_ids': [],
-            'retrieved_doc_ids': []
-        }
-
-    # 2. Process duplicate check result
+    # 2. Process duplicate check result FIRST — this must happen regardless of
+    # whether a PDF was found, otherwise regenerating the same topic without an
+    # uploaded PDF always discards the cache hit and creates a fresh (differently
+    # worded) duplicate row every time, silently defeating dedup entirely.
     cached_question = None
     updated_used_cache_ids = state.get('used_cache_ids', set()).copy()  # Make a copy to avoid modifying original
-    
+
     if duplicate_result and duplicate_result.get('question_text'):
         cache_id = duplicate_result.get('id') or duplicate_result.get('cache_id')
-        
+
         # CHECK IF THIS CACHE ID HAS ALREADY BEEN USED IN THIS PAPER
         if cache_id and cache_id in updated_used_cache_ids:
             logger.warning(f"[CACHE] Cache ID #{cache_id} already used in this paper! Skipping cache, will generate new question.")
@@ -675,7 +658,7 @@ def check_sources(state: AgentState) -> Dict:
             logger.info(f"[CACHE HIT] Found similar question in bank (similarity: {duplicate_result.get('similarity_score', 0):.2f})")
             cached_question = duplicate_result
             sources.append("question_bank_cache")
-            
+
             # IMMEDIATELY add to used_cache_ids so subsequent questions don't reuse it
             if cache_id:
                 updated_used_cache_ids.add(cache_id)
@@ -687,6 +670,31 @@ def check_sources(state: AgentState) -> Dict:
             logger.info("Found existing template - Using ONLY for format/structure reference")
             context_parts.append(f"--- FORMAT REFERENCE ---\n{template['question_text']}")
             sources.append("database_remix")
+
+    # SAFETY CHECK: If PDF context is too weak, trigger fallback immediately
+    if pdf_context and len(pdf_context) > 200:
+        logger.info(f"PDF context found from {filename}, pages: {pages}")
+        context_parts.append(f"--- AUTHORITATIVE SOURCE: UPLOADED PDF TEXTBOOK ---\n{pdf_context}\n\n--- CRITICAL: Use ONLY the formulas and methods from this PDF. ---")
+        sources.append("pdf")
+    elif not cached_question:
+        # No PDF AND no cache hit — nothing to generate from.
+        logger.error("No PDF context found - Cannot generate without PDF source.")
+        return {
+            'retrieved_context': "",
+            'source_type': "no_source",
+            'source_urls': [],
+            'source_pages': [],
+            'source_filename': None,
+            'detected_keywords': {},
+            'db_template': None,
+            'use_fallback': True,
+            'cached_question': None,
+            'used_cache_ids': updated_used_cache_ids,
+            'retrieved_chunk_ids': [],
+            'retrieved_doc_ids': []
+        }
+    else:
+        logger.info("No PDF context, but reusing cached question from bank instead of regenerating.")
 
     logger.info("Web search disabled - Using PDF only for content accuracy")
 
