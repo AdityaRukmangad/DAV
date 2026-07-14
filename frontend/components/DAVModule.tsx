@@ -4,7 +4,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
 } from 'recharts';
-import { onDataChanged } from '../services/events';
+import { onDataChanged, notifyDataChanged } from '../services/events';
 
 // Auto-refresh cadence while an Analytics tab is open, so a paper generating
 // in the background (Papers tab stays mounted behind the scenes) is picked
@@ -901,8 +901,26 @@ const LABEL_COLOR: Record<string, string> = {
 
 const SimilaritySection: React.FC<{ data: SimilarityReport; onRefresh: (t: number) => void }> = ({ data, onRefresh }) => {
   const [threshold, setThreshold] = useState(0.55);
+  const [removing, setRemoving] = useState(false);
+  const [removeResult, setRemoveResult] = useState<string | null>(null);
 
   const summaryData = Object.entries(data.label_summary || {}).map(([k, v]) => ({ name: k, count: v }));
+
+  const handleRemoveDuplicates = async () => {
+    setRemoving(true);
+    setRemoveResult(null);
+    try {
+      const res = await fetch(`${API}/similarity/remove-duplicates?threshold=${threshold}`, { method: 'POST' });
+      const result = await res.json();
+      setRemoveResult(`Removed ${result.removed_count ?? 0} duplicate question(s).`);
+      onRefresh(threshold);
+      notifyDataChanged(); // other tabs (overview counts, bloom, etc.) need to refresh too
+    } catch {
+      setRemoveResult('Failed to remove duplicates.');
+    } finally {
+      setRemoving(false);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -930,7 +948,18 @@ const SimilaritySection: React.FC<{ data: SimilarityReport; onRefresh: (t: numbe
           >
             Reanalyze
           </button>
+          {data.flagged_count > 0 && (
+            <button
+              onClick={handleRemoveDuplicates}
+              disabled={removing}
+              className="px-4 py-1.5 rounded-full bg-rose-600 text-white text-sm font-medium hover:bg-rose-700 transition-all disabled:opacity-50"
+              title="Deletes the newer question from every flagged pair at or above the current threshold"
+            >
+              {removing ? 'Removing…' : `Remove ${data.flagged_count} Flagged Duplicate${data.flagged_count === 1 ? '' : 's'}`}
+            </button>
+          )}
         </div>
+        {removeResult && <p className="text-xs text-ink-light mt-2">{removeResult}</p>}
       </Card>
 
       {summaryData.length > 0 && (

@@ -713,6 +713,51 @@ def get_similarity_report(threshold: float = 0.55) -> Dict:
     }
 
 
+def remove_flagged_duplicates(threshold: float = 0.55) -> Dict:
+    """
+    Delete one question from every pair flagged as similar/duplicate at or
+    above `threshold` (the same Jaccard check as get_similarity_report).
+    For each flagged pair, the newer row (higher id) is removed and the
+    older one (lower id) is kept — mirrors clean_data()'s exact-dedup rule
+    of always keeping the earliest-created row.
+    """
+    if not DB_PATH.exists():
+        return {"error": "Database not found"}
+
+    rows = _fetch_all()
+    if len(rows) < 2:
+        return {"removed_count": 0, "removed_ids": []}
+
+    tokenized = [
+        {"id": r["id"], "tokens": _tokenize((r.get("question_text") or "").strip())}
+        for r in rows
+    ]
+
+    to_remove: set = set()
+    n = len(tokenized)
+    for i in range(n):
+        if tokenized[i]["id"] in to_remove:
+            continue
+        for j in range(i + 1, n):
+            if tokenized[j]["id"] in to_remove:
+                continue
+            sim = _jaccard(tokenized[i]["tokens"], tokenized[j]["tokens"])
+            if sim >= threshold:
+                # Keep the lower id (created first), remove the later duplicate
+                to_remove.add(max(tokenized[i]["id"], tokenized[j]["id"]))
+
+    if not to_remove:
+        return {"removed_count": 0, "removed_ids": []}
+
+    with sqlite3.connect(DB_PATH) as conn:
+        c = conn.cursor()
+        placeholders = ",".join("?" for _ in to_remove)
+        c.execute(f"DELETE FROM templates WHERE id IN ({placeholders})", tuple(to_remove))
+        conn.commit()
+
+    return {"removed_count": len(to_remove), "removed_ids": sorted(to_remove)}
+
+
 # =============================================================================
 # 3. STUDENT PERFORMANCE FEEDBACK ANALYSIS
 # =============================================================================

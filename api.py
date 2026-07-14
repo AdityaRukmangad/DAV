@@ -1574,6 +1574,7 @@ from app.services.dav_service import (
     clean_data,
     get_paper_balance,
     get_similarity_report,
+    remove_flagged_duplicates,
     get_feedback_analysis,
     submit_feedback,
     get_copo_consistency,
@@ -1670,6 +1671,15 @@ async def dav_similarity(threshold: float = 0.55):
     """Detect similar and duplicate questions using Jaccard similarity."""
     try:
         return get_similarity_report(threshold=threshold)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/v1/dav/similarity/remove-duplicates")
+async def dav_remove_duplicates(threshold: float = 0.55):
+    """Delete the newer question from every flagged similar/duplicate pair at or above threshold."""
+    try:
+        return remove_flagged_duplicates(threshold=threshold)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
