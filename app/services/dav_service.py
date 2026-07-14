@@ -161,8 +161,8 @@ def get_overview() -> Dict:
     difficulties = [r.get("difficulty", "Medium") or "Medium" for r in rows]
     diff_counts = Counter(difficulties)
 
-    bloom_vals = [r.get("bloom_level") or 2 for r in rows]
-    avg_bloom = round(sum(bloom_vals) / len(bloom_vals), 2)
+    classified_bloom_vals = [r.get("bloom_level") for r in rows if r.get("bloom_level") in range(1, 7)]
+    avg_bloom = round(sum(classified_bloom_vals) / len(classified_bloom_vals), 2) if classified_bloom_vals else None
 
     diff_scores = [DIFFICULTY_SCORE.get(d, 2) for d in difficulties]
     mean_diff = round(sum(diff_scores) / len(diff_scores), 2)
@@ -179,17 +179,26 @@ def get_overview() -> Dict:
     week_ago = now - 7 * 86400
     recent = sum(1 for r in rows if (r.get("created_at") or 0) >= week_ago)
 
+    # "total_questions" = unique rows in the bank. Papers can reuse the same
+    # underlying question many times (cache/dedup) rather than creating a new
+    # row each time — times_used tracks that reuse so the two numbers can be
+    # told apart instead of Analytics looking like it's "missing" data that a
+    # paper actually generated (it was legitimately deduplicated, not lost).
+    total_generation_count = sum(int(r.get("times_used") or 1) for r in rows)
+
     return {
         "total_questions": total,
+        "total_generation_count": total_generation_count,
         "unique_topics": unique_topics,
         "difficulty_distribution": dict(diff_counts),
         "mean_difficulty_score": mean_diff,
         "difficulty_variance": variance,
         "difficulty_std_dev": std_dev,
         "avg_bloom_level": avg_bloom,
+        "unclassified_bloom_count": total - len(classified_bloom_vals),
         "source_distribution": dict(sources),
         "questions_last_7_days": recent,
-        "bloom_balance_score": _bloom_balance(bloom_vals),
+        "bloom_balance_score": _bloom_balance(classified_bloom_vals),
     }
 
 

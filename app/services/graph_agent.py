@@ -21,7 +21,7 @@ from pydantic import BaseModel, Field
 from app.tools.calculator import get_math_tool
 from app.tools.web_search import get_search_tool
 from app.services.rag_service import get_rag_service
-from app.core.question_bank import get_existing_template, save_template, check_duplicate, find_similar_questions
+from app.core.question_bank import get_existing_template, save_template, check_duplicate, find_similar_questions, mark_question_reused
 from app.tools.utils import get_logger
 from app.services.metrics import get_metrics, timed_node, track_generation
 from app.config import get_format_instruction, get_tags, get_prompt_loader
@@ -1979,14 +1979,22 @@ def validate_syllabus(state: AgentState) -> Dict:
 def save_result(state: AgentState) -> Dict:
     if not state.get('verification_passed'): return {}
     q = state.get('question_data', {})
-    # Don't save if it came from cache (already in bank)
+    # Don't create a duplicate row if it came from cache (already in bank) —
+    # instead bump its reuse counter so analytics can distinguish "generation
+    # activity" (a paper reusing the same underlying question many times)
+    # from "unique questions in the bank".
     if q.get('from_cache'):
-        logger.info("[CACHE] Skipping save - question was from cache")
+        cache_id = q.get('cache_id') or q.get('id')
+        if cache_id:
+            mark_question_reused(cache_id)
+            logger.info(f"[CACHE] Skipping save - question #{cache_id} was from cache (times_used incremented)")
+        else:
+            logger.info("[CACHE] Skipping save - question was from cache")
         return {}
+    unit_num = get_guardian().config.find_topic_unit(state['topic'])
     if q and 'question' in q:
         # Resolve the syllabus unit for this topic regardless of whether Guardian
         # validation is enabled — find_topic_unit() is a pure syllabus lookup.
-        unit_num = get_guardian().config.find_topic_unit(state['topic'])
         q['unit_number'] = unit_num
         question_id = save_template(
             state['topic'],

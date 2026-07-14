@@ -32,7 +32,8 @@ def init_db():
                 source_urls TEXT,
                 full_json TEXT,
                 created_at REAL,
-                unit INTEGER
+                unit INTEGER,
+                times_used INTEGER DEFAULT 1
             )
         ''')
 
@@ -53,7 +54,8 @@ def init_db():
             # STEP 3: Pedagogy Tagger columns
             'course_outcome': 'TEXT',
             'program_outcome': 'TEXT',
-            'unit': 'INTEGER'
+            'unit': 'INTEGER',
+            'times_used': 'INTEGER DEFAULT 1'
         }
 
         for col_name, col_type in required_columns.items():
@@ -235,6 +237,19 @@ def check_duplicate(topic: str, difficulty: str, threshold: float = 0.8) -> Opti
     if similar and similar[0].get('similarity_score', 0) >= threshold:
         return similar[0]
     return None
+
+
+def mark_question_reused(question_id: int) -> None:
+    """
+    Increment times_used when a cached question is served instead of a fresh
+    row being created (e.g. a paper reusing a similar topic+difficulty from
+    the bank). Lets analytics distinguish "generation activity" (papers can
+    reuse the same underlying question many times) from "unique questions".
+    """
+    init_db()
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.execute("UPDATE templates SET times_used = COALESCE(times_used, 1) + 1 WHERE id = ?", (question_id,))
+        conn.commit()
 
 
 def get_question_count(topic: str = None) -> int:

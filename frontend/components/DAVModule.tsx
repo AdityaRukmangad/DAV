@@ -17,12 +17,14 @@ const AUTO_REFRESH_MS = 12000;
 
 interface Overview {
   total_questions: number;
+  total_generation_count?: number;
   unique_topics: number;
   difficulty_distribution: Record<string, number>;
   mean_difficulty_score: number;
   difficulty_variance: number;
   difficulty_std_dev: number;
-  avg_bloom_level: number;
+  avg_bloom_level: number | null;
+  unclassified_bloom_count?: number;
   source_distribution: Record<string, number>;
   questions_last_7_days: number;
   bloom_balance_score: number;
@@ -234,10 +236,18 @@ const OverviewSection: React.FC<{ data: Overview; onClean: () => void; cleaning:
 
       {/* Stat chips */}
       <div className="flex flex-wrap gap-3">
-        <StatChip label="Total Questions" value={data.total_questions} color="bg-indigo-50 text-indigo-700" />
+        <StatChip label="Unique Questions" value={data.total_questions} color="bg-indigo-50 text-indigo-700" />
+        {!!data.total_generation_count && data.total_generation_count !== data.total_questions && (
+          <StatChip
+            label="Total Generated (incl. paper reuse)"
+            value={data.total_generation_count}
+            sub="papers can reuse the same bank question"
+            color="bg-cyan-50 text-cyan-700"
+          />
+        )}
         <StatChip label="Unique Topics" value={data.unique_topics} color="bg-purple-50 text-purple-700" />
         <StatChip label="Last 7 Days" value={data.questions_last_7_days} color="bg-emerald-50 text-emerald-700" />
-        <StatChip label="Avg Bloom" value={data.avg_bloom_level} color="bg-amber-50 text-amber-700" />
+        <StatChip label="Avg Bloom" value={data.avg_bloom_level ?? 'N/A'} color="bg-amber-50 text-amber-700" />
         <StatChip label="Bloom Balance" value={`${data.bloom_balance_score}%`} sub="higher = better" color="bg-blue-50 text-blue-700" />
         <StatChip label="Mean Difficulty" value={data.mean_difficulty_score} color="bg-rose-50 text-rose-700" />
         <StatChip label="Std Dev" value={data.difficulty_std_dev} color="bg-slate-50 text-slate-700" />
