@@ -1813,9 +1813,13 @@ class PedagogyTags(BaseModel):
 @timed_node("pedagogy_tagger")
 def tag_pedagogy(state: AgentState) -> Dict:
     """
-    Tag question with educational metadata (Course Outcome, Program Outcome).
-    OPTIONAL node - controlled by ENABLE_PEDAGOGY_TAGGER env variable.
+    Tag question with educational metadata (Course Outcome, Program Outcome),
+    using the REAL course outcomes and CO->PO mapping from app/config/syllabus.json
+    (the same file used for the topic picker and unit resolution) — not a made-up
+    generic taxonomy. OPTIONAL node - controlled by ENABLE_PEDAGOGY_TAGGER env variable.
     """
+    from app.services.guardian import get_guardian
+
     # Check if pedagogy tagger is enabled
     tagger_enabled = os.getenv("ENABLE_PEDAGOGY_TAGGER", "false").lower() == "true"
     if not tagger_enabled:
@@ -1833,37 +1837,48 @@ def tag_pedagogy(state: AgentState) -> Dict:
         logger.warning("[Pedagogy Tagger] No question text found, skipping")
         return {}
 
-    # Rule-based + LLM hybrid approach
-    system_prompt = f"""You are an educational assessment expert tagging questions with curriculum outcomes.
+    guardian = get_guardian()
+    loader = guardian.config.loader
+    course_outcomes: Dict[str, str] = loader.syllabus_data.get('course_outcomes', {}) or {}
+    co_po_mapping: Dict[str, Dict[str, int]] = loader.syllabus_data.get('co_po_mapping', {}) or {}
+    unit_num = guardian.config.find_topic_unit(topic)
+
+    # Restrict candidate COs to the ones this unit actually maps to in the
+    # syllabus (unit.co_mapping), falling back to all defined COs if the unit
+    # or its mapping can't be resolved (e.g. a freeform/off-syllabus topic).
+    unit_cos = loader.get_co_mapping(unit_num) if unit_num else []
+    candidate_cos = [co for co in unit_cos if co in course_outcomes] or list(course_outcomes.keys())
+
+    if not candidate_cos or not course_outcomes:
+        logger.warning("[Pedagogy Tagger] No course_outcomes defined in syllabus.json, skipping")
+        return {}
+
+    co_lines = "\n".join(f"- {co}: {desc}" for co, desc in course_outcomes.items() if co in candidate_cos)
+    po_lines = "\n".join(
+        f"- {co} allows: {', '.join(sorted(co_po_mapping.get(co, {}).keys())) or 'PO1'}"
+        for co in candidate_cos
+    )
+
+    system_prompt = f"""You are an educational assessment expert tagging questions with this course's real curriculum outcomes.
 
 QUESTION:
 {question_text[:1000]}
 
 TOPIC: {topic}
 BLOOM LEVEL: {bloom_level}
+UNIT: {unit_num or 'unknown'}
 
-TAG this question with appropriate educational outcomes:
+Choose ONE course outcome (CO) from this list ONLY (these are the COs this unit actually maps to):
+{co_lines}
 
-COURSE OUTCOMES (CO):
-- CO1: Remember and understand fundamental concepts
-- CO2: Apply knowledge to solve problems
-- CO3: Analyze and evaluate complex scenarios
-- CO4: Design and create solutions
-- CO5: Communicate and work collaboratively
-
-PROGRAM OUTCOMES (PO):
-- PO1: Engineering knowledge and problem-solving
-- PO2: Critical thinking and analysis
-- PO3: Design and development of solutions
-- PO4: Research and investigation
-- PO5: Modern tool usage
-- PO6: Communication skills
+For your chosen CO, choose ONE program outcome (PO) from its allowed list:
+{po_lines}
 
 RULES:
-1. Choose the MOST APPROPRIATE single CO and PO
-2. Base selection on Bloom level and question type
-3. If uncertain, choose the most likely option
-4. Keep reasoning brief (1 sentence)
+1. You MUST pick course_outcome from exactly the COs listed above — do not invent others.
+2. You MUST pick program_outcome from the allowed POs for your chosen CO.
+3. Base selection on Bloom level and what the question actually asks.
+4. Keep reasoning brief (1 sentence).
 
 Return structured JSON with: course_outcome, program_outcome, reasoning"""
 
@@ -1878,6 +1893,15 @@ Return structured JSON with: course_outcome, program_outcome, reasoning"""
         po = response.program_outcome
         reasoning = response.reasoning
 
+        # Validate against the real syllabus mapping — don't trust the LLM blindly.
+        if co not in candidate_cos:
+            logger.warning(f"[Pedagogy Tagger] Model picked invalid CO '{co}', falling back to {candidate_cos[0]}")
+            co = candidate_cos[0]
+        allowed_pos = list(co_po_mapping.get(co, {}).keys()) or ["PO1"]
+        if po not in allowed_pos:
+            logger.warning(f"[Pedagogy Tagger] Model picked invalid PO '{po}' for {co}, falling back to {allowed_pos[0]}")
+            po = allowed_pos[0]
+
         logger.info(f"[Pedagogy Tagger] ✓ Tagged: {co}, {po} - {reasoning}")
 
         return {
@@ -1887,13 +1911,10 @@ Return structured JSON with: course_outcome, program_outcome, reasoning"""
 
     except Exception as e:
         logger.error(f"[Pedagogy Tagger] Tagging failed: {e}")
-        # Default fallback based on bloom level
-        if bloom_level <= 2:
-            return {'course_outcome': 'CO1', 'program_outcome': 'PO1'}
-        elif bloom_level <= 4:
-            return {'course_outcome': 'CO2', 'program_outcome': 'PO1'}
-        else:
-            return {'course_outcome': 'CO3', 'program_outcome': 'PO2'}
+        # Deterministic fallback using the real syllabus mapping, not a made-up one
+        co = candidate_cos[0]
+        po = (list(co_po_mapping.get(co, {}).keys()) or ["PO1"])[0]
+        return {'course_outcome': co, 'program_outcome': po}
 
 # --- STEP 5: GUARDIAN SYLLABUS VALIDATOR ---
 
