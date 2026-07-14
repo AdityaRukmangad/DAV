@@ -1547,6 +1547,14 @@ async def explain_question(question_id: int):
                 'chunks': chunks
             })
 
+        # Labels shown alongside the raw codes, kept consistent with the DAV
+        # analytics dashboard so provenance and analytics never disagree.
+        from app.services.dav_service import BLOOM_LABELS, CO_LABELS, PO_LABELS
+
+        bloom_level = row['bloom_level']
+        course_outcome = row['course_outcome']
+        program_outcome = row['program_outcome']
+
         # Build response
         response = {
             'question_id': row['id'],
@@ -1554,9 +1562,12 @@ async def explain_question(question_id: int):
             'answer': row['answer_text'],
             'topic': row['topic'],
             'difficulty': row['difficulty'],
-            'bloom_level': row['bloom_level'],
-            'course_outcome': row['course_outcome'],
-            'program_outcome': row['program_outcome'],
+            'bloom_level': bloom_level,
+            'bloom_label': BLOOM_LABELS.get(bloom_level, 'Unclassified') if bloom_level is not None else None,
+            'course_outcome': course_outcome,
+            'course_outcome_label': CO_LABELS.get(course_outcome) if course_outcome else None,
+            'program_outcome': program_outcome,
+            'program_outcome_label': PO_LABELS.get(program_outcome) if program_outcome else None,
             'source_type': row['source_type'],
             'source_documents': source_documents,
             'total_chunks_used': len(chunk_ids)

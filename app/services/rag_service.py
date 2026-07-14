@@ -304,7 +304,7 @@ class HybridRetriever:
             self.logger.error(f"Reranking failed: {e}")
             return docs[:top_k]
 
-    def retrieve_with_keywords(self, query: str, bloom_level: int = None) -> Tuple[str, List[int], str, Dict[str, str]]:
+    def retrieve_with_keywords(self, query: str, bloom_level: int = None) -> Tuple[str, List[int], str, Dict[str, str], List[str], List[str]]:
         """
         Keyword-aware retrieval that searches for specific content types.
         EXTENDED: Now uses Bloom level to adaptively set k (Step 2)
@@ -313,8 +313,10 @@ class HybridRetriever:
             query: The search query
             bloom_level: Bloom's taxonomy level (1-6) to determine k
 
-        Returns (context, page_numbers, filename, keyword_contexts)
+        Returns (context, page_numbers, filename, keyword_contexts, chunk_ids, doc_sources)
         keyword_contexts maps detected keywords to their specific context snippets
+        chunk_ids are the real vector-store chunk IDs used, for provenance lookups
+        doc_sources are the unique source filenames (matches chunk metadata['source'])
         """
         # BLOOM-ADAPTIVE RAG: Determine k based on bloom level
         if bloom_level is not None:
@@ -386,7 +388,7 @@ class HybridRetriever:
                 self.logger.info(f"Found {len(keyword_docs)} docs for keyword '{keyword}'")
 
         if not all_docs:
-            return "", [], "", {}
+            return "", [], "", {}, [], []
 
         # 3. Rerank all collected docs against original query - use adaptive final_k
         just_docs = [d for _, d in all_docs]
@@ -396,6 +398,8 @@ class HybridRetriever:
         # 4. Extract metadata
         pages: Set[int] = set()
         filename = ""
+        chunk_ids: List[str] = []
+        doc_sources: Set[str] = set()
         for d in reranked:
             page = d.metadata.get('page')
             if page is not None:
@@ -405,6 +409,12 @@ class HybridRetriever:
                     pass
             if not filename:
                 filename = d.metadata.get('filename', '')
+            chunk_id = d.metadata.get('chunk_id')
+            if chunk_id:
+                chunk_ids.append(chunk_id)
+            source = d.metadata.get('source') or d.metadata.get('filename')
+            if source:
+                doc_sources.add(source)
 
         # 5. Format output with keyword labels
         context_parts = []
@@ -420,11 +430,11 @@ class HybridRetriever:
             context_parts.append(f"[Source: {d.metadata.get('filename')}]\n{d.page_content[:1500]}")
 
         context = "\n\n".join(context_parts)
-        return context, sorted(list(pages)), filename, keyword_contexts
+        return context, sorted(list(pages)), filename, keyword_contexts, chunk_ids, sorted(list(doc_sources))
 
     def retrieve(self, query: str) -> Tuple[str, List[int], str]:
         """Returns (context, page_numbers, filename) - backwards compatible"""
-        context, pages, filename, _ = self.retrieve_with_keywords(query)
+        context, pages, filename, _, _, _ = self.retrieve_with_keywords(query)
         return context, pages, filename
 
 class EnterpriseRAGService:
@@ -457,12 +467,13 @@ class EnterpriseRAGService:
         """Returns (context, page_numbers, filename)"""
         return self.retriever.retrieve(query)
 
-    def search_with_keywords(self, query: str, k: int = 5, bloom_level: int = None) -> Tuple[str, List[int], str, Dict[str, str]]:
+    def search_with_keywords(self, query: str, k: int = 5, bloom_level: int = None) -> Tuple[str, List[int], str, Dict[str, str], List[str], List[str]]:
         """
-        Returns (context, page_numbers, filename, keyword_contexts)
+        Returns (context, page_numbers, filename, keyword_contexts, chunk_ids, doc_sources)
         keyword_contexts maps detected keywords (e.g., "pseudo-code") to relevant content
 
         EXTENDED (Step 2): Now accepts bloom_level for adaptive k
+        EXTENDED (Step 4): Now also returns real chunk_ids/doc_sources for provenance
         """
         return self.retriever.retrieve_with_keywords(query, bloom_level=bloom_level)
 

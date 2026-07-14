@@ -241,9 +241,24 @@ class RAGEngine:
             db = self.vector_store.get_database()
             if not db:
                 return RetrievalResult("", [], [], topic)
-            results = db.similarity_search_with_score(topic, k=k)
-            docs = [doc for doc, _ in results]
-            scores = [score for _, score in results]
+
+            # Query the underlying Chroma collection directly so we get back the
+            # real chunk IDs (langchain's similarity_search_with_score drops them),
+            # which are required for provenance lookups later.
+            raw = db._collection.query(query_texts=[topic], n_results=k)
+            ids = raw.get('ids', [[]])[0] if raw.get('ids') else []
+            documents_text = raw.get('documents', [[]])[0] if raw.get('documents') else []
+            metadatas = raw.get('metadatas', [[]])[0] if raw.get('metadatas') else []
+            distances = raw.get('distances', [[]])[0] if raw.get('distances') else [0.0] * len(ids)
+
+            docs = []
+            for i, chunk_id in enumerate(ids):
+                meta = dict(metadatas[i]) if i < len(metadatas) and metadatas[i] else {}
+                meta['chunk_id'] = chunk_id
+                content = documents_text[i] if i < len(documents_text) else ''
+                docs.append(Document(page_content=content, metadata=meta))
+
+            scores = list(distances)
             context = "\n\n".join([d.page_content for d in docs])
             return RetrievalResult(context, docs, scores, topic)
         except Exception as e:

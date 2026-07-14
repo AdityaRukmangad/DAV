@@ -588,15 +588,10 @@ def check_sources(state: AgentState) -> Dict:
         duplicate_result = cache_future.result()
 
     # Unpack PDF results
-    pdf_context, pages, filename, keyword_contexts = pdf_result
+    pdf_context, pages, filename, keyword_contexts, retrieved_chunk_ids, retrieved_doc_ids = pdf_result
     source_pages = pages
     source_filename = filename
     detected_keywords = keyword_contexts
-
-    # PROVENANCE TRACKING (Step 2): Capture chunk and doc IDs
-    # For now, use page numbers as doc IDs (more detailed tracking can be added later)
-    retrieved_chunk_ids = [f"page_{p}_chunk" for p in pages]  # Placeholder
-    retrieved_doc_ids = [f"doc_{filename}_p{p}" for p in pages]
 
     # Log detected keywords
     if keyword_contexts:
@@ -1759,6 +1754,9 @@ def use_cached_question(state: AgentState) -> Dict:
 
 # --- PEDAGOGY TAGGER (STEP 3) ---
 
+from app.services.dav_service import BLOOM_CO_RULES, CO_PO_RULES, CO_LABELS, PO_LABELS
+
+
 class PedagogyTags(BaseModel):
     """Educational metadata tags"""
     course_outcome: str = Field(description="Course outcome (CO1, CO2, etc.)")
@@ -1770,6 +1768,11 @@ def tag_pedagogy(state: AgentState) -> Dict:
     """
     Tag question with educational metadata (Course Outcome, Program Outcome).
     OPTIONAL node - controlled by ENABLE_PEDAGOGY_TAGGER env variable.
+
+    CO/PO is always constrained to the set the DAV consistency checker
+    (app/services/dav_service.BLOOM_CO_RULES / CO_PO_RULES) considers valid
+    for the question's Bloom level, so a question can never be tagged with a
+    CO/PO that the analytics dashboard would then flag as a mismatch.
     """
     # Check if pedagogy tagger is enabled
     tagger_enabled = os.getenv("ENABLE_PEDAGOGY_TAGGER", "true").lower() == "true"
@@ -1781,14 +1784,22 @@ def tag_pedagogy(state: AgentState) -> Dict:
 
     question_data = state.get('question_data', {})
     question_text = question_data.get('question', '')
-    bloom_level = state.get('bloom_level', 3)
+    bloom_level = state.get('bloom_level') or 3
     topic = state.get('topic', '')
+
+    # Bloom level is the single source of truth for which CO/PO are allowed.
+    # Default to CO1 if an out-of-range bloom level ever slips through.
+    allowed_cos = BLOOM_CO_RULES.get(bloom_level, ["CO1"])
+    default_co = allowed_cos[0]
+    allowed_pos = CO_PO_RULES.get(default_co, ["PO1"])
+    default_po = allowed_pos[0]
 
     if not question_text:
         logger.warning("[Pedagogy Tagger] No question text found, skipping")
-        return {}
+        return {'course_outcome': default_co, 'program_outcome': default_po}
 
-    # Rule-based + LLM hybrid approach
+    co_options = ", ".join(f"{co} ({CO_LABELS.get(co, co)})" for co in allowed_cos)
+
     system_prompt = f"""You are an educational assessment expert tagging questions with curriculum outcomes.
 
 QUESTION:
@@ -1797,28 +1808,22 @@ QUESTION:
 TOPIC: {topic}
 BLOOM LEVEL: {bloom_level}
 
-TAG this question with appropriate educational outcomes:
+This question's Bloom level ({bloom_level}) restricts the valid Course Outcome (CO) to ONE of:
+{co_options}
 
-COURSE OUTCOMES (CO):
-- CO1: Remember and understand fundamental concepts
-- CO2: Apply knowledge to solve problems
-- CO3: Analyze and evaluate complex scenarios
-- CO4: Design and create solutions
-- CO5: Communicate and work collaboratively
+Pick the single best CO from that list only - do not invent any other CO.
 
-PROGRAM OUTCOMES (PO):
-- PO1: Engineering knowledge and problem-solving
-- PO2: Critical thinking and analysis
-- PO3: Design and development of solutions
-- PO4: Research and investigation
-- PO5: Modern tool usage
-- PO6: Communication skills
+Once you pick a CO, the Program Outcome (PO) MUST be one of the POs mapped to that CO:
+- CO1 -> {', '.join(f"{po} ({PO_LABELS.get(po, po)})" for po in CO_PO_RULES.get('CO1', []))}
+- CO2 -> {', '.join(f"{po} ({PO_LABELS.get(po, po)})" for po in CO_PO_RULES.get('CO2', []))}
+- CO3 -> {', '.join(f"{po} ({PO_LABELS.get(po, po)})" for po in CO_PO_RULES.get('CO3', []))}
+- CO4 -> {', '.join(f"{po} ({PO_LABELS.get(po, po)})" for po in CO_PO_RULES.get('CO4', []))}
+- CO5 -> {', '.join(f"{po} ({PO_LABELS.get(po, po)})" for po in CO_PO_RULES.get('CO5', []))}
 
 RULES:
-1. Choose the MOST APPROPRIATE single CO and PO
-2. Base selection on Bloom level and question type
-3. If uncertain, choose the most likely option
-4. Keep reasoning brief (1 sentence)
+1. Choose the MOST APPROPRIATE CO from the allowed list for this Bloom level - never a CO outside that list
+2. Choose the MOST APPROPRIATE PO from the list mapped to your chosen CO - never a PO outside that list
+3. Keep reasoning brief (1 sentence)
 
 Return structured JSON with: course_outcome, program_outcome, reasoning"""
 
@@ -1834,6 +1839,17 @@ Return structured JSON with: course_outcome, program_outcome, reasoning"""
         po = response.program_outcome
         reasoning = response.reasoning
 
+        # Enforce the Bloom-level constraint even if the LLM drifts - this is what
+        # keeps every L1-6 question tagged with a CO/PO from its assigned set only.
+        if co not in allowed_cos:
+            logger.warning(f"[Pedagogy Tagger] LLM picked CO {co} outside allowed {allowed_cos} for bloom {bloom_level}, correcting to {default_co}")
+            co = default_co
+
+        expected_pos = CO_PO_RULES.get(co, [default_po])
+        if po not in expected_pos:
+            logger.warning(f"[Pedagogy Tagger] LLM picked PO {po} outside allowed {expected_pos} for {co}, correcting to {expected_pos[0]}")
+            po = expected_pos[0]
+
         logger.info(f"[Pedagogy Tagger] ✓ Tagged: {co}, {po} - {reasoning}")
 
         return {
@@ -1842,14 +1858,8 @@ Return structured JSON with: course_outcome, program_outcome, reasoning"""
         }
 
     except Exception as e:
-        logger.error(f"[Pedagogy Tagger] Tagging failed: {e}")
-        # Default fallback based on bloom level
-        if bloom_level <= 2:
-            return {'course_outcome': 'CO1', 'program_outcome': 'PO1'}
-        elif bloom_level <= 4:
-            return {'course_outcome': 'CO2', 'program_outcome': 'PO1'}
-        else:
-            return {'course_outcome': 'CO3', 'program_outcome': 'PO2'}
+        logger.error(f"[Pedagogy Tagger] Tagging failed: {e}, using Bloom-level default")
+        return {'course_outcome': default_co, 'program_outcome': default_po}
 
 # --- STEP 5: GUARDIAN SYLLABUS VALIDATOR ---
 

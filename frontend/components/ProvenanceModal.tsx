@@ -83,19 +83,19 @@ const ProvenanceModal: React.FC<ProvenanceModalProps> = ({ isOpen, onClose, data
                   <div>
                     <span className="text-ink-light font-medium block mb-1">Bloom Level</span>
                     <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-bold">
-                      {data.bloom_level || 'N/A'}
+                      {data.bloom_level ? `L${data.bloom_level}${data.bloom_label ? ` - ${data.bloom_label}` : ''}` : 'N/A'}
                     </span>
                   </div>
                   <div>
                     <span className="text-ink-light font-medium block mb-1">Course Outcome</span>
                     <span className="inline-block bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-bold">
-                      {data.course_outcome || 'N/A'}
+                      {data.course_outcome ? `${data.course_outcome}${data.course_outcome_label ? ` - ${data.course_outcome_label}` : ''}` : 'N/A'}
                     </span>
                   </div>
                   <div>
                     <span className="text-ink-light font-medium block mb-1">Program Outcome</span>
                     <span className="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full font-bold">
-                      {data.program_outcome || 'N/A'}
+                      {data.program_outcome ? `${data.program_outcome}${data.program_outcome_label ? ` - ${data.program_outcome_label}` : ''}` : 'N/A'}
                     </span>
                   </div>
                 </div>

@@ -164,8 +164,11 @@ export interface ProvenanceData {
   topic: string;
   difficulty: string;
   bloom_level: number | null;
+  bloom_label: string | null;
   course_outcome: string | null;
+  course_outcome_label: string | null;
   program_outcome: string | null;
+  program_outcome_label: string | null;
   source_type: string;
   source_documents: SourceDocument[];
   total_chunks_used: number;
